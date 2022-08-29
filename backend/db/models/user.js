@@ -49,6 +49,15 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
+      hasMany(models.Spot, {
+        onDelete: 'CASCADE'
+      })
+      hasMany(models.Booking, {
+        onDelete: 'CASCADE'
+      })
+      hasMany(models.Review, {
+        onDelete: 'CASCADE'
+      })
     }
 
   };
