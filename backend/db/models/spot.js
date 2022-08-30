@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     city: {
       type: DataTypes.STRING,
+      allowNull:false
     },
     state: {
       type: DataTypes.STRING,
@@ -75,6 +76,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   }, {
+    hooks: {beforeCreate: (instance, options) => {
+      console.log(instance)
+    }},
     sequelize,
     modelName: 'Spot',
   });

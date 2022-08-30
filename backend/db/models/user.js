@@ -100,6 +100,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
+      hooks: {beforeCreate: (instance, options) => {
+        console.log(instance)
+      }},
       sequelize,
       modelName: "User",
       defaultScope: {
