@@ -49,13 +49,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
-      hasMany(models.Spot, {
+      User.hasMany(models.Spot, {
         onDelete: 'CASCADE'
       })
-      hasMany(models.Booking, {
+      User.hasMany(models.Booking, {
         onDelete: 'CASCADE'
       })
-      hasMany(models.Review, {
+      User.hasMany(models.Review, {
         onDelete: 'CASCADE'
       })
     }
