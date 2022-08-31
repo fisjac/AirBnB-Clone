@@ -73,24 +73,45 @@ router.get(
   }
 );
 
+// Define middleware to check if spotId exists
+const spotExists = async (req, _res, next) => { //check if spotId exists
+  let spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) { //If the spotId doesn't exist return an error
+    const err = new Error("Spot couldn't be found")
+    err.status = 404
+    err.message = "Spot couldn't be found"
+    next(err)
+  } else {
+    next()
+  }
+};
+
+// Define middleware to check if currentUser owns spot
+const checkOwnership = async (req, _res, next) => {
+  let spot = await Spot.findByPk(req.params.spotId);
+  console.log(spot.ownerId);
+  if (spot.ownerId !== req.params.spotId) {
+    console.log('set user to null');
+    req.user = null;
+  };
+  next();
+};
+
+
+
 // Edit a spot
 router.put('/:spotId',
+  spotExists,
   restoreUser,
+  checkOwnership,
   requireAuth,
   validateSpot,
   async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId);
-    if (!spot) { //If the spotId doesn't exist return an error
-      const err = new Error("Spot couldn't be found")
-      err.status = 404
-      err.message = "Spot couldn't be found"
-      return next(err)
-    } else {
-      spot.set(req.body);
-      spot = await spot.save()
-      res.status = 200
-      return res.json(spot)
-    }
+    spot.set(req.body);
+    spot = await spot.save()
+    res.status = 200
+    return res.json(spot)
   }
 );
 
