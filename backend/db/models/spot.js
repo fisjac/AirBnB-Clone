@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.SpotImage, {
         onDelete: 'CASCADE'
       })
+      Spot.hasMany(models.Review, {
+        onDelete: 'CASCADE'
+      })
 
     }
   }

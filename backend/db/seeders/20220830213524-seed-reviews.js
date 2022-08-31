@@ -17,7 +17,25 @@ const reviewsSeed = [
     spotId: 2,
     userId: 4,
     review: 'no wifi',
-    stars: 4
+    stars: 5
+  },
+  {
+    spotId: 2,
+    userId: 3,
+    review: 'no wifi',
+    stars: 2
+  },
+  {
+    spotId: 1,
+    userId: 5,
+    review: 'no wifi',
+    stars: 3
+  },
+  {
+    spotId: 1,
+    userId: 2,
+    review: 'no wifi',
+    stars: 5
   },
 ]
 
