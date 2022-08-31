@@ -89,9 +89,11 @@ const spotExists = async (req, _res, next) => { //check if spotId exists
 // Define middleware to check if currentUser owns spot
 const checkOwnership = async (req, _res, next) => {
   let spot = await Spot.findByPk(req.params.spotId);
-  console.log(spot.ownerId);
-  if (spot.dataValues.ownerId !== req.params.spotId) {
-    console.log('set user to null');
+  let userId = req.user.dataValues.id;
+  let ownerId = spot.dataValues.ownerId;
+  if (ownerId !== userId) {
+    console.log(`user ${userId} is not owner ${ownerId}`);
+    console.log('setting user to null');
     req.user = null;
   };
   next();
@@ -107,7 +109,23 @@ router.post('/',
     let spot = await Spot.create(req.body);
     res.status = 201;
     return res.json(spot);
-  });
+  }
+);
+
+// Add image to a spot
+router.post('/:spotId/images',
+  spotExists,
+  restoreUser,
+  checkOwnership,
+  requireAuth,
+  async (req, res, next) => {
+    req.body.spotId = req.params.spotId;
+    const image = await SpotImage.create(req.body);
+    res.status = 200;
+    res.json(image);
+  }
+)
+
 
 // Edit a spot
 router.put('/:spotId',
