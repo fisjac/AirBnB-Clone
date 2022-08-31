@@ -90,14 +90,24 @@ const spotExists = async (req, _res, next) => { //check if spotId exists
 const checkOwnership = async (req, _res, next) => {
   let spot = await Spot.findByPk(req.params.spotId);
   console.log(spot.ownerId);
-  if (spot.ownerId !== req.params.spotId) {
+  if (spot.dataValues.ownerId !== req.params.spotId) {
     console.log('set user to null');
     req.user = null;
   };
   next();
 };
 
-
+// Create a spot with ownedBy current user
+router.post('/',
+  restoreUser,
+  requireAuth,
+  validateSpot,
+  async (req, res, next) => {
+    req.body.ownerId = req.user.dataValues.id
+    let spot = await Spot.create(req.body);
+    res.status = 201;
+    return res.json(spot);
+  });
 
 // Edit a spot
 router.put('/:spotId',
