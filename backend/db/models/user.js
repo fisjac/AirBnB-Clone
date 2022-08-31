@@ -49,6 +49,16 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       // define association here
+      User.hasMany(models.Spot, {
+        foreignKey: 'ownerId',
+        onDelete: 'CASCADE'
+      })
+      User.hasMany(models.Booking, {
+        onDelete: 'CASCADE'
+      })
+      User.hasMany(models.Review, {
+        onDelete: 'CASCADE'
+      })
     }
 
   };
@@ -91,6 +101,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
+      hooks: {beforeCreate: (instance, options) => {
+        console.log(instance)
+      }},
       sequelize,
       modelName: "User",
       defaultScope: {
