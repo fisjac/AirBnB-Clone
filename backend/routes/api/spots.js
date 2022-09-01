@@ -49,7 +49,7 @@ router.get(
             // adding subquery for average ratings
             sequelize.literal(`(
               select avg(stars)
-              from reviews as review
+              from Reviews as review
               where
                 review.spotId = spot.id
             )`), 'avgRating'
@@ -58,7 +58,7 @@ router.get(
             // adding subquery for preview image
             sequelize.literal(`(
               select url
-              from spotImages as spotimage
+              from SpotImages as spotimage
               where
                 spotimage.spotId = spot.id
                 and
