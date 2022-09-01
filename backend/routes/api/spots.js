@@ -65,32 +65,7 @@ router.get(
       ? spot.dataValues.previewImage = preview[0].dataValues.url
       : spot.dataValues.previewImage = null
     }
-    //   {
-    //   attributes: {
-    //     include: [
-    //       [
-    //         // adding subquery for average ratings
-    //         sequelize.literal(`(
-    //           select avg(stars)
-    //           from Reviews as Review
-    //           where
-    //             Review.spotId = Spot.id
-    //         )`), 'avgRating'
-    //       ],
-    //       [
-    //         // adding subquery for preview image
-    //         sequelize.literal(`(
-    //           select url
-    //           from SpotImages as SpotImage
-    //           where
-    //             SpotImage.spotId = Spot.id
-    //             and
-    //               SpotImage.preview = true
-    //         )`), 'preview'
-    //       ],
-    //     ]
-    //   },
-    // }
+
 
     res.statusCode = 200;
     return res.json({Spots: allSpots});
@@ -123,7 +98,42 @@ const checkOwnership = async (req, _res, next) => {
   next();
 };
 
-
+// Get spots owned by current user
+router.get('/current',
+  restoreUser,
+  requireAuth,
+  async (req, res, next) => {
+    let spots = await Spot.findAll({
+      where: {ownerId: req.user.dataValues.id},
+      attributes: {
+        include: [
+          [
+            // adding subquery for average ratings
+            sequelize.literal(`(
+              select avg(stars)
+              from Reviews as Review
+              where
+                Review.spotId = Spot.id
+            )`), 'avgRating'
+          ],
+          [
+            // adding subquery for preview image
+            sequelize.literal(`(
+              select url
+              from SpotImages as SpotImage
+              where
+                SpotImage.spotId = Spot.id
+                and
+                  SpotImage.preview = true
+            )`), 'preview'
+          ],
+        ]
+    }
+    })
+    res.status = 200;
+    res.json({'Spots': spots});
+  }
+)
 
 // Create a spot with ownedBy current user
 router.post('/',
