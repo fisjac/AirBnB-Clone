@@ -17,10 +17,10 @@ const reviewImagesSeed = [
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('reviewImages',reviewImagesSeed);
+    await queryInterface.bulkInsert('ReviewImages',reviewImagesSeed);
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('reviewImages');
+    await queryInterface.bulkDelete('ReviewImages');
   }
 };
