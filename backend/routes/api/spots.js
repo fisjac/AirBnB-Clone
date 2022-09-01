@@ -42,32 +42,51 @@ const validateSpot = [
 router.get(
   '/',
   async (req, res, next) => {
-    const allSpots = await Spot.findAll({
-      attributes: {
-        include: [
-          [
-            // adding subquery for average ratings
-            sequelize.literal(`(
-              select avg(stars)
-              from Reviews as Review
-              where
-                Review.spotId = Spot.id
-            )`), 'avgRating'
-          ],
-          [
-            // adding subquery for preview image
-            sequelize.literal(`(
-              select url
-              from SpotImages as SpotImage
-              where
-                SpotImage.spotId = Spot.id
-                and
-                  SpotImage.preview = true
-            )`), 'preview'
-          ],
-        ]
-      },
-    });
+    const allSpots = await Spot.findAll(
+      {
+        attributes: {
+          include: [
+            [
+              sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'
+            ]]
+        },
+        include: {model : Review, attributes: []}
+      }
+    );
+    for (let spot of allSpots) {
+      let preview = await spot.getSpotImages({
+        attributes: ['url'],
+        where: {preview: true}
+      })
+      spot.dataValues.previewImage = preview[0].dataValues.url
+    }
+    //   {
+    //   attributes: {
+    //     include: [
+    //       [
+    //         // adding subquery for average ratings
+    //         sequelize.literal(`(
+    //           select avg(stars)
+    //           from Reviews as Review
+    //           where
+    //             Review.spotId = Spot.id
+    //         )`), 'avgRating'
+    //       ],
+    //       [
+    //         // adding subquery for preview image
+    //         sequelize.literal(`(
+    //           select url
+    //           from SpotImages as SpotImage
+    //           where
+    //             SpotImage.spotId = Spot.id
+    //             and
+    //               SpotImage.preview = true
+    //         )`), 'preview'
+    //       ],
+    //     ]
+    //   },
+    // }
+
     res.statusCode = 200;
     return res.json({Spots: allSpots});
   }
@@ -120,9 +139,10 @@ router.post('/:spotId/images',
   requireAuth,
   async (req, res, next) => {
     req.body.spotId = req.params.spotId;
-    const image = await SpotImage.create(req.body);
+
+    // const image = await SpotImage.create(req.body);
     res.status = 200;
-    res.json(image);
+    res.json(req.body);
   }
 )
 
