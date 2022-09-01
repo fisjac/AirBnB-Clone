@@ -3,7 +3,7 @@ const router = express.Router();
 const { requireAuth, restoreUser } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation')
 const { check } = require('express-validator');
-const {Spot, Review, SpotImage, sequelize} = require('../../db/models');
+const {User, Spot, Review, SpotImage, sequelize} = require('../../db/models');
 
 // Create custom validator
 const validateSpot = [
@@ -123,6 +123,8 @@ const checkOwnership = async (req, _res, next) => {
   next();
 };
 
+
+
 // Create a spot with ownedBy current user
 router.post('/',
   restoreUser,
@@ -135,6 +137,39 @@ router.post('/',
     return res.json(spot);
   }
 );
+
+// Get all spot details by id
+router.get('/:spotId',
+  spotExists,
+  async (req, res, next) => {
+    let spot = await Spot.findByPk(req.params.spotId, {
+      include: [{
+        model: SpotImage
+      },
+      {
+        model: User, as: 'Owner',
+        attributes: ['id', 'firstName', 'lastName']
+      }
+    ]
+    });
+    // Add avgRating
+    let ratings = await spot.getReviews({
+      attributes:['stars']})
+    if (!ratings.length) {
+      spot.dataValues.avgRating = null;
+      spot.dataValues.numReviews = 0;
+    } else {
+      let avgRating = ratings.reduce((sum, review) =>{
+        return sum += review.dataValues.stars
+      },0) / ratings.length;
+      spot.dataValues.avgRating = avgRating;
+      spot.dataValues.numReviews = ratings.length;
+    };
+    res.status = 200;
+    console.log(spot)
+    res.json(spot);
+  }
+)
 
 // Add image to a spot
 router.post('/:spotId/images',
