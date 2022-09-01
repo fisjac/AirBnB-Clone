@@ -38,40 +38,6 @@ const validateSpot = [
   handleValidationErrors
 ];
 
-// GET all spots
-router.get(
-  '/',
-  async (req, res, next) => {
-    const allSpots = await Spot.findAll();
-    for (let spot of allSpots) {
-      // add avgRating
-      let ratings = await spot.getReviews({
-        attributes:['stars']})
-      if (!ratings.length) {
-        spot.dataValues.avgRating = null
-      } else {
-        let avgRating = ratings.reduce((sum, review) =>{
-          return sum += review.dataValues.stars
-        },0) / ratings.length;
-        spot.dataValues.avgRating = avgRating
-      };
-
-      // Add previewImage to each record
-      let preview = await spot.getSpotImages({
-        attributes: ['url'],
-        where: {preview: true}
-      })
-      preview[0]
-      ? spot.dataValues.previewImage = preview[0].dataValues.url
-      : spot.dataValues.previewImage = null
-    }
-
-
-    res.statusCode = 200;
-    return res.json({Spots: allSpots});
-  }
-);
-
 // Define middleware to check if spotId exists
 const spotExists = async (req, _res, next) => { //check if spotId exists
   let spot = await Spot.findByPk(req.params.spotId);
@@ -98,37 +64,23 @@ const checkOwnership = async (req, _res, next) => {
   next();
 };
 
+// GET all spots
+router.get(
+  '/',
+  async (req, res, next) => {
+    const allSpots = await Spot.scope('avgRating', 'preview').findAll();
+    res.statusCode = 200;
+    return res.json({Spots: allSpots});
+  }
+);
+
 // Get spots owned by current user
 router.get('/current',
   restoreUser,
   requireAuth,
   async (req, res, next) => {
-    let spots = await Spot.findAll({
+    let spots = await Spot.scope('avgRating', 'preview').findAll({
       where: {ownerId: req.user.dataValues.id},
-      attributes: {
-        include: [
-          [
-            // adding subquery for average ratings
-            sequelize.literal(`(
-              select avg(stars)
-              from Reviews as Review
-              where
-                Review.spotId = Spot.id
-            )`), 'avgRating'
-          ],
-          [
-            // adding subquery for preview image
-            sequelize.literal(`(
-              select url
-              from SpotImages as SpotImage
-              where
-                SpotImage.spotId = Spot.id
-                and
-                  SpotImage.preview = true
-            )`), 'preview'
-          ],
-        ]
-    }
     })
     res.status = 200;
     res.json({'Spots': spots});
@@ -152,29 +104,37 @@ router.post('/',
 router.get('/:spotId',
   spotExists,
   async (req, res, next) => {
-    let spot = await Spot.findByPk(req.params.spotId, {
-      include: [{
-        model: SpotImage
-      },
-      {
-        model: User, as: 'Owner',
-        attributes: ['id', 'firstName', 'lastName']
-      }
-    ]
-    });
-    // Add avgRating
-    let ratings = await spot.getReviews({
-      attributes:['stars']})
-    if (!ratings.length) {
-      spot.dataValues.avgRating = null;
-      spot.dataValues.numReviews = 0;
-    } else {
-      let avgRating = ratings.reduce((sum, review) =>{
-        return sum += review.dataValues.stars
-      },0) / ratings.length;
-      spot.dataValues.avgRating = avgRating;
-      spot.dataValues.numReviews = ratings.length;
-    };
+    let spot = await Spot
+      .findByPk(req.params.spotId, {
+        attributes: {
+          include: [
+            [
+              // adding subquery for average ratings
+              sequelize.literal(`(
+                select avg(stars)
+                from Reviews as Review
+                where
+                  Review.spotId = Spot.id
+              )`), 'avgStarRating'
+            ],
+            [
+              // adding subquery for numReviews
+              sequelize.literal(`(
+                select count(*)
+                from Reviews as Review
+                where
+                  Review.spotId = Spot.id
+              )`), 'numReviews'
+            ],
+          ]
+        },
+        include: [
+          { model: SpotImage },
+          { model: User, as: 'Owner',
+            attributes: ['id', 'firstName', 'lastName']
+          },
+        ]
+      });
     res.status = 200;
     console.log(spot)
     res.json(spot);
@@ -211,5 +171,22 @@ router.put('/:spotId',
     return res.json(spot)
   }
 );
+
+// Delete a spot
+router.delete('/:spotId',
+  spotExists,
+  restoreUser,
+  checkOwnership,
+  requireAuth,
+  async (req, res, next) => {
+    let spot = await Spot.findByPk(req.params.spotId);
+    await spot.destroy();
+    res.status = 200;
+    res.json({
+      "message": "Successfully deleted",
+      "statusCode": 200
+    })
+  }
+)
 
 module.exports = router
