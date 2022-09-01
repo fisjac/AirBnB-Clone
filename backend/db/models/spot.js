@@ -1,4 +1,5 @@
 'use strict';
+const {User, SpotImage} = require('../../db/models');
 const {
   Model
 } = require('sequelize');
@@ -11,9 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.belongsTo(models.User,
-        {foreignKey: 'ownerId'}
-        )
+      Spot.belongsTo(models.User,{
+        as: 'Owner',
+        foreignKey: 'ownerId'
+      })
       Spot.hasMany(models.Booking, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE'
@@ -87,6 +89,40 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {beforeCreate: (instance, options) => {
       console.log(instance)
     }},
+    scopes: {
+      avgRating: {
+        attributes: {
+          include: [
+            [
+              // adding subquery for average ratings
+              sequelize.literal(`(
+                select avg(stars)
+                from Reviews as Review
+                where
+                  Review.spotId = Spot.id
+              )`), 'avgRating'
+            ],
+          ]
+        }
+      },
+      preview: {
+        attributes: {
+          include: [
+            [
+            // adding subquery for preview image
+            sequelize.literal(`(
+              select url
+              from SpotImages as SpotImage
+              where
+                SpotImage.spotId = Spot.id
+                and
+                  SpotImage.preview = true
+            )`), 'previewImage'
+            ],
+          ]
+        }
+      }
+    },
     sequelize,
     modelName: 'Spot',
   });
