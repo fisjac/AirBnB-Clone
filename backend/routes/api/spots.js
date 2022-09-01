@@ -57,8 +57,6 @@ const checkOwnership = async (req, _res, next) => {
   let userId = req.user.dataValues.id;
   let ownerId = spot.dataValues.ownerId;
   if (ownerId !== userId) {
-    console.log(`user ${userId} is not owner ${ownerId}`);
-    console.log('setting user to null');
     req.user = null;
   };
   next();
@@ -136,7 +134,6 @@ router.get('/:spotId',
         ]
       });
     res.status = 200;
-    console.log(spot)
     res.json(spot);
   }
 )
