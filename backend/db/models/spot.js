@@ -1,5 +1,5 @@
 'use strict';
-const {User, SpotImage} = require('../../db/models');
+const {User, SpotImage, Review} = require('../../db/models');
 const {
   Model
 } = require('sequelize');
@@ -88,40 +88,6 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {beforeCreate: (instance, options) => {
       console.log(instance)
     }},
-    scopes: {
-      avgRating: {
-        attributes: {
-          include: [
-            [
-              // adding subquery for average ratings
-              sequelize.literal(`(
-                select avg(stars)
-                from Reviews as Review
-                where
-                  Review.spotId = Spot.id
-              )`), 'avgRating'
-            ],
-          ]
-        }
-      },
-      preview: {
-        attributes: {
-          include: [
-            [
-            // adding subquery for preview image
-            sequelize.literal(`(
-              select url
-              from SpotImages as SpotImage
-              where
-                SpotImage.spotId = Spot.id
-                and
-                  SpotImage.preview = true
-            )`), 'previewImage'
-            ],
-          ]
-        }
-      }
-    },
     sequelize,
     modelName: 'Spot',
   });
