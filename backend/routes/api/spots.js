@@ -42,17 +42,7 @@ const validateSpot = [
 router.get(
   '/',
   async (req, res, next) => {
-    const allSpots = await Spot.findAll(
-      // {
-      //   attributes: {
-      //     include: [
-      //       [
-      //         sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'
-      //       ]]
-      //   },
-      //   include: {model : Review, attributes: []}
-      // }
-    );
+    const allSpots = await Spot.findAll();
     for (let spot of allSpots) {
       // add avgRating
       let ratings = await spot.getReviews({
