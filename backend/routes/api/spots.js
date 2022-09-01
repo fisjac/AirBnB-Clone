@@ -62,11 +62,44 @@ const checkOwnership = async (req, _res, next) => {
   next();
 };
 
+
+// add avgRating to spot instance
+const avgRating = async (spot) => {
+  let ratings = await spot.getReviews({
+    attributes:['stars']})
+  if (!ratings.length) {
+    return null;
+  } else {
+    let avgRating = ratings.reduce((sum, review) =>{
+      return sum += review.dataValues.stars
+    },0) / ratings.length;
+    return avgRating;
+  };
+};
+
+
+// Add previewImage to each record
+const getPreview = async (spot) => {
+  let preview = await spot.getSpotImages({
+    attributes: ['url'],
+    where: {preview: true}
+  });
+  let hasPreview = preview[0];
+  if (!hasPreview) return null;
+  let url = preview[0].dataValues.url;
+  return url
+}
+
+
 // GET all spots
 router.get(
   '/',
   async (req, res, next) => {
-    const allSpots = await Spot.scope('avgRating', 'preview').findAll();
+    const allSpots = await Spot.findAll();
+    for (let spot of allSpots) {
+      spot.dataValues.avgRating = await avgRating(spot);
+      spot.dataValues.previewImage = await getPreview(spot)
+    }
     res.statusCode = 200;
     return res.json({Spots: allSpots});
   }
@@ -77,7 +110,7 @@ router.get('/current',
   restoreUser,
   requireAuth,
   async (req, res, next) => {
-    let spots = await Spot.scope('avgRating', 'preview').findAll({
+    let spots = await Spot.findAll({
       where: {ownerId: req.user.dataValues.id},
     })
     res.status = 200;
@@ -104,28 +137,6 @@ router.get('/:spotId',
   async (req, res, next) => {
     let spot = await Spot
       .findByPk(req.params.spotId, {
-        attributes: {
-          include: [
-            [
-              // adding subquery for average ratings
-              sequelize.literal(`(
-                select avg(stars)
-                from Reviews as Review
-                where
-                  Review.spotId = Spot.id
-              )`), 'avgStarRating'
-            ],
-            [
-              // adding subquery for numReviews
-              sequelize.literal(`(
-                select count(*)
-                from Reviews as Review
-                where
-                  Review.spotId = Spot.id
-              )`), 'numReviews'
-            ],
-          ]
-        },
         include: [
           { model: SpotImage },
           { model: User, as: 'Owner',
@@ -133,6 +144,9 @@ router.get('/:spotId',
           },
         ]
       });
+    spot.dataValues.avgStarRating = await avgRating(spot);
+    let count = await Review.count({where: {'spotId': req.params.spotId}})
+    spot.dataValues.numReviews = count
     res.status = 200;
     res.json(spot);
   }
@@ -151,7 +165,6 @@ router.post('/:spotId/images',
     res.json(image);
   }
 )
-
 
 // Edit a spot
 router.put('/:spotId',
