@@ -1,3 +1,14 @@
+const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../db/models');
+const { Op } = require('sequelize');
+
+
+const arrayToJSON = (array) => {
+  return array.reduce((accum, record) => {
+    accum.push(record.toJSON());
+    return accum;
+  }, [] );
+};
+
 // Add previewImage to each record
 const getPreviewForSpot = async (spot) => {
   let preview = await spot.getSpotImages({
@@ -25,6 +36,7 @@ const avgRatingForSpot = async (spot) => {
 };
 
 module.exports = {
+  arrayToJSON,
   getPreviewForSpot,
   avgRatingForSpot
 }

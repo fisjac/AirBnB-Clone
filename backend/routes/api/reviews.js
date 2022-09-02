@@ -29,10 +29,10 @@ router.get('/current',
     })
 
     for (let review of reviews) {
-      review.dataValues.Spot.dataValues.previewImage = await helperFuncs.getPreview(review.dataValues.Spot)
+      review.dataValues.Spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(review.dataValues.Spot)
     };
 
-    jsonArray = arrayToJSON(reviews)
+    jsonArray = helperFuncs.arrayToJSON(reviews)
     res.status = 200;
     res.json({Reviews: reviews})
   }

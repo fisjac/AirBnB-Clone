@@ -1,10 +1,5 @@
-
-const arrayToJSON = (array) => {
-  return array.reduce((accum, record) => {
-    accum.push(record.toJSON());
-    return accum;
-  }, [] );
-};
+const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../db/models');
+const { Op } = require('sequelize');
 
 // Define middleware to check if spotId exists
 const spotExists = async (req, _res, next) => { //check if spotId exists
@@ -133,7 +128,6 @@ const spotIsAvailable = async (req, res, next) => {
 
 
 module.exports = {
-  arrayToJSON,
   spotExists, reviewExists,
   checkOwnership, ownershipStatusMustBe,
   hasAlreadyReviewed, alreadyHasNImages,

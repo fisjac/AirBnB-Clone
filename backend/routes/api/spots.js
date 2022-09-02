@@ -97,6 +97,7 @@ router.post('/:spotId/reviews',
   }
 );
 
+// Get all reviews for a spot
 router.get('/:spotId/reviews',
   errorCatching.spotExists,
   async (req, res, next) => {
