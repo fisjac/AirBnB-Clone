@@ -83,29 +83,30 @@ const alreadyHasNImages = (num) => {
 // Define middleware to check if spot is already booked
 const spotIsAvailable = async (req, res, next) => {
   let { startDate, endDate } = req.body;
-  [req.newStart, req.newEnd] = [new Date(startDate), new Date(endDate)]
+  [newStart, newEnd] = [Date.parse(startDate), Date.parse(endDate)]
   const bookings = await Booking.findAll({where: {'spotId': req.params.spotId}});
 
   existingBookings = helperFuncs.arrayToJSON(bookings);
   let bookingError = false;
   const err = new Error("Sorry, this spot is already booked for the specified dates");
   err.status = 403;
+  err.errors = {};
   for (let booking of bookings) {
-    let {startDate, endDate} = booking;
-
-    if (req.newStart >= startDate && req.newStart <= endDate) {
+    let [startDate, endDate] = [Date.parse(booking.dataValues.startDate), Date.parse(booking.dataValues.endDate)];
+    console.log(newStart, newEnd, startDate, endDate)
+    if (newStart >= startDate && newStart <= endDate) {
       bookingError = true;
       err.errors.startDate = "Start date conflicts with an existing booking"
     }
 
-    if (req.newEnd >= startDate && req.newEnd <= endDate) {
+    if (newEnd >= startDate && newEnd <= endDate) {
       bookingError = true;
-      err.errors.startDate = "End date conflicts with an existing booking"
+      err.errors.endDate = "End date conflicts with an existing booking"
     }
 
-    if (req.newStart <= startDate && req.newEnd >= endDate) {
+    if (newStart < startDate && newEnd > endDate) {
       bookingError = true;
-      err.errors.startDate = "New reservation contains an existing booking"
+      err.errors.duration = "New reservation contains an existing booking"
     }
   };
 
