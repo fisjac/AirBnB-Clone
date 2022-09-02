@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth, restoreUser } = require('../../utils/auth');
-const customValidators = require('../../utils/validation')
-const errorCatching = require('../../utils/errorCatching')
+const customValidators = require('../../utils/validation');
+const errorCatching = require('../../utils/errorCatching');
 const {User, Spot, Review, ReviewImage, SpotImage, sequelize} = require('../../db/models');
 const review = require('../../db/models/review');
-const helperFuncs = require('../../utils/helperFuncs')
+const helperFuncs = require('../../utils/helperFuncs');
 
 router.get('/current',
   restoreUser,
@@ -67,7 +67,7 @@ router.put('/:reviewId',
     res.status = 200;
     res.json(updatedReview);
   }
-)
+);
 
 router.delete('/:reviewId',
   errorCatching.reviewExists,
@@ -83,6 +83,6 @@ router.delete('/:reviewId',
       "statusCode": 200
     })
   }
-)
+);
 
 module.exports = router;

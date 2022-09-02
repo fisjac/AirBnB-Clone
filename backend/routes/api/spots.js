@@ -32,7 +32,7 @@ router.get('/current',
     res.status = 200;
     res.json({'Spots': spots});
   }
-)
+);
 
 // Create a spot owned by current user
 router.post('/',
@@ -66,7 +66,7 @@ router.get('/:spotId',
     res.status = 200;
     res.json(spot);
   }
-)
+);
 
 // Add image to a spot
 router.post('/:spotId/images',
@@ -81,7 +81,7 @@ router.post('/:spotId/images',
     res.status = 200;
     res.json(image);
   }
-)
+);
 
 // Create a review for a spot
 router.post('/:spotId/reviews',
@@ -95,7 +95,7 @@ router.post('/:spotId/reviews',
     res.status = 201;
     res.json(review)
   }
-)
+);
 
 router.get('/:spotId/reviews',
   errorCatching.spotExists,
@@ -114,7 +114,7 @@ router.get('/:spotId/reviews',
     res.json({'Reviews': reviews});
   }
 
-)
+);
 
 // Edit a spot
 router.put('/:spotId',
@@ -149,7 +149,7 @@ errorCatching.spotExists,
       "statusCode": 200
     })
   }
-)
+);
 
 router.post('/:spotId/bookings',
   errorCatching.spotExists,

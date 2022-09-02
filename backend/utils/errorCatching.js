@@ -57,7 +57,7 @@ const ownershipStatusMustBe = (status) => {
       next(err);
     }
   }
-}
+};
 
 // Define middleware to check if currentUser has already reviewed spot
 const hasAlreadyReviewed = async (req, _res, next) => {
@@ -92,7 +92,7 @@ const alreadyHasNImages = (num) => {
       next(err);
     } else { next() }
   }
-}
+};
 
 // Define middleware to check if spot is already booked
 const spotIsAvailable = async (req, res, next) => {
@@ -130,6 +130,8 @@ const spotIsAvailable = async (req, res, next) => {
   };
   // console.log(existingBookings);
 };
+
+
 module.exports = {
   arrayToJSON,
   spotExists, reviewExists,
