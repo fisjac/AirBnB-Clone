@@ -4,20 +4,20 @@ const bookingSeed = [
   {
     spotId: 1,
     userId: 3,
-    startDate: '2022-10-01',
-    endDate: '2022-10-15'
+    startDate: new Date('2022-10-01'),
+    endDate: Date('2022-10-15')
   },
   {
     spotId: 2,
     userId: 3,
-    startDate: '2022-11-01',
-    endDate: '2022-12-01'
+    startDate: new Date('2022-11-01'),
+    endDate: new Date('2022-12-01')
   },
   {
     spotId: 3,
     userId: 1,
-    startDate: '2023-01-01',
-    endDate: '2023-01-04'
+    startDate: new Date('2023-01-01'),
+    endDate: new Date('2023-01-04')
   },
 ];
 
