@@ -3,7 +3,7 @@ const router = express.Router();
 const { requireAuth, restoreUser } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation')
 const { check } = require('express-validator');
-const {User, Spot, Review, SpotImage, sequelize} = require('../../db/models');
+const {User, Spot, Review, SpotImage, ReviewImage, sequelize} = require('../../db/models');
 const { Op } = require('sequelize');
 
 // Create custom validator
@@ -211,6 +211,25 @@ router.post('/:spotId/reviews',
     res.status = 201;
     res.json(review)
   }
+)
+
+router.get('/:spotId/reviews',
+  spotExists,
+  async (req, res, next) => {
+    const reviews = await Review.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        {model: ReviewImage},
+      ],
+      where: {'spotId': req.body.spotId}
+    });
+    res.status = 200;
+    res.json(reviews);
+  }
+
 )
 
 // Edit a spot

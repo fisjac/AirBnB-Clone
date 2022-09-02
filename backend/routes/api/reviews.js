@@ -7,6 +7,17 @@ const { check } = require('express-validator');
 const {User, Spot, Review, ReviewImage, SpotImage, sequelize} = require('../../db/models');
 const review = require('../../db/models/review');
 
+const validateReview = [
+  check('review')
+    .exists({checkFalsy: true})
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists({checkFalsy: true})
+    .withMessage("Stars ,must be an integer from 1 to 5"),
+    handleValidationErrors
+];
+
+
 // Define middleware to check if review exists
 const reviewExists = async (req, _res, next) => { //check if reviewId exists
   let review = await Review.findByPk(req.params.reviewId);
@@ -19,6 +30,17 @@ const reviewExists = async (req, _res, next) => { //check if reviewId exists
     req.body.reviewId = review.dataValues.id;
     next()
   }
+};
+
+// Define middleware to check if currentUser owns spot
+const checkOwnership = async (req, _res, next) => {
+  let review = await Review.findByPk(req.params.reviewId);
+  let userId = req.body.userId;
+  let ownerId = review.dataValues.userId;
+  if (ownerId !== userId) {
+    req.user = null;
+  }
+  next();
 };
 
 // define middleware to check if number of reviews exceeds value
@@ -65,7 +87,7 @@ router.get('/current',
           attributes: ['id', 'url']
         },
       ],
-      where: {'userId': req.userId}
+      where: {'userId': req.body.userId}
     })
 
     for (let review of reviews) {
@@ -94,5 +116,36 @@ router.post('/:reviewId/images',
     });
   }
 );
+
+router.put('/:reviewId',
+  reviewExists,
+  restoreUser,
+  checkOwnership,
+  requireAuth,
+  validateReview,
+  async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId);
+    review.set(req.body);
+    updatedReview = await review.save();
+    res.status = 200;
+    res.json(updatedReview);
+  }
+)
+
+router.delete('/:reviewId',
+  reviewExists,
+  restoreUser,
+  checkOwnership,
+  requireAuth,
+  async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId);
+    await review.destroy();
+    res.status = 200;
+    res.json({
+      "message": "Successfully deleted",
+      "statusCode": 200
+    })
+  }
+)
 
 module.exports = router;

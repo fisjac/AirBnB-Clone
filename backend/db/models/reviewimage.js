@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ReviewImage.belongsTo(models.Review, {foreignKey: 'reviewId'})
+      ReviewImage.belongsTo(models.Review, {
+        foreignKey: 'reviewId',
+      })
     }
   }
   ReviewImage.init({
@@ -25,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       // unique: true
     }
   }, {
+    defaultScope: {attributes: ['id', 'url']},
     sequelize,
     modelName: 'ReviewImage',
   });
