@@ -227,7 +227,7 @@ router.get('/:spotId/reviews',
       where: {'spotId': req.body.spotId}
     });
     res.status = 200;
-    res.json(reviews);
+    res.json({'Reviews': reviews});
   }
 
 )
