@@ -4,6 +4,7 @@ const { requireAuth, restoreUser } = require('../../utils/auth');
 const { handleValidationErrors } = require('../../utils/validation')
 const { check } = require('express-validator');
 const {User, Spot, Review, SpotImage, sequelize} = require('../../db/models');
+const { Op } = require('sequelize');
 
 // Create custom validator
 const validateSpot = [
@@ -38,6 +39,16 @@ const validateSpot = [
   handleValidationErrors
 ];
 
+const validateReview = [
+  check('review')
+    .exists({checkFalsy: true})
+    .withMessage("Review text is required"),
+  check('stars')
+    .exists({checkFalsy: true})
+    .withMessage("Stars ,must be an integer from 1 to 5"),
+    handleValidationErrors
+];
+
 // Define middleware to check if spotId exists
 const spotExists = async (req, _res, next) => { //check if spotId exists
   let spot = await Spot.findByPk(req.params.spotId);
@@ -47,6 +58,7 @@ const spotExists = async (req, _res, next) => { //check if spotId exists
     err.message = "Spot couldn't be found"
     next(err)
   } else {
+    req.body.spotId = spot.dataValues.id;
     next()
   }
 };
@@ -61,6 +73,27 @@ const checkOwnership = async (req, _res, next) => {
   }
   next();
 };
+
+// Define middleware to check if currentUser has already reviewed spot
+const hasAlreadyReviewed = async (req, _res, next) => {
+  let review = await Review.findOne({
+    where: {
+      [Op.and]: [
+        {'spotId': req.params.spotId},
+        {'userId': req.body.userId}
+      ]
+    }
+  });
+  if (review) {
+    const err = new Error();
+    err.message = "User already has a review for this spot";
+    err.status = 403;
+    next(err);
+  } else {
+    next();
+  };
+};
+
 
 
 // add avgRating to spot instance
@@ -163,6 +196,20 @@ router.post('/:spotId/images',
     const image = await SpotImage.create(req.body);
     res.status = 200;
     res.json(image);
+  }
+)
+
+// Create a review for a spot
+router.post('/:spotId/reviews',
+  spotExists,
+  restoreUser,
+  requireAuth,
+  hasAlreadyReviewed,
+  validateReview,
+  async (req, res, next) => {
+    let review = await Review.create(req.body);
+    res.status = 201;
+    res.json(review)
   }
 )
 
