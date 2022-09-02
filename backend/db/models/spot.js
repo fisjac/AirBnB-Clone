@@ -1,5 +1,5 @@
 'use strict';
-const {User, SpotImage, Review} = require('../../db/models');
+const {User, Review} = require('../../db/models');
 const {
   Model
 } = require('sequelize');
@@ -28,6 +28,28 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'spotId',
         onDelete: 'CASCADE'
       })
+
+      // Custom Scopes
+      Spot.addScope('preview', {
+          include: [{
+            model: models.SpotImage,
+            attributes: ['url'],
+            where: {'preview': true}
+          }],
+        }
+      )
+      Spot.addScope('avgRating', {
+          attributes:[
+            [sequelize.fn('AVG', sequelize.col('Review.stars')), 'avgRating']
+          ],
+          include: [{
+            model: models.Review,
+            attributes: []
+          }],
+          // group: 'Spot.id'
+        }
+      )
+
     }
   }
   Spot.init({
@@ -85,9 +107,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   }, {
-    hooks: {beforeCreate: (instance, options) => {
-      console.log(instance)
-    }},
+    defaultScope: {
+      attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+    },
     sequelize,
     modelName: 'Spot',
   });
