@@ -7,10 +7,34 @@ const { check } = require('express-validator');
 const {User, Spot, Review, ReviewImage, SpotImage, sequelize} = require('../../db/models');
 const review = require('../../db/models/review');
 
+// Define middleware to check if review exists
+const reviewExists = async (req, _res, next) => { //check if reviewId exists
+  let review = await Review.findByPk(req.params.reviewId);
+  if (!review) { //If the spotId doesn't exist return an error
+    const err = new Error("Review couldn't be found")
+    err.status = 404
+    err.message = "Review couldn't be found"
+    next(err)
+  } else {
+    req.body.reviewId = review.dataValues.id;
+    next()
+  }
+};
 
-// Create custom validator
-const validateReview = [handleValidationErrors];
-
+// define middleware to check if number of reviews exceeds value
+const alreadyHasNImages = (num) => {
+  return async (req, _res, next) => {
+    const numImages = await ReviewImage.count({
+      where: {'reviewId': req.params.reviewId}
+    })
+    if (numImages >= num) {
+      const err = new Error();
+      err.message = "Maximum number of images for this resource was reached";
+      err.status = 403;
+      next(err);
+    } else { next() }
+  }
+}
 // Add previewImage to each record
 const getPreview = async (spot) => {
   let preview = await spot.getSpotImages({
@@ -22,7 +46,6 @@ const getPreview = async (spot) => {
   let url = preview[0].dataValues.url;
   return url
 }
-
 
 router.get('/current',
   restoreUser,
@@ -53,6 +76,22 @@ router.get('/current',
     jsonArray = arrayToJSON(reviews)
     res.status = 200;
     res.json({Reviews: reviews})
+  }
+);
+
+router.post('/:reviewId/images',
+  restoreUser,
+  requireAuth,
+  reviewExists,
+  alreadyHasNImages(10),
+  async (req, res, next) => {
+    const reviewImage = await ReviewImage.create(req.body);
+    res.status = 200;
+    let jsonReviewImage = reviewImage.toJSON();
+    res.json({
+      'id': jsonReviewImage.id,
+      'url': jsonReviewImage.url
+    });
   }
 );
 
