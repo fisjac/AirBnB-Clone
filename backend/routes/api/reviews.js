@@ -41,7 +41,7 @@ router.get('/current',
 router.post('/:reviewId/images',
   restoreUser,
   requireAuth,
-  errorCatching.reviewExists,
+  errorCatching.exists(Review, 'reviewId'),
   errorCatching.alreadyHasNImages(10),
   async (req, res, next) => {
     const reviewImage = await ReviewImage.create(req.body);
@@ -55,10 +55,10 @@ router.post('/:reviewId/images',
 );
 
 router.put('/:reviewId',
-  errorCatching.reviewExists,
+  errorCatching.exists(Review, 'reviewId'),
   restoreUser,
   requireAuth,
-  errorCatching.checkOwnership,
+  errorCatching.checkOwnership(Review, 'reviewId'),
   customValidators.validateReview,
   async (req, res, next) => {
     const review = await Review.findByPk(req.params.reviewId);
@@ -70,7 +70,7 @@ router.put('/:reviewId',
 );
 
 router.delete('/:reviewId',
-  errorCatching.reviewExists,
+  errorCatching.exists(Review, 'reviewId'),
   restoreUser,
   requireAuth,
   errorCatching.checkOwnership,

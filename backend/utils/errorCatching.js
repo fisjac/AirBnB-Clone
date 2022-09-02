@@ -1,44 +1,35 @@
 const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../db/models');
 const { Op } = require('sequelize');
+const helperFuncs = require('./helperFuncs');
 
 // Define middleware to check if spotId exists
-const spotExists = async (req, _res, next) => { //check if spotId exists
-  let spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) { //If the spotId doesn't exist return an error
-    const err = new Error("Spot couldn't be found")
-    err.status = 404
-    err.message = "Spot couldn't be found"
-    next(err)
-  } else {
-    req.body.spotId = spot.dataValues.id;
-    next()
-  }
+
+const exists = (Model, paramId) => {
+  return async (req, _res, next) => { //check if id exists
+    let instance = await Model.findByPk(req.params[paramId]);
+    if (!instance) { //If the id doesn't exist return an error
+      const err = new Error(`${Model.name} couldn't be found`)
+      err.status = 404
+      next(err)
+    } else {
+      req.body.spotId = instance.dataValues.id;
+      next()
+    };
+  };
 };
 
-// Define middleware to check if review exists
-const reviewExists = async (req, _res, next) => { //check if reviewId exists
-  let review = await Review.findByPk(req.params.reviewId);
-  if (!review) { //If the spotId doesn't exist return an error
-    const err = new Error("Review couldn't be found")
-    err.status = 404
-    err.message = "Review couldn't be found"
-    next(err)
-  } else {
-    req.body.reviewId = review.dataValues.id;
-    next()
-  }
-};
-
-// Define middleware to check if currentUser owns spot
-const checkOwnership = async (req, _res, next) => {
-  let spot = await Spot.findByPk(req.params.spotId);
-  let userId = req.user.dataValues.id;
-  let ownerId = spot.dataValues.ownerId;
-  req.isOwner = true
-  if (ownerId !== userId) {
-    req.isOwner = false;
-  }
-  next();
+// Returns a middleware func to check if currentUser owns [instance]
+const checkOwnership = (Model, targetId) => {
+  return async (req, _res, next) => {
+    let instance = await Model.findByPk(req.params[targetId]);
+    let userId = req.user.dataValues.id;
+    let ownerId = instance.dataValues.ownerId;
+    req.isOwner = true
+    if (ownerId !== userId) {
+      req.isOwner = false;
+    }
+    next();
+  };
 };
 
 // Define whether user must or must not be owner
@@ -95,7 +86,7 @@ const spotIsAvailable = async (req, res, next) => {
   [req.newStart, req.newEnd] = [new Date(startDate), new Date(endDate)]
   const bookings = await Booking.findAll({where: {'spotId': req.params.spotId}});
 
-  existingBookings = arrayToJSON(bookings);
+  existingBookings = helperFuncs.arrayToJSON(bookings);
   let bookingError = false;
   const err = new Error("Sorry, this spot is already booked for the specified dates");
   err.status = 403;
@@ -123,14 +114,12 @@ const spotIsAvailable = async (req, res, next) => {
   } else {
     next();
   };
-  // console.log(existingBookings);
 };
 
 
 module.exports = {
-  spotExists, reviewExists,
+  exists,
   checkOwnership, ownershipStatusMustBe,
   hasAlreadyReviewed, alreadyHasNImages,
   spotIsAvailable,
-
 };

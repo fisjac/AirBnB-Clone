@@ -49,7 +49,7 @@ router.post('/',
 
 // Get all spot details by id
 router.get('/:spotId',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot, 'spotId'),
   async (req, res, next) => {
     let spot = await Spot
       .findByPk(req.params.spotId, {
@@ -70,9 +70,9 @@ router.get('/:spotId',
 
 // Add image to a spot
 router.post('/:spotId/images',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot, 'spotId'),
   restoreUser,
-  errorCatching.checkOwnership,
+  errorCatching.checkOwnership(Spot, 'spotId'),
   errorCatching.ownershipStatusMustBe(true),
   requireAuth,
   async (req, res, next) => {
@@ -85,7 +85,7 @@ router.post('/:spotId/images',
 
 // Create a review for a spot
 router.post('/:spotId/reviews',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot, 'spotId'),
   restoreUser,
   requireAuth,
   errorCatching.hasAlreadyReviewed,
@@ -99,7 +99,7 @@ router.post('/:spotId/reviews',
 
 // Get all reviews for a spot
 router.get('/:spotId/reviews',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot, 'spotId'),
   async (req, res, next) => {
     const reviews = await Review.findAll({
       include: [
@@ -119,10 +119,10 @@ router.get('/:spotId/reviews',
 
 // Edit a spot
 router.put('/:spotId',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot,'spotId'),
   restoreUser,
   requireAuth,
-  errorCatching.checkOwnership,
+  errorCatching.checkOwnership(Spot, 'spotId'),
   errorCatching.ownershipStatusMustBe(true),
   customValidators.validateSpot,
   async (req, res, next) => {
@@ -136,10 +136,10 @@ router.put('/:spotId',
 
 // Delete a spot
 router.delete('/:spotId',
-errorCatching.spotExists,
+errorCatching.exists(Spot,'spotId'),
   restoreUser,
   requireAuth,
-  errorCatching.checkOwnership,
+  errorCatching.checkOwnership(Spot, 'spotId'),
   errorCatching.ownershipStatusMustBe(true),
   async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId);
@@ -153,17 +153,18 @@ errorCatching.spotExists,
 );
 
 router.post('/:spotId/bookings',
-  errorCatching.spotExists,
+  errorCatching.exists(Spot,'spotId'),
   errorCatching.spotIsAvailable,
   restoreUser,
   requireAuth,
-  errorCatching.checkOwnership,
+  errorCatching.checkOwnership(Spot, 'spotId'),
   errorCatching.ownershipStatusMustBe(false),
   customValidators.validateBooking,
   async(req, res, next) => {
+    console.log(req.body)
     const booking = await Booking.create(req.body);
     res.status = 200;
-    res.body(booking);
+    res.json(booking);
   }
 );
 
