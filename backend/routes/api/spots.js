@@ -58,7 +58,7 @@ const checkOwnership = async (req, _res, next) => {
   let ownerId = spot.dataValues.ownerId;
   if (ownerId !== userId) {
     req.user = null;
-  };
+  }
   next();
 };
 
