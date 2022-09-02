@@ -12,7 +12,7 @@ const exists = (Model, paramId) => {
       err.status = 404
       next(err)
     } else {
-      req.body.spotId = instance.dataValues.id;
+      req.body[paramId] = instance.dataValues.id;
       next()
     };
   };
