@@ -5,6 +5,7 @@ const {User, Spot, Review, Booking, sequelize} = require('../../db/models');
 const { Op } = require('sequelize');
 const helperFuncs = require('../../utils/helperFuncs')
 const customValidators = require('../../utils/validation')
+const errorCatching = require('../../utils/errorCatching')
 
 
 
@@ -29,7 +30,21 @@ router.get('/current',
   }
 );
 
-
+router.put('/:bookingId',
+  errorCatching.exists(Booking,'bookingId'),
+  restoreUser,
+  requireAuth,
+  errorCatching.checkOwnership(Booking, 'bookingId'),
+  errorCatching.ownershipStatusMustBe(true),
+  customValidators.validateBooking,
+  async (req, res, _next) => {
+    let booking = await Booking.findByPk(req.params.bookingId)
+    booking.set(req.body);
+    const editedBooking = await booking.save();
+    res.status = 200;
+    res.json(editedBooking)
+  }
+)
 
 
 module.exports = router

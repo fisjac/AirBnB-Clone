@@ -19,11 +19,11 @@ const exists = (Model, paramId) => {
 };
 
 // Returns a middleware func to check if currentUser owns [instance]
-const checkOwnership = (Model, targetId) => {
+const checkOwnership = (Model, paramId, fKey = 'userId') => {
   return async (req, _res, next) => {
-    let instance = await Model.findByPk(req.params[targetId]);
+    let instance = await Model.findByPk(req.params[paramId]);
     let userId = req.user.dataValues.id;
-    let ownerId = instance.dataValues.ownerId;
+    let ownerId = instance.dataValues[fKey];
     req.isOwner = true
     if (ownerId !== userId) {
       req.isOwner = false;
