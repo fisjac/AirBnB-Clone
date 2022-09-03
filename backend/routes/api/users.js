@@ -22,7 +22,7 @@ const validateSignup = [
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
+    .withMessage('Please provie a password of 6 characters or more.'),
   handleValidationErrors
 ];
 
@@ -30,15 +30,36 @@ const validateSignup = [
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
-    const user = await User.signup({ email, username, password, firstName, lastName });
+
+    const usernameTaken = await User.findOne({
+      where: {username: username}
+    });
+    const emailTaken = await User.findOne({
+      where: {email: email}
+    });
+    if (usernameTaken) {
+      const err = new Error("User already exists");
+      err.status = 403;
+      err.errors = {"username": "User with that username already exists"}
+      next(err)
+    }
+    if (emailTaken) {
+      const err = new Error("User already exists");
+      err.status = 403;
+      err.errors = {"email": "User with that email already exists"}
+      next(err)
+    }
+
+    let user = await User.signup({ email, username, password, firstName, lastName });
 
     await setTokenCookie(res, user);
-
-    return res.json({
-      user,
-    });
+    user = user.toJSON();
+    delete user.createdAt;
+    delete user.updatedAt;
+    user.token = '';
+    res.json(user);
   }
 );
 
