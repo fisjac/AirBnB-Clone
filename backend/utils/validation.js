@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
@@ -9,12 +9,15 @@ const handleValidationErrors = (req, _res, next) => {
   if (!validationErrors.isEmpty()) {
     const errors = validationErrors
       .array()
-      .map((error) => `${error.msg}`);
+      .reduce((obj, error) => {
+        obj[error.param]= error.msg;
+        return obj;
+      }, {});
 
-    const err = Error('Bad request.');
+    const err = Error('Validation error');
     err.errors = errors;
     err.status = 400;
-    err.title = 'Bad request.';
+    err.title = 'Validation error';
     next(err);
   }
   next();
@@ -53,6 +56,67 @@ const validateSpot = [
   handleValidationErrors
 ];
 
+const validateSpotQuery = [
+
+check('page')
+.optional()
+.custom((val) => {
+  if (val < 0) {
+    throw new Error("Page must be greater than or equal to 0");
+  } else return true
+}),
+check('size')
+.optional()
+.custom((val) => {
+  if (val < 0) {
+    throw new Error("Page must be greater than or equal to 0");
+  } else return true
+}),
+check('maxLat')
+  .optional()
+  .custom((val) => {
+    if (val > 90 || val < -90) {
+      throw new Error("Maximum latitude is invalid");
+    } else return true
+  }),
+check('minLat')
+  .optional({checkFalsy: true})
+  .custom((val) => {
+  if (val > 90 || val < -90) {
+    throw new Error("Minimum latitude is invalid");
+  } else return true
+}),
+check('maxLng')
+  .optional({checkFalsy: true})
+  .custom((val) => {
+    if (val > 180 || val < -180) {
+      throw new Error("Maximum longitude is invalid");
+    } else return true
+  }),
+check('minLng')
+  .optional({checkFalsy: true})
+  .custom((val) => {
+  if (val > 180 || val < -180) {
+    throw new Error("Minimum longitude is invalid");
+  } else return true
+}),
+check('maxPrice')
+  .optional({checkFalsy: true})
+  .custom((val) => {
+    if (val < 0) {
+      throw new Error("Maximum price must be greater than or equal to 0");
+    } else return true
+  }),
+  check('minPrice')
+    .optional({checkFalsy: true})
+    .custom((val) => {
+    if (val < 0) {
+      throw new Error("Minimum price must be greater than or equal to 0");
+    } else return true
+  }),
+handleValidationErrors
+]
+
 const validateReview = [
   check('review')
     .exists({checkFalsy: true})
@@ -70,6 +134,7 @@ const validateBooking = [
 module.exports = {
   handleValidationErrors,
   validateSpot,
+  validateSpotQuery,
   validateReview,
   validateBooking
 };
