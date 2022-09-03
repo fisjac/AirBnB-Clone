@@ -1,9 +1,8 @@
-const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../db/models');
+const {Review, ReviewImage, Booking} = require('../db/models');
 const { Op } = require('sequelize');
 const helperFuncs = require('./helperFuncs');
 
 // Define middleware to check if spotId exists
-
 const exists = (Model, paramId) => {
   return async (req, _res, next) => { //check if id exists
     let instance = await Model.findByPk(req.params[paramId]);
@@ -19,15 +18,21 @@ const exists = (Model, paramId) => {
 };
 
 // Returns a middleware func to check if currentUser owns [instance]
-const checkOwnership = (Model, paramId, fKey = 'userId') => {
+const checkOwnership = (Model, paramId, fKey = 'userId', joinModel = null) => {
   return async (req, _res, next) => {
-    let instance = await Model.findByPk(req.params[paramId]);
+    let options = joinModel ? {include: joinModel} : {};
     let userId = req.user.dataValues.id;
-    let ownerId = instance.dataValues[fKey];
+    let instance = await Model.findByPk(req.params[paramId], options);
+    let ownerId = joinModel ?
+      instance.dataValues[joinModel.name].dataValues[fKey] :
+      instance.dataValues[fKey];
+
+    console.log(userId, ownerId)
     req.isOwner = true
     if (ownerId !== userId) {
       req.isOwner = false;
     }
+    console.log(req.isOwner)
     next();
   };
 };
@@ -81,7 +86,7 @@ const alreadyHasNImages = (num) => {
 };
 
 // Define middleware to check if spot is already booked
-const spotIsAvailable = async (req, res, next) => {
+const spotIsAvailable = async (req, _res, next) => {
   let { startDate, endDate } = req.body;
   [newStart, newEnd] = [Date.parse(startDate), Date.parse(endDate)]
   const bookings = await Booking.findAll({where: {'spotId': req.params.spotId}});
@@ -116,7 +121,6 @@ const spotIsAvailable = async (req, res, next) => {
     next();
   };
 };
-
 
 module.exports = {
   exists,

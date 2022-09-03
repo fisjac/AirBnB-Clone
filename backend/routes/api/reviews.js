@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { requireAuth, restoreUser } = require('../../utils/auth');
+const { requireAuth} = require('../../utils/auth');
 const customValidators = require('../../utils/validation');
 const errorCatching = require('../../utils/errorCatching');
-const {User, Spot, Review, ReviewImage, SpotImage, sequelize} = require('../../db/models');
-const review = require('../../db/models/review');
+const {User, Spot, Review, ReviewImage} = require('../../db/models');
 const helperFuncs = require('../../utils/helperFuncs');
 
 router.get('/current',
-  restoreUser,
   requireAuth,
-  async (req, res, next) => {
+  async (req, res) => {
     const reviews = await Review.findAll({
       include: [
         {
@@ -39,11 +37,10 @@ router.get('/current',
 );
 
 router.post('/:reviewId/images',
-  restoreUser,
   requireAuth,
   errorCatching.exists(Review, 'reviewId'),
   errorCatching.alreadyHasNImages(10),
-  async (req, res, next) => {
+  async (req, res) => {
     const reviewImage = await ReviewImage.create(req.body);
     res.status = 200;
     let jsonReviewImage = reviewImage.toJSON();
@@ -56,11 +53,10 @@ router.post('/:reviewId/images',
 
 router.put('/:reviewId',
   errorCatching.exists(Review, 'reviewId'),
-  restoreUser,
   requireAuth,
   errorCatching.checkOwnership(Review, 'reviewId'),
   customValidators.validateReview,
-  async (req, res, next) => {
+  async (req, res) => {
     const review = await Review.findByPk(req.params.reviewId);
     review.set(req.body);
     updatedReview = await review.save();
@@ -71,10 +67,10 @@ router.put('/:reviewId',
 
 router.delete('/:reviewId',
   errorCatching.exists(Review, 'reviewId'),
-  restoreUser,
   requireAuth,
-  errorCatching.checkOwnership,
-  async (req, res, next) => {
+  errorCatching.checkOwnership(Review, 'reviewId'),
+  errorCatching.ownershipStatusMustBe(true),
+  async (req, res) => {
     const review = await Review.findByPk(req.params.reviewId);
     await review.destroy();
     res.status = 200;
