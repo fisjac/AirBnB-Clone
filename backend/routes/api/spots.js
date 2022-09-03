@@ -6,6 +6,7 @@ const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require
 const { Op } = require('sequelize');
 const errorCatching = require('../../utils/errorCatching');
 const helperFuncs = require('../../utils/helperFuncs');
+const { check } = require('express-validator');
 
 // GET all spots
 router.get(
@@ -167,5 +168,23 @@ router.post('/:spotId/bookings',
     res.json(booking);
   }
 );
+
+router.get('/:spotId/bookings',
+  errorCatching.exists(Spot,'spotId'),
+  restoreUser,
+  requireAuth,
+  errorCatching.checkOwnership(Spot, 'spotId'),
+  errorCatching.ownershipStatusMustBe(true),
+  async (req, res, next) => {
+    let bookings = await Booking.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      }
+    });
+    res.status = 200;
+    res.json(bookings);
+  }
+)
 
 module.exports = router
