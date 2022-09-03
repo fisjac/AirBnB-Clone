@@ -1,7 +1,5 @@
-const {User, Spot, Review, SpotImage, ReviewImage, Booking, sequelize} = require('../db/models');
-const { Op } = require('sequelize');
 
-
+// takes an array of instances and converts to an array of JSON
 const arrayToJSON = (array) => {
   return array.reduce((accum, record) => {
     accum.push(record.toJSON());
@@ -39,4 +37,4 @@ module.exports = {
   arrayToJSON,
   getPreviewForSpot,
   avgRatingForSpot
-}
+};
