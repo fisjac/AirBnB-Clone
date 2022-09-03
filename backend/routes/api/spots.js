@@ -2,21 +2,74 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth} = require('../../utils/auth');
 const customValidators = require('../../utils/validation');
+const {Op} = require('sequelize')
 const {User, Spot, Review, SpotImage, ReviewImage, Booking} = require('../../db/models');
 const errorCatching = require('../../utils/errorCatching');
 const helperFuncs = require('../../utils/helperFuncs');
+const { query } = require('express');
 
 // GET all spots
 router.get(
   '/',
+  customValidators.validateSpotQuery,
   async (req, res) => {
-    const allSpots = await Spot.findAll();
+
+    const queries = {
+      minLat: {'name': 'lat', 'func': Op.gte},
+      maxLat: {'name': 'lat', 'func': Op.lte},
+      minLng: {'name': 'lng', 'func': Op.gte},
+      maxLng: {'name': 'lng', 'func': Op.lte},
+      minPrice: {'name': 'price', 'func': Op.gte},
+      maxPrice: {'name': 'price', 'func': Op.lte}
+    };
+
+    // Dynamic WHERE object code
+    let where;
+    let queryParams = [];
+    for (let key in req.query) { //loop over all of the req.query params
+      if (Object.keys(queries).includes(key)) { // if instructions are specified...
+        // grab values
+        let column = queries[key].name;
+        let func = queries[key].func;
+        let val = req.query[key];
+        let newQuery = {[column]: {[func]: val} } // format the values into a query
+        queryParams.push(newQuery); //add it to the array of queries
+      };
+    };
+
+    // If there are any where params, add it to the where object
+    if (queryParams.length) {
+      where = {[Op.and]: queryParams};
+    };
+
+    // Pagination code
+    const pagination = {};
+
+    let {page, size} = req.query;
+    if (!page) page = 1;
+    if (!size) size = 20;
+
+    page = parseInt(page);
+    size = parseInt(size);
+    console.log(page, size)
+
+    if (page > 0 && size > 0) {
+      pagination.limit = size
+      pagination.offset = (page - 1) * size
+    }
+
+    // Get spots
+    let allSpots = await Spot.findAll({where, ...pagination});
     for (let spot of allSpots) {
       spot.dataValues.avgRating = await helperFuncs.avgRatingForSpot(spot);
       spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(spot);
     }
     res.statusCode = 200;
-    return res.json({Spots: allSpots});
+    res.json({
+      Spots: allSpots,
+      page: page,
+      size: size
+    });
   }
 );
 
