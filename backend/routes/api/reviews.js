@@ -31,8 +31,7 @@ router.get('/current',
     };
 
     jsonArray = helperFuncs.arrayToJSON(reviews)
-    res.status = 200;
-    res.json({Reviews: reviews})
+    res.status(200).json({Reviews: reviews})
   }
 );
 
@@ -42,9 +41,8 @@ router.post('/:reviewId/images',
   errorCatching.alreadyHasNImages(10),
   async (req, res) => {
     const reviewImage = await ReviewImage.create(req.body);
-    res.status = 200;
-    let jsonReviewImage = reviewImage.toJSON();
-    res.json({
+    jsonReviewImage = reviewImage.toJSON();
+    res.status(200).json({
       'id': jsonReviewImage.id,
       'url': jsonReviewImage.url
     });
@@ -60,8 +58,7 @@ router.put('/:reviewId',
     const review = await Review.findByPk(req.params.reviewId);
     review.set(req.body);
     updatedReview = await review.save();
-    res.status = 200;
-    res.json(updatedReview);
+    res.status(200).json(updatedReview);
   }
 );
 
@@ -73,8 +70,7 @@ router.delete('/:reviewId',
   async (req, res) => {
     const review = await Review.findByPk(req.params.reviewId);
     await review.destroy();
-    res.status = 200;
-    res.json({
+    res.status(200).json({
       "message": "Successfully deleted",
       "statusCode": 200
     })
