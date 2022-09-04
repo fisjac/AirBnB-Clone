@@ -26,13 +26,10 @@ const checkOwnership = (Model, paramId, fKey = 'userId', joinModel = null) => {
     let ownerId = joinModel ?
       instance.dataValues[joinModel.name].dataValues[fKey] :
       instance.dataValues[fKey];
-
-    console.log(userId, ownerId)
     req.isOwner = true
     if (ownerId !== userId) {
       req.isOwner = false;
     }
-    console.log(req.isOwner)
     next();
   };
 };
@@ -98,7 +95,6 @@ const spotIsAvailable = async (req, _res, next) => {
   err.errors = {};
   for (let booking of bookings) {
     let [startDate, endDate] = [Date.parse(booking.dataValues.startDate), Date.parse(booking.dataValues.endDate)];
-    console.log(newStart, newEnd, startDate, endDate)
     if (newStart >= startDate && newStart <= endDate) {
       bookingError = true;
       err.errors.startDate = "Start date conflicts with an existing booking"

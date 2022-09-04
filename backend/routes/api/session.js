@@ -19,7 +19,6 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-
 // Restore session user
 router.get(
   '/',
@@ -27,9 +26,7 @@ router.get(
   (req, res) => {
     const { user } = req;
     if (user) {
-      return res.json({
-        user: user.toSafeObject()
-      });
+      return res.json(user.toSafeObject());
     } else return res.json({});
   }
 );

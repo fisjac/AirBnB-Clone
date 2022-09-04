@@ -39,20 +39,36 @@ const validateSpot = [
     .withMessage("Country is required"),
   check('lat')
     .exists({checkFalsy: true})
-    .withMessage("Latitude is not valid"),
+    .withMessage("Latitude is required")
+    .custom((val) => {
+      if (val > 90 || val < -90) {
+        throw new Error("Latitude must be between -90 and 90");
+      } else return true
+    }),
   check('lng')
     .exists({checkFalsy: true})
-    .withMessage("lng is not valid"),
+    .withMessage("Longitude is required")
+    .custom((val) => {
+      if (val > 180 || val < -180) {
+        throw new Error("Longitude must be between -180 and 180");
+      } else return true
+    }),
   check('name')
     .exists({checkFalsy: true})
-    .withMessage("Name must be less than 50 character")
-    .isLength({ max: 50 }),
+    .withMessage("Name is required")
+    .isLength({ max: 50 })
+    .withMessage("Name must be less than 50 character"),
   check('description')
     .exists({checkFalsy: true})
     .withMessage("Description is required"),
   check('price')
     .exists({checkFalsy: true})
-    .withMessage("Price per day is required"),
+    .withMessage("Price per day is required")
+    .custom((val) => {
+      if (val <= 0) {
+        throw new Error("Price must be greater than zero");
+      } else return true
+    }),
   handleValidationErrors
 ];
 
@@ -123,11 +139,32 @@ const validateReview = [
     .withMessage("Review text is required"),
   check('stars')
     .exists({checkFalsy: true})
-    .withMessage("Stars ,must be an integer from 1 to 5"),
+    .withMessage("Stars are required")
+    .custom((val)=> {
+      if (!Number.isInteger(val) || val > 5 || val < 1) {
+        throw new Error()
+      } else return true
+    })
+    .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];
 
 const validateBooking = [
+  check('startDate')
+  .exists({checkFalsy: true})
+  .withMessage("StartDate is required"),
+  check('endDate')
+  .exists({checkFalsy: true})
+  .withMessage("endDate is required")
+  .custom((_val, {req})=> {
+    let {startDate, endDate} = req.body;
+
+    [startDate, endDate] = [startDate, endDate].map(ele => Date.parse(ele));
+    console.log(startDate, endDate)
+    if (startDate >= endDate) {
+      throw new Error("endDate cannot be on or before startDate")
+    } else return true
+  }),
   handleValidationErrors
 ]
 
