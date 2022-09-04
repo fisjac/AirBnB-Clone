@@ -30,6 +30,15 @@ router.put('/:bookingId',
   requireAuth,
   errorCatching.checkOwnership(Booking, 'bookingId'),
   errorCatching.ownershipStatusMustBe(true),
+  async (req, _res, next) => { //is booking in the past
+    let booking = await Booking.findByPk(req.params.bookingId);
+    booking = booking.toJSON();
+    if (Date.parse(booking.endDate) <= Date.now()) {
+      const err = new Error("Past bookings cannot be modified");
+      err.status = 403
+      next(err);
+    } else next();
+  },
   customValidators.validateBooking,
   async (req, res) => {
     let booking = await Booking.findByPk(req.params.bookingId)
