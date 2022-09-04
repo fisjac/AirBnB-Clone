@@ -38,6 +38,10 @@ app.use(
   })
 );
 
+app.get('/', (_req, res) => {
+  res.send('Welcome to DareBnB... We dare you to book with us.')
+});
+
 const routes = require('./routes');
 app.use(routes); // Connect all the routes
 
