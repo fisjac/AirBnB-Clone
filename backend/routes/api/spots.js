@@ -59,13 +59,12 @@ router.get(
     }
 
     // Get spots
-    let allSpots = await Spot.findAll({where, ...pagination});
+    let allSpots = await Spot.scope('showAll').findAll({where, ...pagination});
     for (let spot of allSpots) {
       spot.dataValues.avgRating = await helperFuncs.avgRatingForSpot(spot);
       spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(spot);
     }
-    res.statusCode = 200;
-    res.json({
+    res.status(200).json({
       Spots: allSpots,
       page: page,
       size: size
@@ -77,11 +76,14 @@ router.get(
 router.get('/current',
   requireAuth,
   async (req, res) => {
-    let spots = await Spot.findAll({
+    let spots = await Spot.scope('showAll').findAll({
       where: {ownerId: req.user.dataValues.id},
     })
-    res.status = 200;
-    res.json({'Spots': spots});
+    for (let spot of spots) {
+      spot.dataValues.avgRating = await helperFuncs.avgRatingForSpot(spot);
+      spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(spot);
+    }
+    res.status(200).json({'Spots': spots});
   }
 );
 
@@ -92,8 +94,7 @@ router.post('/',
   async (req, res) => {
     req.body.ownerId = req.user.dataValues.id
     let spot = await Spot.create(req.body);
-    res.status = 201;
-    return res.json(spot);
+    res.status(201).json(spot);
   }
 );
 
@@ -102,9 +103,12 @@ router.get('/:spotId',
   errorCatching.exists(Spot, 'spotId'),
   async (req, res) => {
     let spot = await Spot
+      .scope('showAll')
       .findByPk(req.params.spotId, {
         include: [
-          { model: SpotImage },
+          { model: SpotImage,
+            attributes: ['id', 'url', 'preview']
+          },
           { model: User, as: 'Owner',
             attributes: ['id', 'firstName', 'lastName']
           },
@@ -113,8 +117,7 @@ router.get('/:spotId',
     spot.dataValues.avgStarRating = await helperFuncs.avgRatingForSpot(spot);
     let count = await Review.count({where: {'spotId': req.params.spotId}})
     spot.dataValues.numReviews = count
-    res.status = 200;
-    res.json(spot);
+    res.status(200).json(spot);
   }
 );
 
@@ -127,8 +130,7 @@ router.post('/:spotId/images',
   async (req, res) => {
     req.body.spotId = req.params.spotId;
     const image = await SpotImage.create(req.body);
-    res.status = 200;
-    res.json(image);
+    res.status(200).json(image);
   }
 );
 
@@ -140,8 +142,7 @@ router.post('/:spotId/reviews',
   customValidators.validateReview,
   async (req, res) => {
     let review = await Review.create(req.body);
-    res.status = 201;
-    res.json(review)
+    res.status(201).json(review)
   }
 );
 
@@ -159,8 +160,7 @@ router.get('/:spotId/reviews',
       ],
       where: {'spotId': req.body.spotId}
     });
-    res.status = 200;
-    res.json({'Reviews': reviews});
+    res.status(200).json({'Reviews': reviews});
   }
 
 );
@@ -173,11 +173,12 @@ router.put('/:spotId',
   errorCatching.ownershipStatusMustBe(true),
   customValidators.validateSpot,
   async (req, res) => {
-    let spot = await Spot.findByPk(req.params.spotId);
+    let spot = await Spot
+    .scope('showAll')
+    .findByPk(req.params.spotId);
     spot.set(req.body);
-    spot = await spot.save()
-    res.status = 200
-    return res.json(spot)
+    spot = await spot.save();
+    res.status(200).json(spot);
   }
 );
 
@@ -192,8 +193,7 @@ router.post('/:spotId/bookings',
   async(req, res) => {
     console.log(req.body)
     const booking = await Booking.create(req.body);
-    res.status = 200;
-    res.json(booking);
+    res.status(200).json(booking);
   }
 );
 
@@ -202,16 +202,23 @@ router.get('/:spotId/bookings',
   errorCatching.exists(Spot,'spotId'),
   requireAuth,
   errorCatching.checkOwnership(Spot, 'spotId', 'ownerId'),
-  errorCatching.ownershipStatusMustBe(true),
-  async (_req, res) => {
-    let bookings = await Booking.findAll({
-      include: {
-        model: User,
-        attributes: ['id', 'firstName', 'lastName']
-      }
-    });
-    res.status = 200;
-    res.json(bookings);
+  async (req, res) => {
+    let bookings;
+    if (!req.isOwner) {
+      bookings = await Booking.findAll({
+          attributes: ['spotId', 'startDate', 'endDate'],
+          where: {'spotId' : req.params.spotId}
+        });
+    } else {
+      bookings = await Booking.findAll({
+        include: {
+          model: User,
+          attributes: ['id', 'firstName', 'lastName']
+        },
+        where: {'spotId' : req.params.spotId}
+      });
+    }
+    res.status(200).json({Bookings: bookings});
   }
 );
 
@@ -224,8 +231,7 @@ router.delete('/:spotId',
   async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId);
     await spot.destroy();
-    res.status = 200;
-    res.json({
+    res.status(200).json({
       "message": "Successfully deleted",
       "statusCode": 200
     })

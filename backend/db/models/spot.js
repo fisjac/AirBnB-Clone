@@ -77,8 +77,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: -90,
-        max: 90,
+        // min: -90,
+        // max: 90,
         isNumeric: true
       }
     },
@@ -86,8 +86,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        min: -180,
-        max: 180,
+        // min: -180,
+        // max: 180,
         isNumeric: true
       }
     },
@@ -109,6 +109,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     defaultScope: {
       attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+    },
+    scopes: {
+      showAll: {}
     },
     sequelize,
     modelName: 'Spot',
