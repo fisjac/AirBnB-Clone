@@ -1,4 +1,4 @@
-# AirBnB Clone
+# API Documentation
 
 ## Database Schema Design
 
