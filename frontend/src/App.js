@@ -15,9 +15,7 @@ function App() {
 
   return (
     <>
-    <div className='global'>
       <Navigation isLoaded={isLoaded} />
-    </div>
       {isLoaded && (
         <Switch>
           <Route path="/login">

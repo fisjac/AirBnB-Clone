@@ -1,0 +1,30 @@
+div.drop-down-menu {
+  position: absolute;
+  right: 0px;
+  top:25px;
+  display: flex;
+  flex-direction: column;
+  float:right;
+  min-width: 200px;
+  min-height: 100px;
+  text-align: end;
+  background-color: white;
+  border: #717171 solid 1px;
+  border-radius: 25px;
+}
+
+li.user {
+  list-style-type: none;
+  width: 100%
+}
+
+
+div.drop-down-menu a {
+  text-decoration: none;
+  color: var(--ui-brand-color);
+}
+
+div.drop-down-menu a:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
