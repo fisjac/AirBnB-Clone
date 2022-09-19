@@ -1,1 +1,16 @@
 /* TODO Add site wide styles */
+.global {
+  padding-inline-start: 80px;
+  padding-inline-end: 80px;
+  margin-inline: auto;
+  color: ui-brand-color !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
+
+
+/* @brand-color: #FF385C !important;
+@ui-brand-color: #222222 !important;
+@listing-title-weight: 600 !important;
+@listing-title-size: 26px !important;
+@listing-title-line-height: 30px !important; */

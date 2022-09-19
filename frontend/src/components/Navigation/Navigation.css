@@ -1,0 +1,23 @@
+.nav-bar {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.profile-button {
+  box-sizing: border-box;
+  display: block;
+
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+  text-align: inherit;
+  background-color: var(--f-mkcy-f);
+  border: 1px solid var(--j-qkgmf);
+  border-radius: 21px;
+  transition: box-shadow 0.2s ease;
+}

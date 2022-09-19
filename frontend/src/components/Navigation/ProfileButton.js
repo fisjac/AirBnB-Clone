@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
 import * as sessionActions from '../../store/session';
@@ -29,20 +30,43 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
+  let dropDownMenu;
+  if (user) {
+    dropDownMenu = (
+      <ul className="profile-dropdown">
+        <li>{user.firstName}</li>
+        <li>{user.lastName}</li>
+        <li>{user.username}</li>
+        <li>{user.email}</li>
+        <li>
+          <button onClick={logout}>Log Out</button>
+        </li>
+    </ul>
+    )
+  } else {
+    dropDownMenu = (
+      <>
+        <NavLink to="/login">Log In</NavLink>
+        <NavLink to="/signup">Sign Up</NavLink>
+        <button
+          onClick={()=>{let _ = dispatch(sessionActions.login({
+            credential: 'Demo-lition',
+            password: 'password'}))
+          }}
+          >
+            Login Demo User
+        </button>
+      </>
+  )}
+
+
   return (
     <>
-      <button onClick={openMenu}>
+      <button className='profile-button' onClick={openMenu}>
+      <i class="fa-solid fa-bars"></i>
       <i class="fa-solid fa-user"></i>
       </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
-      )}
+      {showMenu &&  dropDownMenu}
     </>
   );
 }
