@@ -20,7 +20,7 @@ function  UserDropDown({user}) {
       <ul className="profile-dropdown">
         {Object.keys(user).map((key)=> {
           if (key !== 'id') return (
-          <li className='user'>
+          <li className='user' key={key}>
             <label>{`${key}: `}</label>
             {user[key]}
           </li>

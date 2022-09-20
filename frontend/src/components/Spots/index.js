@@ -22,7 +22,6 @@ function printSpot(spot) {
       <div>{`${city}, ${state}`}</div>
       <div><span style={{fontWeight: 'bold'}}>{`$${price} `}</span>night</div>
       </div>
-
     </>
    );
 };
@@ -36,7 +35,6 @@ function SpotsBrowser() {
   },[dispatch]);
 
   const spots = useSelector(state=> state.spots.allSpots)
-  console.log(spots);
 
   return (
     <div id='spot-range'>
