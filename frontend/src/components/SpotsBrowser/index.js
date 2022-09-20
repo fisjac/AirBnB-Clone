@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import './Spots.css'
 
@@ -39,7 +40,13 @@ function SpotsBrowser() {
   return (
     <div id='spot-range'>
      { Object.values(spots).map(spot => (
-        <div className='spot-card' key={spot.id}>
+        <div
+          className='spot-card'
+          key={spot.id}
+          onClick={()=>(
+            <Redirect to={`/spots/${spot.id}`}/>
+          )}
+          >
           {printSpot(spot)}
         </div>
       ))}
