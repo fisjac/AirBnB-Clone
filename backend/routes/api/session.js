@@ -27,7 +27,7 @@ router.get(
     const { user } = req;
     if (user) {
       return res.json(user.toSafeObject());
-    } else return res.json({});
+    } else return res.json(null);
   }
 );
 
@@ -47,8 +47,6 @@ router.post(
       // err.errors = ['The provided credentials were invalid.'];
       return next(err);
     }
-
-
 
     await setTokenCookie(res, user);
     user = user.toJSON()

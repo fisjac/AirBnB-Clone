@@ -1,0 +1,78 @@
+.header {
+  position: sticky;
+  /* margin: 0; */
+  top: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  height: 80px;
+  box-shadow: rgb(0 0 0 / 16%) 0 0 6px;
+}
+
+.nav-bar {
+  display: flex;
+  padding-left: 40px;
+  padding-right: 40px;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.home-button {
+  font-size: 2em;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--brand-color)
+}
+
+
+.user-container {
+  position: relative;
+  right: 40px;
+}
+
+
+
+.profile-button {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 77.2px;
+  height: 42px;
+  padding: 5px 5px 5px 12px;
+
+  background-color: white;
+  border: 1px solid #717171;
+  border-radius: 21px;
+  cursor: pointer;
+
+  font-size: 20px;
+  color: #717171
+}
+
+.profile-button:hover {
+  box-shadow: rgb(0 0 0 / 16%) 0 0 6px;
+}
+
+#profile-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border-color: #717171;
+  background-color: #717171;
+  color: white;
+  font-size: 25px;
+  margin: 0 0;
+}
+
+.drop-down-div {
+  position: relative;
+  top: 0px;
+  right: 0px
+}
