@@ -35,9 +35,11 @@ function  UserDropDown({user}) {
         <NavLink to="/login">Log In</NavLink>
         <NavLink to="/signup">Sign Up</NavLink>
         <button
-          onClick={()=>{let _ = dispatch(sessionActions.login({
-            credential: 'Demo-lition',
-            password: 'password'}))
+          onClick={()=>{
+            dispatch(sessionActions.login({
+              credential: 'NatureBoy',
+              password: 'woooooo'
+            }));
           }}
           >
             Login Demo User
