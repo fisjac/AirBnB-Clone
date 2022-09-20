@@ -10,6 +10,13 @@ const userSeed = [
     hashedPassword: bcrypt.hashSync('password')
   },
   {
+    firstName: 'Ric',
+    lastName: 'Flair',
+    email: 'natureboy@woo.io',
+    username: 'NatureBoy',
+    hashedPassword: bcrypt.hashSync('woooooo')
+  },
+  {
     firstName: 'Fake',
     lastName: 'User',
     email: 'user1@user.io',
