@@ -8,7 +8,6 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const user = useSelector(state => state.session.user);
-  console.log(user)
   return (
     <div className='header'>
       <div className='nav-bar'>
