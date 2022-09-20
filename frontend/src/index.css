@@ -12,26 +12,9 @@ body {
   color: var(--ui-brand-color)
 }
 
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 33%;
-  height: 50%;
 
-  display: grid;
-  justify-content: space-around;
-  background-color: white;
-  z-index: 1;
-  border: 1px solid var(--ui-brand-color);
-  border-radius: 10%;
-
-  transform: translateX(-50%) translateY(-50%);
-  transition: transform .2s linear;
-}
-
-.modal * {
-  width: 100%;
+.darkscale {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 :root {

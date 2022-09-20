@@ -3,6 +3,7 @@ div.drop-down-menu {
   z-index: 1;
   right: 0px;
   top:25px;
+
   display: flex;
   flex-direction: column;
   float:right;
@@ -19,13 +20,12 @@ li.user {
   width: 100%
 }
 
-
-div.drop-down-menu a {
-  text-decoration: none;
-  color: var(--ui-brand-color);
+div.drop-down-menu button {
+  background-color: white;
+  border: none;
 }
 
-div.drop-down-menu a:hover {
-  text-decoration: underline;
-  font-weight: bold;
+div.drop-down-menu button:hover {
+cursor: pointer;
+background-color: lightgrey;
 }

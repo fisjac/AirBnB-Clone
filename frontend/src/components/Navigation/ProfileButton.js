@@ -27,7 +27,10 @@ function ProfileButton({ user }) {
         <button className='profile-button' onClick={openMenu}>
         <i className="fa-solid fa-bars"></i>
         <div id='profile-icon'>
-          <i className="fa-solid fa-user"></i>
+          {user && user.id === 2 ?
+            <img id='flair-image' src='https://blanknews.com/wp-content/uploads/2017/11/ric-flair-647959.jpg'></img> :
+            <i className="fa-solid fa-user"></i>
+          }
         </div>
         </button>
         <div className='drop-down-div'>

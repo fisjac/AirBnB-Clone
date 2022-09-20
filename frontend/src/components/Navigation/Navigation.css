@@ -4,6 +4,7 @@
   width: 100%;
   height: 80px;
   box-shadow: rgb(0 0 0 / 16%) 0 0 6px;
+  background-color: white;
 }
 
 .nav-bar {
@@ -13,6 +14,11 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
+}
+
+#flair-image {
+  height: 30px;
+  /* width: auto; */
 }
 
 .home-button {
@@ -52,11 +58,12 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 10px solid #717171;
+  border: 0 solid #717171;
   background-color: #717171;
   color: white;
   font-size: 25px;
   margin: 0 0;
+  overflow: hidden;
 }
 
 .drop-down-div {
