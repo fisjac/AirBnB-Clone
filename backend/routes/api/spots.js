@@ -65,7 +65,7 @@ router.get(
       spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(spot);
     }
     res.status(200).json({
-      Spots: allSpots,
+      spots: allSpots,
       page: page,
       size: size
     });
@@ -83,7 +83,7 @@ router.get('/current',
       spot.dataValues.avgRating = await helperFuncs.avgRatingForSpot(spot);
       spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(spot);
     }
-    res.status(200).json({'Spots': spots});
+    res.status(200).json({'spots': spots});
   }
 );
 
@@ -160,7 +160,7 @@ router.get('/:spotId/reviews',
       ],
       where: {'spotId': req.body.spotId}
     });
-    res.status(200).json({'Reviews': reviews});
+    res.status(200).json({'reviews': reviews});
   }
 
 );
@@ -218,7 +218,7 @@ router.get('/:spotId/bookings',
         where: {'spotId' : req.params.spotId}
       });
     }
-    res.status(200).json({Bookings: bookings});
+    res.status(200).json({bookings: bookings});
   }
 );
 
