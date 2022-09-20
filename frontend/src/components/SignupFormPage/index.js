@@ -41,6 +41,7 @@ function SignupFormPage() {
 
   return (
     <form
+      className="modal signup"
       onSubmit={handleSubmit}
     >
       <ul>

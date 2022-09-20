@@ -15,7 +15,9 @@ function printSpot(spot) {
       <div className='spot-details'>
       <div className='stars'>
         <label><i className="fa-solid fa-star"></i></label>
-        <span>{avgRating.toPrecision(3)}</span>
+        <span>{
+        avgRating ? avgRating.toPrecision(3) : 'No Ratings'
+        }</span>
       </div>
       <div>{`${city}, ${state}`}</div>
       <div><span style={{fontWeight: 'bold'}}>{`$${price} `}</span>night</div>
