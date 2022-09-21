@@ -151,6 +151,7 @@ function EditOrDeleteSpot({setShowModal, spot}) {
               .confirm('are you sure you want to delete your listing?')
               ) {
                 dispatch(spotActions.deleteSpot(spot.id))
+                history.push('/');
               };
           }}
           >
