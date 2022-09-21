@@ -47,7 +47,7 @@
   color: #717171
 }
 
-.profile-button:hover {
+button:hover {
   box-shadow: rgb(0 0 0 / 16%) 0 0 6px;
 }
 

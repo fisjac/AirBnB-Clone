@@ -51,7 +51,7 @@ function SingleSpot () {
           </img>
           ))}
       </div>
-      {user.id === spot.ownerId &&
+      {user?.id === spot.ownerId &&
         <EditOrDeleteSpotModal
           text={'Edit or Delete Listing'}
           />

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import SpotCard from './SpotCard';
 
@@ -20,7 +19,7 @@ function SpotsBrowser() {
   return (
     <div id='spot-range'>
       { Object.values(spots).map(spot => (
-          <SpotCard spot={spot} />
+          <SpotCard key={spot.id} spot={spot} />
         ))
       }
     </div>
