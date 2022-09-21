@@ -2,30 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
+import SpotCard from './SpotCard';
+
 import './Spots.css'
 
 import * as spotActions from '../../store/spots';
-
-function printSpot(spot) {
-   const {city, state, country, name, description, price, avgRating, previewImage } = spot;
-   return (
-    <>
-      <img
-        src={previewImage}
-        ></img>
-      <div className='spot-details'>
-      <div className='stars'>
-        <label><i className="fa-solid fa-star"></i></label>
-        <span>{
-        avgRating ? avgRating.toPrecision(3) : 'No Ratings'
-        }</span>
-      </div>
-      <div>{`${city}, ${state}`}</div>
-      <div><span style={{fontWeight: 'bold'}}>{`$${price} `}</span>night</div>
-      </div>
-    </>
-   );
-};
 
 function SpotsBrowser() {
 
@@ -36,20 +17,12 @@ function SpotsBrowser() {
   },[dispatch]);
 
   const spots = useSelector(state=> state.spots.allSpots)
-
   return (
     <div id='spot-range'>
-     { Object.values(spots).map(spot => (
-        <div
-          className='spot-card'
-          key={spot.id}
-          onClick={()=>(
-            <Redirect to={`/spots/${spot.id}`}/>
-          )}
-          >
-          {printSpot(spot)}
-        </div>
-      ))}
+      { Object.values(spots).map(spot => (
+          <SpotCard spot={spot} />
+        ))
+      }
     </div>
     )
 };

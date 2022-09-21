@@ -3,8 +3,9 @@ import { useState } from "react";
 
 import * as sessionActions from '../../store/session';
 
+import './LoginSignupForm.css'
 
-const LoginSignupForm = () => {
+const LoginSignupForm = ({setShowModal}) => {
   console.log('loginSignUpForm rendered')
   const dispatch = useDispatch();
     const [credential, setCredential] = useState('');
@@ -22,45 +23,66 @@ const LoginSignupForm = () => {
     };
 
     return (
-      <div>
-        <form
-          onSubmit={handleSubmit}
-          className='login-submit-page'
-          >
-        <i className="fa-regular fa-x"></i>
-        <div className='login-header'>Log in or sign up</div>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-          <input
-            type="text"
-            value={credential}
-            placeholder='Username or Email'
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            placeholder='Password'
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        <button className='continue button' type="submit">Continue</button>
-      </form>
-      <div id='or'>or</div>
-      <button
-          className='demo button'
-          onClick={()=>{
-            dispatch(sessionActions.login({
-              credential: 'NatureBoy',
-              password: 'woooooo'
-            }));
-          }}
-          >
-          Continue with Demo User
-      </button>
-    </div>
+      <div className='container'>
+        <div className='login-header'>
+          <button
+            id='close-button'
+            onClick={()=> {
+              setShowModal(false)
+            }}
+            >
+            <i className="fa-regular fa-x"></i>
+          </button>
+          Log in or sign up
+        </div>
+        <div id='login-content-container'>
+          <div id='welcome-banner'>Welcome to FlairBnB</div>
+          <form
+            onSubmit={handleSubmit}
+            className='login-submit-form'
+            >
+            <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
+            <input
+              className='top input-field'
+              type="text"
+              value={credential}
+              placeholder='Username or Email'
+              onChange={(e) => setCredential(e.target.value)}
+              required
+              />
+            <input
+              className='bottom input-field'
+              type="password"
+              value={password}
+              placeholder='Password'
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              />
+            <button
+              className='continue button'
+              type="submit"
+              >
+              Continue
+            </button>
+          </form>
+          <div id='or-container'>
+            <div id='or'>or</div>
+          </div>
+          <button
+            className='demo button'
+            onClick={()=>{
+              dispatch(sessionActions.login({
+                credential: 'NatureBoy',
+                password: 'woooooo'
+              }));
+            }}
+            >
+            Continue with Demo User
+          </button>
+        </div>
+      </div>
     );
 };
 

@@ -16,6 +16,13 @@ body {
   color: var(--ui-brand-color)
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  flex-flow: column;
+}
 :root {
   --brand-color: #FF385C;
   --ui-brand-color: #222222;

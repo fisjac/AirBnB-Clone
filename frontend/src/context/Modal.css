@@ -20,39 +20,12 @@
 
 #modal-content {
   position: absolute;
+  display: flex;
+  flex-flow:column;
   /* bottom:-150vh; */
   width: 568px;
-  height: 682px;
+  height: 400px;
   background-color:white;
   transition: bottom .2s ease-out;
+  border-radius: 14px;
 }
-
-
-/* #modal.show {
-  bottom: 0
-} */
-
-/* .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 568px;
-  height: 682px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  z-index: 1;
-
-  background-color: white;
-  border: 1px solid var(--ui-brand-color);
-  box-shadow: rgb(0 0 0 28%) 0px 8px;
-  border-radius: 12px;
-
-  transform: translateX(-50%) translateY(-50%);
-  transition: transform .2s linear;
-}
-
-.modal * {
-  width: 100%;
-} */
