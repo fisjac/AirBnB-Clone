@@ -20,6 +20,14 @@ div.drop-down-menu {
   border-radius: 25px;
 }
 
+#greeting {
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: #ebebeb solid 1px;
+}
+
 div.drop-down-menu * {
   height: 48px;
   text-align: left;
@@ -37,5 +45,6 @@ div.drop-down-menu button {
 
 div.drop-down-menu button:hover {
 cursor: pointer;
-background-color: lightgrey;
+background-color: rgb(235 235 235)
+
 }

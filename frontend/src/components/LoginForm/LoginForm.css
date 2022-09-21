@@ -1,0 +1,39 @@
+#or-container {
+  display: inline-flex;
+  justify-content: center;
+}
+
+#or {
+  height: 16px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+#or::before{
+  content: "";
+  display:block;
+  height: 1px;
+  width: 238px;
+  margin-right: 16px;
+  left:0;
+  background-color: rgb(221 221 221);
+}
+
+#or::after{
+  content: "";
+  display:block;
+  height: 1px;
+  width: 238px;
+  margin-left: 16px;
+  left:0;
+  background-color: rgb(221 221 221);
+}
+
+.continue {
+  background-color: var(--brand-color);
+  color: white;
+  font-weight: bold;
+  border: none;
+}
