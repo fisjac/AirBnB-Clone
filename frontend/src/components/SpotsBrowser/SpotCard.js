@@ -4,9 +4,13 @@ function printSpot(spot) {
   const {city, state, country, name, description, price, avgRating, previewImage } = spot;
   return (
    <>
-     <img
-       src={previewImage}
-       ></img>
+    <div
+      className='img-container'
+      style={{
+        backgroundImage:`url(${previewImage})`
+        }}
+        >
+    </div>
      <div className='spot-details'>
      <div className='stars'>
        <label><i className="fa-solid fa-star"></i></label>
@@ -23,15 +27,18 @@ function printSpot(spot) {
 
 export default function SpotCard({spot}) {
   return (
-    <div
-      className='spot-card'
-      key={spot.id}
-      >
+
       <NavLink
-        className='card-navlink'
+        className='spot-link'
         to={`/spots/${spot.id}`}
-        ></NavLink>
-      {printSpot(spot)}
-    </div>
+        >
+        <div
+          className='spot-card'
+          key={spot.id}
+          >
+          {printSpot(spot)}
+        </div>
+      </NavLink>
+
   );
 };

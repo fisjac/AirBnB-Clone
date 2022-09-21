@@ -1,12 +1,14 @@
 import { useDispatch } from 'react-redux';
 
 import LoginSignupFormModal from "../../LoginSignupFormModal";
+import CreateNewSpotModal from '../CreateNewSpotModal';
 import * as sessionActions from '../../../store/session';
 
 import './DropDownTable.css'
 
 function UserDropDown({user}) {
   const dispatch = useDispatch();
+
 
   // Define Logout function that calls logout thunk
   const logout = (e) => {
@@ -21,6 +23,7 @@ function UserDropDown({user}) {
     dropDownMenu = (
       <>
         <div id='greeting'>{`Welcome back ${user.firstName}!`}</div>
+        <CreateNewSpotModal text={'Create a listing'} />
         <button onClick={logout}>Log Out</button>
       </>
     )
