@@ -3,7 +3,7 @@ import { Modal } from '../../context/Modal';
 
 import EditOrDeleteSpot from './EditOrDeleteSpot.js';
 
-function EditOrDeleteSpotModal({text}) {
+function EditOrDeleteSpotModal({text, spot}) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ function EditOrDeleteSpotModal({text}) {
     <button onClick={()=> setShowModal(true)}>{text}</button>
     {showModal && (
       <Modal onClose={()=> setShowModal(false)}>
-        <EditOrDeleteSpot setShowModal={setShowModal}/>
+        <EditOrDeleteSpot setShowModal={setShowModal} spot={spot}/>
       </Modal>
     )}
     </>

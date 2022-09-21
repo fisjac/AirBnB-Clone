@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSpotDetails } from '../../store/spots';
-import EditOrDeleteSpotModal from '../SpotsBrowser/EditOrDeleteSpotModal';
+import EditOrDeleteSpotModal from './EditOrDeleteSpotModal';
 
 
 //get spot details from db
@@ -19,7 +19,7 @@ function SingleSpot () {
   const user = useSelector(state=>state.session.user);
   const spot = useSelector(state=>state.spots.singleSpot);
 
-
+  if (!spot) return
   return (
     <>
       <div
@@ -42,7 +42,7 @@ function SingleSpot () {
       <div
         className='image container'
         >
-        {spot.SpotImages.slice(0,5).map((image, idx)=>(
+        {spot.SpotImages?.slice(0,5).map((image, idx)=>(
           <img
             key={idx}
             id={`image-${idx+1}`}
@@ -51,9 +51,10 @@ function SingleSpot () {
           </img>
           ))}
       </div>
-      {user?.id === spot.ownerId &&
+      {user.id === spot.ownerId &&
         <EditOrDeleteSpotModal
           text={'Edit or Delete Listing'}
+          spot={spot}
           />
       }
     </>

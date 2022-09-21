@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 
@@ -14,8 +15,9 @@ function CreateNewSpotForm ({setShowModal}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-
   const [errors, setErrors] = useState([]);
+
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -35,6 +37,8 @@ function CreateNewSpotForm ({setShowModal}) {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
+        history.push(`/spots/${newSpot.id}`)
+        if(!errors.length) setShowModal(false);
     };
 
   return (
