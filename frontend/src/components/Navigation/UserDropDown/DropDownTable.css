@@ -3,15 +3,26 @@ div.drop-down-menu {
   z-index: 1;
   right: 0px;
   top:25px;
+
+  margin: auto 0;;
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
   float:right;
+  width: max-content;
+  height: max-content;
   min-width: 200px;
-  min-height: 100px;
+  min-height: 150px;
   text-align: end;
   background-color: white;
   border: #717171 solid 1px;
   border-radius: 25px;
+}
+
+div.drop-down-menu * {
+  height: 48px;
+  text-align: left;
 }
 
 li.user {
@@ -19,13 +30,12 @@ li.user {
   width: 100%
 }
 
-
-div.drop-down-menu a {
-  text-decoration: none;
-  color: var(--ui-brand-color);
+div.drop-down-menu button {
+  background-color: white;
+  border: none;
 }
 
-div.drop-down-menu a:hover {
-  text-decoration: underline;
-  font-weight: bold;
+div.drop-down-menu button:hover {
+cursor: pointer;
+background-color: lightgrey;
 }
