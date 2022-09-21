@@ -23,15 +23,18 @@ function printSpot(spot) {
 
 export default function SpotCard({spot}) {
   return (
-    <div
-      className='spot-card'
-      key={spot.id}
-      >
+
       <NavLink
-        className='card-navlink'
+        className='spot-link'
         to={`/spots/${spot.id}`}
-        ></NavLink>
-      {printSpot(spot)}
-    </div>
+        >
+        <div
+          className='spot-card'
+          key={spot.id}
+          >
+          {printSpot(spot)}
+        </div>
+      </NavLink>
+
   );
 };
