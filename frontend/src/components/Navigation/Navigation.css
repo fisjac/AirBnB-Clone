@@ -9,8 +9,8 @@
 
 .nav-bar {
   display: flex;
-  padding-left: 200px;
-  padding-right: 200px;
+  padding-left: 80px;
+  padding-right: 80px;
   justify-content: space-between;
   align-items: center;
   height: 100%;

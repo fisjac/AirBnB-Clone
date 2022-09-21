@@ -19,17 +19,10 @@ function UserDropDown({user}) {
   if (user) { // If a user is signed in then show
 
     dropDownMenu = (
-      <ul className="profile-dropdown">
-        {Object.keys(user).map((key)=> {
-          if (key !== 'id') return (
-          <li className='user' key={key}>
-            <label>{`${key}: `}</label>
-            {user[key]}
-          </li>
-          )}
-        )}
+      <>
+        <div id='greeting'>{`Welcome back ${user.firstName}!`}</div>
         <button onClick={logout}>Log Out</button>
-    </ul>
+      </>
     )
   } else { // if no user is signed in then show
     dropDownMenu = (
