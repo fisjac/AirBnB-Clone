@@ -69,3 +69,15 @@ button:hover {
 .drop-down-div {
   position: relative;
 }
+
+button {
+  height: 48px;
+  border-radius: 14px;
+  font-weight: bold;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: rgb(0 0 0 / 20%) 0 0 6px;
+}
