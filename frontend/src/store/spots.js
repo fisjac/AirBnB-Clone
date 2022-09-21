@@ -36,7 +36,8 @@ export const createSpot = (spot) => async dispatch => {
     method: 'POST',
     body: spot
   })
-  const {spot} = await response.json()
+  const spot = await response.json()
+  return spot;
 }
 
 const initialState = {

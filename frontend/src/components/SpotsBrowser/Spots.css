@@ -43,10 +43,11 @@ text-decoration: none;
   right:0;
 }
 
-div.spot-card img {
-  background-size: contain;
+.img-container {
   width: 300px;
   height: 285px;
   border-radius: 16px;
-  resize:both;
+  background-size: 300px;
+  resize: width;
+  background-position: center;
 }
