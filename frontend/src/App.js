@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotsBrowser from "./components/SpotsBrowser";
 import LoginSignupForm from "./components/LoginSignupForm";
+import { NavBarProvider } from "./context/Navbar";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,7 +17,9 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <NavBarProvider>
+        <Navigation isLoaded={isLoaded} />
+      </NavBarProvider>
       <SpotsBrowser/>
       {isLoaded && (
         <Switch>

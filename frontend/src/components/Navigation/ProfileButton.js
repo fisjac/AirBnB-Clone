@@ -24,7 +24,10 @@ function ProfileButton({ user }) {
 
   return (
     <div className='user-container'>
-        <button className='profile-button' onClick={openMenu}>
+        <button
+          className='profile-button'
+          onClick={openMenu}
+          >
         <i className="fa-solid fa-bars"></i>
         <div id='profile-icon'>
           {user && user.id === 2 ?
@@ -33,8 +36,8 @@ function ProfileButton({ user }) {
           }
         </div>
         </button>
-        <div className='drop-down-div'>
-          {showMenu &&  <UserDropDown user={user}/>}
+        <div className={`drop-down-div ${!showMenu?'hidden': ''}`}>
+          {<UserDropDown user={user}/>}
         </div>
     </div>
   );

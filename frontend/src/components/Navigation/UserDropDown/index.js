@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
 import LoginSignupFormModal from "../../LoginSignupFormModal";
