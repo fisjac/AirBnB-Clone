@@ -3,10 +3,9 @@ import { useState } from "react";
 
 import * as sessionActions from '../../store/session';
 
-import './LoginSignupForm.css'
+import './LoginForm.css'
 
-const LoginSignupForm = ({setShowModal}) => {
-  console.log('loginSignUpForm rendered')
+const LoginForm = ({setShowModal}) => {
   const dispatch = useDispatch();
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
@@ -24,7 +23,7 @@ const LoginSignupForm = ({setShowModal}) => {
 
     return (
       <div className='container'>
-        <div className='login-header'>
+        <div className='modal-header'>
           <button
             id='close-button'
             onClick={()=> {
@@ -33,19 +32,19 @@ const LoginSignupForm = ({setShowModal}) => {
             >
             <i className="fa-regular fa-x"></i>
           </button>
-          Log in or sign up
+          Log in
         </div>
-        <div id='login-content-container'>
-          <div id='welcome-banner'>Welcome to FlairBnB</div>
+        <div id='content-container'>
+          <div className='welcome-banner'>Welcome to FlairBnB</div>
           <form
+            className='submit-form'
             onSubmit={handleSubmit}
-            className='login-submit-form'
             >
             <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
             <input
-              className='top input-field'
+              className='top'
               type="text"
               value={credential}
               placeholder='Username or Email'
@@ -53,7 +52,7 @@ const LoginSignupForm = ({setShowModal}) => {
               required
               />
             <input
-              className='bottom input-field'
+              className='bottom'
               type="password"
               value={password}
               placeholder='Password'
@@ -86,4 +85,4 @@ const LoginSignupForm = ({setShowModal}) => {
     );
 };
 
-export default LoginSignupForm;
+export default LoginForm;
