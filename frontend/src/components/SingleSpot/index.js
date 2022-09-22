@@ -55,7 +55,6 @@ function SingleSpot () {
       {user?.id === spot.ownerId &&
         <EditOrDeleteSpotModal
           text={'Edit or Delete Listing'}
-          spot={spot}
           />
       }
     </>

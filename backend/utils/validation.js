@@ -59,7 +59,7 @@ const validateSpot = [
     .exists({checkFalsy: true})
     .withMessage("Country is required"),
   check('lat')
-    .exists({checkFalsy: true})
+    .exists({checkNull: true})
     .withMessage("Latitude is required")
     .custom((val) => {
       if (val > 90 || val < -90) {
@@ -67,7 +67,7 @@ const validateSpot = [
       } else return true
     }),
   check('lng')
-    .exists({checkFalsy: true})
+    .exists({checkNull: true})
     .withMessage("Longitude is required")
     .custom((val) => {
       if (val > 180 || val < -180) {

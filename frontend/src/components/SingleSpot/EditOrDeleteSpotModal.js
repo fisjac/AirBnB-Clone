@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 
-import EditOrDeleteSpot from './EditOrDeleteSpot.js';
+import EditOrDeleteSpotForm from './EditOrDeleteSpotForm.js';
 
 function EditOrDeleteSpotModal({text, spot}) {
   const [showModal, setShowModal] = useState(false);
@@ -11,7 +11,7 @@ function EditOrDeleteSpotModal({text, spot}) {
     <button onClick={()=> setShowModal(true)}>{text}</button>
     {showModal && (
       <Modal onClose={()=> setShowModal(false)}>
-        <EditOrDeleteSpot setShowModal={setShowModal} spot={spot}/>
+        <EditOrDeleteSpotForm setShowModal={setShowModal}/>
       </Modal>
     )}
     </>

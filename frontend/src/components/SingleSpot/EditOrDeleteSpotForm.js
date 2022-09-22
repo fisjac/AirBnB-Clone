@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 
 
-function EditOrDeleteSpot({setShowModal, spot}) {
+function EditOrDeleteSpotForm({setShowModal}) {
   const dispatch = useDispatch();
+
+  let spot = useSelector(state=>state.spots.singleSpot)
+  console.log(spot)
+
   const [address, setAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
   const [state, setState] = useState(spot.state);
@@ -24,6 +28,7 @@ function EditOrDeleteSpot({setShowModal, spot}) {
     e.preventDefault();
     setErrors([]);
     const body = {
+      id: spot.id,
       address,
       city,
       state,
@@ -34,12 +39,11 @@ function EditOrDeleteSpot({setShowModal, spot}) {
       description,
       price
     };
-    const newSpot = await dispatch(spotActions.createSpot(body))
+    const updatedSpot = await dispatch(spotActions.updateSpot(body))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
-      history.push(`/spots/${newSpot.id}`);
       if(!Object.keys(errors).length) setShowModal(false);
   };
 
@@ -163,4 +167,4 @@ function EditOrDeleteSpot({setShowModal, spot}) {
   );
 };
 
-export default EditOrDeleteSpot;
+export default EditOrDeleteSpotForm;
