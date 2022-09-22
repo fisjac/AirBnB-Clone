@@ -23,6 +23,27 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+// Validate Signup
+const validateSignup = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage('Please provide a valid email.'),
+  check('username')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 4 })
+    .withMessage('Please provide a username with at least 4 characters.'),
+  check('username')
+    .not()
+    .isEmail()
+    .withMessage('Username cannot be an email.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 6 })
+    .withMessage('Please provide a password of 6 characters or more.'),
+  handleValidationErrors
+];
+
 // Create custom validators
 const validateSpot = [
   check('address')
@@ -179,6 +200,7 @@ const validateBooking = [
 
 module.exports = {
   handleValidationErrors,
+  validateSignup,
   validateSpot,
   validateSpotQuery,
   validateReview,

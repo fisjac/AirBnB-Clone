@@ -21,26 +21,27 @@ function EditOrDeleteSpot({setShowModal, spot}) {
   const history = useHistory();
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      setErrors([]);
-      const newSpot = await dispatch(spotActions.createSpot({
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
-      }))
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
-        history.push(`/spots/${newSpot.id}`);
-        if(!errors.length) setShowModal(false);
+    e.preventDefault();
+    setErrors([]);
+    const body = {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price
     };
+    const newSpot = await dispatch(spotActions.createSpot(body))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
+      history.push(`/spots/${newSpot.id}`);
+      if(!Object.keys(errors).length) setShowModal(false);
+  };
 
   return (
     <div className='container'>
@@ -62,7 +63,7 @@ function EditOrDeleteSpot({setShowModal, spot}) {
           onSubmit={handleSubmit}
           >
           <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
           </ul>
           <input
             className='top'

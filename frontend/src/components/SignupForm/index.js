@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import errorCatching from "../../errorHandler";
 import * as sessionActions from '../../store/session';
 
 function SignupForm({setShowModal}) {
@@ -21,19 +22,15 @@ function SignupForm({setShowModal}) {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(sessionActions.signup({
+      const options = {
         firstName,
         lastName,
         username,
         email,
         password,
         confirmPassword
-      }))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.Errors)
-      });
-
+      };
+      return errorCatching(sessionActions.signup, options, dispatch, setErrors);
     }
   }
 
@@ -58,7 +55,7 @@ function SignupForm({setShowModal}) {
           onSubmit={handleSubmit}
         >
           <ul>
-            {errors.map((error, idx)=> (<li key={idx}>{error}</li>))}
+            {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
           </ul>
           <input
             className="top"

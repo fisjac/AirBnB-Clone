@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-
+import errorCatching from "../../errorHandler";
 import * as sessionActions from '../../store/session';
 
 import './LoginForm.css'
@@ -14,13 +14,13 @@ const LoginForm = ({setShowModal}) => {
     const handleSubmit = (e) => {
       e.preventDefault();
       setErrors([]);
-      return dispatch(sessionActions.login({ credential, password }))
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-        });
+      errorCatching(
+        sessionActions.login,
+        { credential, password },
+        dispatch,
+        setErrors)
     };
-
+    console.log(errors)
     return (
       <div className='container'>
         <div className='modal-header'>
@@ -41,7 +41,7 @@ const LoginForm = ({setShowModal}) => {
             onSubmit={handleSubmit}
             >
             <ul>
-            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
             </ul>
             <input
               className='top'
