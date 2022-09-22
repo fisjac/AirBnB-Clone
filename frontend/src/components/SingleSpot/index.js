@@ -19,6 +19,7 @@ function SingleSpot () {
   const user = useSelector(state=>state.session.user);
   const spot = useSelector(state=>state.spots.singleSpot);
 
+
   if (!spot) return
   return (
     <>
@@ -51,7 +52,7 @@ function SingleSpot () {
           </img>
           ))}
       </div>
-      {user.id === spot.ownerId &&
+      {user?.id === spot.ownerId &&
         <EditOrDeleteSpotModal
           text={'Edit or Delete Listing'}
           spot={spot}
