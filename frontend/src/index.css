@@ -19,6 +19,13 @@ ul {
   padding: 0;
 }
 
+.pink {
+  background-color: var(--brand-color);
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
 #error-message {
   color: red;
   list-style: none;

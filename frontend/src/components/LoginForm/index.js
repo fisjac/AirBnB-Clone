@@ -60,7 +60,7 @@ const LoginForm = ({setShowModal}) => {
               required
               />
             <button
-              className='continue button'
+              className='pink button'
               type="submit"
               >
               Continue

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSpotDetails } from '../../store/spots';
 import EditOrDeleteSpotModal from './EditOrDeleteSpotModal';
-
+import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
 
 //get spot details from db
 //get user from state
@@ -41,7 +41,7 @@ function SingleSpot () {
           </div>
       </div>
       <div
-        className='image container'
+        id='image-container'
         >
         {spot.SpotImages?.slice(0,5).map((image, idx)=>(
           <img
@@ -52,11 +52,19 @@ function SingleSpot () {
           </img>
           ))}
       </div>
+      <div className='container'>
       {user?.id === spot.ownerId &&
         <EditOrDeleteSpotModal
           text={'Edit or Delete Listing'}
           />
       }
+      {user?.id !== spot.ownerId &&
+      <LeaveAReviewModal
+        text={'Leave a review'}
+        />
+      }
+      </div>
+
     </>
   );
 };

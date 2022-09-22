@@ -108,7 +108,7 @@ function SignupForm({setShowModal}) {
             className="spacer">
           </div>
           <button
-            className="button continue"
+            className="button pink"
             type="submit">Sign Up</button>
         </form>
       </div>

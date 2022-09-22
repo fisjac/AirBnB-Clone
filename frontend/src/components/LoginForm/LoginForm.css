@@ -30,10 +30,3 @@
   left:0;
   background-color: rgb(221 221 221);
 }
-
-.continue {
-  background-color: var(--brand-color);
-  color: white;
-  font-weight: bold;
-  border: none;
-}

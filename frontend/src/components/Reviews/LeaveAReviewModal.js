@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 
-import EditOrDeleteSpotForm from './EditOrDeleteSpotForm.js';
 
-function EditOrDeleteSpotModal({text, spot}) {
+import ReviewForm from './ReviewForm.js';
+
+function ReviewFormModal({text}) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -11,11 +12,11 @@ function EditOrDeleteSpotModal({text, spot}) {
     <button className='pink' onClick={()=> setShowModal(true)}>{text}</button>
     {showModal && (
       <Modal onClose={()=> setShowModal(false)}>
-        <EditOrDeleteSpotForm setShowModal={setShowModal}/>
+        <ReviewForm setShowModal={setShowModal}/>
       </Modal>
     )}
     </>
   );
 };
 
-export default EditOrDeleteSpotModal;
+export default ReviewFormModal;

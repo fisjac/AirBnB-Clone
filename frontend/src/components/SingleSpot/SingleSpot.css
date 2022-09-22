@@ -1,0 +1,28 @@
+#image-1 {
+
+}
+#image-2 {
+
+}
+#image-3 {
+
+}
+#image-4 {
+
+}
+#image-5 {
+
+}
+
+#image-container {
+  display: grid;
+  row-gap: 8px;
+  column-gap: 8x;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  padding: 0 40px;
+}
+
+#nested-grid {
+
+}
