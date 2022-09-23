@@ -6,7 +6,7 @@ import logo from '../../Flair-Favicon.png';
 
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation(){
   const user = useSelector(state => state.session.user);
 
   return (
@@ -17,7 +17,7 @@ function Navigation({ isLoaded }){
           <img id='logo' src={logo}></img>
           FlairBnB
         </NavLink>
-        {isLoaded && <ProfileButton user={user}/>}
+        <ProfileButton user={user}/>
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { getSpotDetails } from '../../store/spots';
 import EditOrDeleteSpotModal from './EditOrDeleteSpotModal';
 import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
+import SpotReviews from './SpotReviews';
+
 
 //get spot details from db
 //get user from state
@@ -16,12 +19,12 @@ function SingleSpot () {
   useEffect(()=>{
     dispatch(getSpotDetails(spotId));
   },[dispatch])
+
   const user = useSelector(state=>state.session.user);
   const spot = useSelector(state=>state.spots.singleSpot);
+  const reviews = useSelector(state=>state.reviews.spot)
 
-
-  if (!spot) return
-  return (
+  return  spot && (
     <>
       <div
         className='title'>
@@ -53,16 +56,18 @@ function SingleSpot () {
           ))}
       </div>
       <div className='container'>
-      {user?.id === spot.ownerId &&
-        <EditOrDeleteSpotModal
-          text={'Edit or Delete Listing'}
+
+        {spot && <SpotReviews spotId={spot.id}/>}
+        {user?.id === spot.ownerId &&
+          <EditOrDeleteSpotModal
+            text={'Edit or Delete Listing'}
+            />
+        }
+        {user?.id !== spot.ownerId &&
+        <LeaveAReviewModal
+          text={'Leave a review'}
           />
-      }
-      {user?.id !== spot.ownerId &&
-      <LeaveAReviewModal
-        text={'Leave a review'}
-        />
-      }
+        }
       </div>
 
     </>

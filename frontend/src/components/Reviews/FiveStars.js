@@ -1,15 +1,23 @@
+import './Stars.css'
+
 export default function FiveStars({stars, setStars}) {
   return (
-    <div id='stars-container'>
+    <div id='star-container'>
       {[1,2,3,4,5]
         .map(num => (
-          <input
-          className={`star ${stars>=num && 'checked'}`}
-          id='star1'
-          type='radio'
-          checked={stars >= num}
-          onClick={()=> setStars(num)}
-          />
+          <div
+            className={`star ${stars>=num && 'checked'}`}
+            id={`star${num}`}
+            key={num}
+            onClick={(e)=> {
+              e.preventDefault()
+              setStars(num)}}
+            >
+            {
+              stars>=num && <i className="fa-solid fa-star"></i>
+            }
+            { stars< num && <i className="fa-regular fa-star"></i>}
+          </div>
       ))}
     </div>
   )

@@ -12,19 +12,18 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
+    isLoaded && (
+        <>
+        <Navigation/>
         <Switch>
           <SpotsBrowser exact path='/'/>
           <Route path='/spots/:spotId'>
             <SingleSpot/>
           </Route>
         </Switch>
-      )}
-    </>
+      </>
+      )
   );
 }
 
