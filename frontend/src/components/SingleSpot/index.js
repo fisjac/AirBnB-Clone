@@ -35,23 +35,27 @@ function SingleSpot () {
                 spot.avgStarRating.toPrecision(3) :
                 'No Ratings'}
             </div>
-            <div id='reviws'>{spot.numReviews}</div>
+            <span id='dot'>·</span>
+            <div id='num-reviews'>{spot.numReviews}Reviews</div>
             <div id=''></div>
-            <span id='city'>{spot.city}, </span>
-            <span id='state'>{spot.state}, </span>
-            <span id='country'>{spot.country}</span>
+            <span id='dot'>·</span>
+            <span id='city'>{`${spot.city},`} </span>
+            <span id='state'> {` ${spot.state},`} </span>
+            <span id='country'>{` ${spot.country}`}</span>
           </div>
       </div>
       <div
         id='image-container'
         >
         {spot.SpotImages?.slice(0,5).map((image, idx)=>(
-          <img
+          <div
             key={idx}
+            style={{backgroundImage:`url(${image.url})`}}
+            className='image'
             id={`image-${idx+1}`}
-            src= {image.url}
             >
-          </img>
+
+          </div>
           ))}
       </div>
       <div className='container'>
