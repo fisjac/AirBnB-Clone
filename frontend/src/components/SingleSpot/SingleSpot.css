@@ -1,3 +1,8 @@
+.title {
+  padding: 0 40px;
+  display: flex;
+}
+
 #image-1 {
 
 }
