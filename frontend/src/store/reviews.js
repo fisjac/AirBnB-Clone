@@ -26,7 +26,6 @@ export const createReview = ({spotId, review}) => async dispatch => {
     const loadResponse = await csrfFetch(`/api/spots/${spotId}/reviews`);
     const {reviews} = await loadResponse.json();
     const loadedReview = reviews.find(review=> {
-      console.log(review.id, reviewId)
       return review.id === reviewId })
     dispatch(createSpotReview(loadedReview));
   };

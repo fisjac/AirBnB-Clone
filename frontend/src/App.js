@@ -17,7 +17,9 @@ function App() {
         <>
         <Navigation/>
         <Switch>
-          <SpotsBrowser exact path='/'/>
+          <Route exact path='/'>
+            <SpotsBrowser />
+          </Route>
           <Route path='/spots/:spotId'>
             <SingleSpot/>
           </Route>

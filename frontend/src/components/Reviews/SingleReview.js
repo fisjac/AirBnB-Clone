@@ -9,7 +9,7 @@ export default function SingleReview ({reviewId}) {
     <div id='review'>
       <div>{review.stars}</div>
       <div>{review.review}</div>
-      {user.id === review.userId &&
+      {user?.id === review.userId &&
         <button
           className='pink delete-review'
           onClick={(e)=> {

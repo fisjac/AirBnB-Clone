@@ -2,3 +2,7 @@
 #star-container {
   display: flex
 }
+
+.star {
+  cursor: pointer;
+}

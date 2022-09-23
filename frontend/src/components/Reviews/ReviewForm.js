@@ -20,7 +20,8 @@ export default function ReviewForm({setShowModal}) {
       dispatch,
       setErrors
     );
-    if (!errors.length) setShowModal(false)
+    console.log(errors)
+    if (Object.keys(errors).length) setShowModal(false)
 
 
   };
