@@ -37,7 +37,7 @@ const ModalHeader = ({setShowModal, header, children}) => {
         </button>
         {header}
       </div>
-      {children}
+      {React.cloneElement(children, {setShowModal})}
     </div>
   );
 };

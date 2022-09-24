@@ -8,6 +8,7 @@ import LoginForm from './LoginForm';
 import './DropDownTable.css'
 import { CreateModalButton } from '../../context/Modal';
 import SignupForm from './SignUpForm';
+import CreateNewSpotForm from './CreateNewSpotForm';
 
 function UserDropDown({user}) {
   const dispatch = useDispatch();
@@ -26,7 +27,12 @@ function UserDropDown({user}) {
     dropDownMenu = (
       <>
         <div id='greeting'>{`Welcome back ${user.firstName}!`}</div>
-        <CreateNewSpotModal text={'Create a listing'} />
+        <CreateModalButton
+          label='Create a listing'
+          header='Create New Listing'>
+          <CreateNewSpotForm/>
+        </CreateModalButton>
+        {/* <CreateNewSpotModal text={'Create a listing'} /> */}
         <button onClick={logout}>Log Out</button>
       </>
     )

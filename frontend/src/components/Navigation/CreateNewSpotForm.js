@@ -38,24 +38,14 @@ function CreateNewSpotForm ({setShowModal}) {
           if (data && data.errors) setErrors(data.errors);
         });
         history.push(`/spots/${newSpot.id}`)
-        if(!Object.keys(errors).length) setShowModal(false);
+        // if(!Object.keys(errors).length) setShowModal(false);
+        setShowModal(false);
     };
 
   return (
     <div className="container">
-      <div className='modal-header'>
-          <button
-            id='close-button'
-            onClick={()=> {
-              setShowModal(false)
-            }}
-            >
-            <i className="fa-regular fa-x"></i>
-          </button>
-          Create a Listing
-        </div>
         <div id='content-container'>
-          <div className='welcome-banner'>Welcome to FlairBnB</div>
+          <div className='welcome-banner'>Enter the details for your new listing</div>
           <form
             className='submit-form'
             onSubmit={handleSubmit}
@@ -134,7 +124,7 @@ function CreateNewSpotForm ({setShowModal}) {
               required
               />
             <button
-              className='continue button'
+              className='pink button'
               type="submit"
               >
               Continue

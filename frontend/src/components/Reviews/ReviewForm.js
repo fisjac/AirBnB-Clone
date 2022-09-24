@@ -18,7 +18,7 @@ export default function ReviewForm({setShowModal}) {
           .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
-            if (!Object.keys(data.errors).length) setShowModal(false)
+            // if (!Object.keys(data.errors).length) setShowModal(false)
           });
   };
 
@@ -26,7 +26,8 @@ export default function ReviewForm({setShowModal}) {
     <div className='container'>
       <div className="content-container">
         <div className='welcome-banner'>Leave a review for this listing</div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={
+          handleSubmit}>
           <ul>
             {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
           </ul>
