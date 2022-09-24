@@ -172,16 +172,3 @@ ul {
 .flex-columns {
   flex-direction: column;
 }
-
-#reviews-header {
-  font-size: 22px;
-  margin-bottom: 32px;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#leave-review-button {
-  background-color: none;
-}

@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSpotDetails } from '../../store/spots';
-import SpotReviews from './SpotReviews';
-import ReviewForm from '../Reviews/ReviewForm';
 import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';

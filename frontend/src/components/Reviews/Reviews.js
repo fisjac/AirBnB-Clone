@@ -2,6 +2,9 @@ import { CreateModalButton } from "../../context/Modal";
 import SpotReviews from "../SingleSpot/SpotReviews";
 import ReviewForm from "./ReviewForm";
 
+
+import './reviews.css'
+
 const LeaveAReviewButton = ({user, spot}) => (
   user && user?.id !== spot.ownerId &&
   <CreateModalButton
@@ -12,9 +15,7 @@ const LeaveAReviewButton = ({user, spot}) => (
   </CreateModalButton>
 );
 
-
 export default function Reviews({user, spot}) {
-  console.log(spot)
   return (
     <div className="padded top-padded">
       <div id='reviews-header'>
@@ -31,7 +32,7 @@ export default function Reviews({user, spot}) {
         <LeaveAReviewButton id='leave-review-button' spot={spot} user={user}/>
       </div>
       <div>
-        <SpotReviews spotId={spot.id}/>
+        <SpotReviews spotId={spot.id} user={user}/>
       </div>
     </div>)
 };

@@ -52,16 +52,20 @@ button:hover {
 #profile-icon {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  border: 0 solid #717171;
+  border: 0 solid white;
   background-color: #717171;
   color: white;
   font-size: 25px;
   margin: 0 0;
   overflow: hidden;
+}
+
+.fa-user {
+  translate: transformY(4px);
 }
 
 .drop-down-div {
