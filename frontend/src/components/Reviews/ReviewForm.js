@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import errorCatching from "../../errorHandler.js";
 import FiveStars from "./FiveStars.js";
 import * as reviewActions from '../../store/reviews'
 

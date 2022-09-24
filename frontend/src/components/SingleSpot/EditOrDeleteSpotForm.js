@@ -75,28 +75,24 @@ function EditOrDeleteSpotForm({setShowModal}) {
             value={address}
             placeholder='Address'
             onChange={(e) => setAddress(e.target.value)}
-            required
             />
           <input
             type="text"
             value={city}
             placeholder='City'
             onChange={(e) => setCity(e.target.value)}
-            required
             />
           <input
             type="text"
             value={state}
             placeholder='State'
             onChange={(e) => setState(e.target.value)}
-            required
             />
           <input
             type="text"
             value={country}
             placeholder='Country'
             onChange={(e) => setCountry(e.target.value)}
-            required
             />
           <input
             type="number"
@@ -105,7 +101,6 @@ function EditOrDeleteSpotForm({setShowModal}) {
             max="90"
             placeholder='Latitude'
             onChange={(e) => setLat(e.target.value)}
-            required
             />
           <input
             type="number"
@@ -114,21 +109,18 @@ function EditOrDeleteSpotForm({setShowModal}) {
             max="180"
             placeholder='Lng'
             onChange={(e) => setLng(e.target.value)}
-            required
             />
           <input
             type="text"
             value={name}
             placeholder='Name'
             onChange={(e) => setName(e.target.value)}
-            required
             />
           <input
             type="text"
             value={description}
             placeholder='Description'
             onChange={(e) => setDescription(e.target.value)}
-            required
             />
           <input
             className='bottom'
@@ -137,7 +129,6 @@ function EditOrDeleteSpotForm({setShowModal}) {
             value={price}
             placeholder='Price'
             onChange={(e) => setPrice(e.target.value)}
-            required
             />
           <button
             className='continue button'
