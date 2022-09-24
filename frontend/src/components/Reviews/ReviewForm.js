@@ -19,9 +19,8 @@ export default function ReviewForm({setShowModal}) {
           .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
-            if (!Object.keys(errors).length) setShowModal(false)
+            if (!Object.keys(data.errors).length) setShowModal(false)
           });
-          console.log(errors)
   };
 
   return (
