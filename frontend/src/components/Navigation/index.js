@@ -10,7 +10,7 @@ function Navigation(){
   const user = useSelector(state => state.session.user);
 
   return (
-    <div className='header'>
+    <div className='header undercarriage'>
       <div className='flex padded height100 justify-between'>
 
         <NavLink className='home-button' exact to="/">

@@ -176,3 +176,7 @@ ul {
 .align {
   align-items: center;
 }
+
+.undercarriage {
+  border-bottom: 1px solid rgba(0,0,0, .1);
+}
