@@ -37,17 +37,6 @@ function SignupForm({setShowModal}) {
   return (
     <div
       className="container">
-      <div className='modal-header'>
-      <button
-        id='close-button'
-        onClick={()=> {
-          setShowModal(false)
-        }}
-        >
-        <i className="fa-regular fa-x"></i>
-      </button>
-      Sign Up
-      </div>
       <div id="content-container">
         <div className='welcome-banner'>Welcome to FlairBnB</div>
         <form

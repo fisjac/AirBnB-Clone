@@ -3,8 +3,11 @@ import { useDispatch } from 'react-redux';
 import LoginSignupFormModal from "../../LoginSignupFormModal";
 import CreateNewSpotModal from '../CreateNewSpotModal';
 import * as sessionActions from '../../../store/session';
+import LoginForm from '../../LoginForm';
 
 import './DropDownTable.css'
+import { CreateModalButton } from '../../../context/Modal';
+import SignupForm from '../../SignupForm';
 
 function UserDropDown({user}) {
   const dispatch = useDispatch();
@@ -30,8 +33,14 @@ function UserDropDown({user}) {
   } else { // if no user is signed in then show
     dropDownMenu = (
       <>
-        <LoginSignupFormModal text={'Log In'}/>
-        <LoginSignupFormModal text={'Sign Up'}/>
+        <CreateModalButton label='Log In'>
+          <LoginForm/>
+        </CreateModalButton>
+        <CreateModalButton label='Sign Up'>
+          <SignupForm/>
+        </CreateModalButton>
+        {/* <LoginSignupFormModal text={'Log In'}/>
+        <LoginSignupFormModal text={'Sign Up'}/> */}
       </>
   )};
 

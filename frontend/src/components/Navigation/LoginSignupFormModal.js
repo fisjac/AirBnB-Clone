@@ -11,7 +11,9 @@ function LoginSignupFormModal({text}) {
     <>
     <button onClick={()=> setShowModal(true)}>{text}</button>
     {showModal && (
-      <Modal onClose={()=> setShowModal(false)}>
+      <Modal
+      onClose={()=> setShowModal(false)}
+      setShowModal={setShowModal}>
         {text === 'Log In' && <LoginForm setShowModal={setShowModal}/>}
         {text === 'Sign Up' && <SignupForm setShowModal={setShowModal}/>}
 

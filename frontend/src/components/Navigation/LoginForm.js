@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import errorCatching from "../../errorHandler";
-import * as sessionActions from '../../store/session';
+import errorCatching from "./errorHandler";
+import * as sessionActions from '../store/session';
 
 import './LoginForm.css'
 
@@ -22,17 +22,6 @@ const LoginForm = ({setShowModal}) => {
     };
     return (
       <div className='container'>
-        <div className='modal-header'>
-          <button
-            id='close-button'
-            onClick={()=> {
-              setShowModal(false)
-            }}
-            >
-            <i className="fa-regular fa-x"></i>
-          </button>
-          Log in
-        </div>
         <div id='content-container'>
           <div className='welcome-banner'>Welcome to FlairBnB</div>
           <form
