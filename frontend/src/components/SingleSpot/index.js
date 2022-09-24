@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSpotDetails } from '../../store/spots';
-import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
 import SpotReviews from './SpotReviews';
 import ReviewForm from '../Reviews/ReviewForm';
+import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 
@@ -96,17 +96,12 @@ const Image = ({url, className}) => (
   //   ))}
   // </div> */}
 
-const Reviews = () => (
-  <div className='flex'>
-    <div className='stars'>
-       <label><i className="fa-solid fa-star"></i></label>
-       <span>{
-       spot.avgRating ? spot.avgRating.toPrecision(3) : 'No Ratings'
-       }</span>
-     </div>
-    <div>{`${spot.numReviews} Reviews`}</div>
-    {<SpotReviews spotId={spot.id}/>}
-    {user?.id === spot.ownerId &&
+
+
+  return  spot && (
+    <>
+      <Title />
+      {user?.id === spot.ownerId &&
       <CreateModalButton
         header='Edit or Delete Your Listing'
         label='Edit/Delete'
@@ -114,24 +109,7 @@ const Reviews = () => (
         >
         <EditOrDeleteSpotForm />
       </CreateModalButton>
-    }
-    {user && user?.id !== spot.ownerId &&
-    <CreateModalButton
-      header='Leave a review'
-      label='Leave a Review'
-      className='pink'
-      >
-        <ReviewForm/>
-      </CreateModalButton>
-
-    }
-  </div>
-);
-
-
-  return  spot && (
-    <>
-      <Title />
+  }
       <Wrappers>
         <Image
           url={
@@ -142,7 +120,9 @@ const Reviews = () => (
         <div></div>
       </Wrappers>
 
-        <Reviews />
+        <Reviews
+          spot={spot}
+          user={user}/>
 
     </>
   );

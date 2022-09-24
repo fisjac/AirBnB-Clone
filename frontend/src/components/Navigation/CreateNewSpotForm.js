@@ -37,9 +37,8 @@ function CreateNewSpotForm ({setShowModal}) {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
-        history.push(`/spots/${newSpot.id}`)
-        // if(!Object.keys(errors).length) setShowModal(false);
-        setShowModal(false);
+      history.push(`/spots/${newSpot.id}`)
+      setShowModal(false);
     };
 
   return (
@@ -59,7 +58,7 @@ function CreateNewSpotForm ({setShowModal}) {
               value={address}
               placeholder='Address'
               onChange={(e) => setAddress(e.target.value)}
-              required
+              // required
               />
             <input
               type="text"

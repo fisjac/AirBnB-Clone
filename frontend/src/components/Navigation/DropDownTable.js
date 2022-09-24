@@ -45,8 +45,6 @@ function UserDropDown({user}) {
         <CreateModalButton label='Sign Up'>
           <SignupForm/>
         </CreateModalButton>
-        {/* <LoginSignupFormModal text={'Log In'}/>
-        <LoginSignupFormModal text={'Sign Up'}/> */}
       </>
   )};
 

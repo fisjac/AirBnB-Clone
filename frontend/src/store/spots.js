@@ -36,8 +36,11 @@ export const createSpot = (spot) => async dispatch => {
     body: JSON.stringify(spot)
   });
   const newSpot = await response.json();
-  if (response.ok) dispatch(loadSingleSpot(newSpot));
-  return newSpot;
+  if (response.ok) {
+    dispatch(loadSingleSpot(newSpot));
+    return newSpot
+  };
+  return response;
 }
 
 //READ
