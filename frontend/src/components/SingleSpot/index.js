@@ -15,13 +15,13 @@ import './SingleSpot.css'
 function SingleSpot () {
   const dispatch = useDispatch();
   const {spotId} = useParams();
+  const user = useSelector(state=>state.session.user);
+  const spot = useSelector(state=>state.spots.singleSpot);
 
   useEffect(()=>{
     dispatch(getSpotDetails(spotId));
-  },[dispatch])
+  },[dispatch, user])
 
-  const user = useSelector(state=>state.session.user);
-  const spot = useSelector(state=>state.spots.singleSpot);
 
 
 const Title = () => (
@@ -56,9 +56,6 @@ const Wrappers = ({children}) => (
   </div>
 )
 
-const Columns = ({children, width}) => (
-  {children}
-);
 
 const Image = ({url, className}) => (
   <div
