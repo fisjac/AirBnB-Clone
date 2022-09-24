@@ -7,6 +7,26 @@ const spotImagesSeed = [
     preview: true
   },
   {
+    spotId: 1,
+    url: 'https://cdn.pixabay.com/photo/2016/08/11/23/48/mountains-1587287_960_720.jpg',
+    preview: false
+  },
+  {
+    spotId: 1,
+    url: 'https://cdn.pixabay.com/photo/2016/08/11/23/48/mountains-1587287_960_720.jpg',
+    preview: false
+  },
+  {
+    spotId: 1,
+    url: 'https://cdn.pixabay.com/photo/2016/08/11/23/48/mountains-1587287_960_720.jpg',
+    preview: false
+  },
+  {
+    spotId: 1,
+    url: 'https://cdn.pixabay.com/photo/2016/08/11/23/48/mountains-1587287_960_720.jpg',
+    preview: false
+  },
+  {
     spotId: 2,
     url: 'https://cdn.pixabay.com/photo/2016/06/24/10/47/house-1477041__340.jpg',
     preview: true

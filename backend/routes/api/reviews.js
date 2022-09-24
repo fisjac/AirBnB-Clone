@@ -31,7 +31,7 @@ router.get('/current',
     };
 
     jsonArray = helperFuncs.arrayToJSON(reviews)
-    res.status(200).json({Reviews: reviews})
+    res.status(200).json({reviews: reviews})
   }
 );
 

@@ -5,11 +5,11 @@ function printSpot(spot) {
   return (
    <>
     <div
-      className='img-container'
+      className='radius fill ratio background'
       style={{
         backgroundImage:`url(${previewImage})`
         }}
-        >
+      >
     </div>
      <div className='spot-details'>
      <div className='stars'>

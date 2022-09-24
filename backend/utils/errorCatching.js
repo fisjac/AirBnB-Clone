@@ -7,9 +7,10 @@ const exists = (Model, paramId) => {
   return async (req, _res, next) => { //check if id exists
     let instance = await Model.findByPk(req.params[paramId]);
     if (!instance) { //If the id doesn't exist return an error
-      const err = new Error(`${Model.name} couldn't be found`)
-      err.status = 404
-      next(err)
+      const err = new Error(`${Model.name} couldn't be found`);
+      err.status = 404;
+      err.errors= {"Resource not found": `This ${Model.name} does not exist`};
+      next(err);
     } else {
       req.body[paramId] = instance.dataValues.id;
       next()
@@ -40,8 +41,9 @@ const ownershipStatusMustBe = (status) => {
     if (req.isOwner === status) {
       next();
     } else {
-      const err = new Error('Forbidden')
-      err.status = 403
+      const err = new Error('Forbidden');
+      err.status = 403;
+      err.errors= {"Forbidden": 'User cannot access this resource'};
       next(err);
     }
   }
@@ -60,6 +62,7 @@ const hasAlreadyReviewed = async (req, _res, next) => {
   if (review) {
     const err = new Error();
     err.message = "User already has a review for this spot";
+    err.errors = {"User already reviewed": 'User has already reviewed this listing'};
     err.status = 403;
     next(err);
   } else {
@@ -77,6 +80,7 @@ const alreadyHasNImages = (num) => {
       const err = new Error();
       err.message = "Maximum number of images for this resource was reached";
       err.status = 403;
+      err.errors= {"Max images": `Cannot add more than ${num} images`}
       next(err);
     } else { next() }
   }

@@ -6,18 +6,18 @@ import logo from '../../Flair-Favicon.png';
 
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation(){
   const user = useSelector(state => state.session.user);
 
   return (
     <div className='header'>
-      <div className='nav-bar'>
+      <div className='flex padded height100 justify-between'>
 
         <NavLink className='home-button' exact to="/">
           <img id='logo' src={logo}></img>
           FlairBnB
         </NavLink>
-        {isLoaded && <ProfileButton user={user}/>}
+        <ProfileButton user={user}/>
       </div>
     </div>
   );

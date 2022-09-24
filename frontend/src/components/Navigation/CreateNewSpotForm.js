@@ -38,7 +38,7 @@ function CreateNewSpotForm ({setShowModal}) {
           if (data && data.errors) setErrors(data.errors);
         });
         history.push(`/spots/${newSpot.id}`)
-        if(!errors.length) setShowModal(false);
+        if(!Object.keys(errors).length) setShowModal(false);
     };
 
   return (
@@ -61,7 +61,7 @@ function CreateNewSpotForm ({setShowModal}) {
             onSubmit={handleSubmit}
             >
             <ul>
-            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
             </ul>
             <input
               className='top'

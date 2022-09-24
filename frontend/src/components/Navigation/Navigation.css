@@ -13,15 +13,6 @@
   width: auto;
 }
 
-.nav-bar {
-  display: flex;
-  padding-left: 40px;
-  padding-right: 40px;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
 #flair-image {
   height: 30px;
   /* width: auto; */

@@ -16,8 +16,11 @@ function SpotsBrowser() {
   },[dispatch]);
 
   const spots = useSelector(state=> state.spots.allSpots)
-  return (
-    <div id='spot-range'>
+  return spots && (
+    <div
+      id='spot-range'
+      className='padded'
+      >
       { Object.values(spots).map(spot => (
           <SpotCard key={spot.id} spot={spot} />
         ))

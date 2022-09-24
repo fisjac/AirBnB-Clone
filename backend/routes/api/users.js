@@ -5,31 +5,12 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
-
-const validateSignup = [
-  check('email')
-    .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage('Please provide a valid email.'),
-  check('username')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage('Please provide a username with at least 4 characters.'),
-  check('username')
-    .not()
-    .isEmail()
-    .withMessage('Username cannot be an email.'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage('Please provie a password of 6 characters or more.'),
-  handleValidationErrors
-];
+const customValidators = require('../../utils/validation')
 
 // Sign up
 router.post(
   '/',
-  validateSignup,
+  customValidators.validateSignup,
   async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
 

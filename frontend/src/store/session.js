@@ -25,14 +25,16 @@ export const login = (user) => async dispatch => {
       password
     }),
   })
-  const data = await response.json();
-  dispatch(setUser(data));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data));
+  };
   return response;
 };
 
 export const signup = (user) => async dispatch => {
   const {firstName, lastName, username, email, password} = user;
-  const response = await csrfFetch('api/users', {
+  const response = await csrfFetch('/api/users', {
     method: 'POST',
     body: JSON.stringify({
       firstName,
@@ -42,8 +44,10 @@ export const signup = (user) => async dispatch => {
       password
     }),
   });
-  const data = await response.json();
-  dispatch(setUser(data));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data));
+  };
   return response;
 };
 
@@ -51,14 +55,16 @@ export const logout = () => async dispatch => {
   const response = await csrfFetch('/api/session', {
     method: 'DELETE',
   });
-  dispatch(removeUser());
+  if (response.ok) dispatch(removeUser());
   return response
 };
 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
-  const data = await response.json();
-  dispatch(setUser(data));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setUser(data));
+  };
   return response;
 };
 
