@@ -28,7 +28,7 @@ function SingleSpot () {
 
 const Title = () => (
   <div
-    className='title'
+    className='title padded top-padded'
     >
     <div
       // className='title'
