@@ -2,28 +2,36 @@ import { CreateModalButton } from "../../context/Modal";
 import SpotReviews from "../SingleSpot/SpotReviews";
 import ReviewForm from "./ReviewForm";
 
+const LeaveAReviewButton = ({user, spot}) => (
+  user && user?.id !== spot.ownerId &&
+  <CreateModalButton
+    header='Leave a review'
+    label='Leave a Review'
+    >
+    <ReviewForm/>
+  </CreateModalButton>
+);
+
+
 export default function Reviews({user, spot}) {
+  console.log(spot)
   return (
-  <div className='flex'>
-    <div className='stars'>
-       <label><i className="fa-solid fa-star"></i></label>
-       <span>{
-       spot.avgRating ? spot.avgRating.toPrecision(3) : 'No Ratings'
-       }</span>
-     </div>
-    <div>{`${spot.numReviews} Reviews`}</div>
-    {<SpotReviews spotId={spot.id}/>}
-
-    {user && user?.id !== spot.ownerId &&
-    <CreateModalButton
-      header='Leave a review'
-      label='Leave a Review'
-      className='pink'
-      >
-        <ReviewForm/>
-      </CreateModalButton>
-
-    }
-  </div>
-  )
+    <div className="padded top-padded">
+      <div id='reviews-header'>
+        <div>
+          <div className='stars flex justify-center'>
+            <label><i className="fa-solid fa-star"></i></label>
+            <span>
+              {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'}
+            </span>
+            <span id='dot'>·</span>
+            <div>{`${spot.numReviews} Reviews`}</div>
+          </div>
+        </div>
+        <LeaveAReviewButton id='leave-review-button' spot={spot} user={user}/>
+      </div>
+      <div>
+        <SpotReviews spotId={spot.id}/>
+      </div>
+    </div>)
 };

@@ -60,7 +60,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
   return (
     <div className='container'>
       <div id='content-container'>
-        <div className='welcome-banner'>Edit or Delete this listing</div>
+        <div className='welcome-banner'>Enter the new details for this listing</div>
         <form
           className='submit-form'
           onSubmit={handleSubmit}

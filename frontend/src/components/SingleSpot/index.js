@@ -40,8 +40,7 @@ const Title = () => (
             'No Ratings'}
         </div>
         <span id='dot'>·</span>
-        <div id='num-reviews'>{spot.numReviews}Reviews</div>
-        <div id=''></div>
+        <div id='num-reviews'>{`${spot.numReviews} Reviews`}</div>
         <span id='dot'>·</span>
         <span id='city'>{`${spot.city},`} </span>
         <span id='state'> {` ${spot.state},`} </span>
