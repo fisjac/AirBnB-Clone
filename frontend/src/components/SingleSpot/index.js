@@ -3,13 +3,15 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSpotDetails } from '../../store/spots';
-import EditOrDeleteSpotModal from './EditOrDeleteSpotModal';
 import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
 import SpotReviews from './SpotReviews';
-
-import './SingleSpot.css'
+import ReviewForm from '../Reviews/ReviewForm';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
+
+
+import './SingleSpot.css'
+
 //get spot details from db
 //get user from state
 //check if user owns spot
@@ -117,9 +119,14 @@ const Reviews = () => (
       </CreateModalButton>
     }
     {user && user?.id !== spot.ownerId &&
-    <LeaveAReviewModal
-      text={'Leave a review'}
-      />
+    <CreateModalButton
+      header='Leave a review'
+      label='Leave a Review'
+      className='pink'
+      >
+        <ReviewForm/>
+      </CreateModalButton>
+
     }
   </div>
 );

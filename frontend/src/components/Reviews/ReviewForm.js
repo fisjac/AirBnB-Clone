@@ -28,17 +28,6 @@ export default function ReviewForm({setShowModal}) {
 
   return (
     <div className='container'>
-      <div className="modal-header">
-        <button
-            id='close-button'
-            onClick={()=> {
-              setShowModal(false)
-            }}
-            >
-            <i className="fa-regular fa-x"></i>
-          </button>
-        Leave a Review
-      </div>
       <div className="content-container">
         <div className='welcome-banner'>Leave a review for this listing</div>
         <form onSubmit={handleSubmit}>
