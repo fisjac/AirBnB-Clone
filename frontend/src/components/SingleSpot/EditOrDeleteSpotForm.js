@@ -49,17 +49,6 @@ function EditOrDeleteSpotForm({setShowModal}) {
 
   return (
     <div className='container'>
-      <div className='modal-header'>
-        <button
-          id='close-button'
-          onClick={()=> {
-            setShowModal(false)
-          }}
-          >
-          <i className="fa-regular fa-x"></i>
-        </button>
-        Log in
-      </div>
       <div id='content-container'>
         <div className='welcome-banner'>Edit or Delete this listing</div>
         <form

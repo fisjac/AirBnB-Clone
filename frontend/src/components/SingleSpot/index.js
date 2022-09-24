@@ -8,6 +8,8 @@ import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
 import SpotReviews from './SpotReviews';
 
 import './SingleSpot.css'
+import { CreateModalButton } from '../../context/Modal';
+import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 //get spot details from db
 //get user from state
 //check if user owns spot
@@ -106,9 +108,13 @@ const Reviews = () => (
     <div>{`${spot.numReviews} Reviews`}</div>
     {<SpotReviews spotId={spot.id}/>}
     {user?.id === spot.ownerId &&
-      <EditOrDeleteSpotModal
-        text={'Edit or Delete Listing'}
-        />
+      <CreateModalButton
+        header='Edit or Delete Your Listing'
+        label='Edit/Delete'
+        className='pink'
+        >
+        <EditOrDeleteSpotForm />
+      </CreateModalButton>
     }
     {user && user?.id !== spot.ownerId &&
     <LeaveAReviewModal
