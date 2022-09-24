@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 
-import LoginSignupFormModal from "../../LoginSignupFormModal";
-import CreateNewSpotModal from '../CreateNewSpotModal';
-import * as sessionActions from '../../../store/session';
-import LoginForm from '../../LoginForm';
+import LoginSignupFormModal from "./LoginSignupFormModal";
+import CreateNewSpotModal from './CreateNewSpotModal';
+import * as sessionActions from '../../store/session';
+import LoginForm from './LoginForm';
 
 import './DropDownTable.css'
-import { CreateModalButton } from '../../../context/Modal';
-import SignupForm from '../../SignupForm';
+import { CreateModalButton } from '../../context/Modal';
+import SignupForm from './SignUpForm';
 
 function UserDropDown({user}) {
   const dispatch = useDispatch();

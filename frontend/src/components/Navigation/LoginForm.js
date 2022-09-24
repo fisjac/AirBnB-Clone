@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import errorCatching from "./errorHandler";
-import * as sessionActions from '../store/session';
+import errorCatching from "../errorHandler.js";
+import * as sessionActions from '../../store/session';
 
 import './LoginForm.css'
 
