@@ -21,7 +21,7 @@ export default function ReviewForm({setShowModal}) {
       setErrors
     );
     console.log(errors)
-    if (Object.keys(errors).length) setShowModal(false)
+    if (!Object.keys(errors).length) setShowModal(false)
 
 
   };
