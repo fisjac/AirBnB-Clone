@@ -49,7 +49,7 @@ export function CreateModalButton(props) {
 
   return (
     <>
-    <button className={props.className || ''} onClick={()=> setShowModal(true)}>{props.label || ''}</button>
+    <button className={props.className || ''} id={props.id || ''} onClick={()=> setShowModal(true)}>{props.label || ''}</button>
     {showModal && (
       <Modal
         onClose={()=> setShowModal(false)}

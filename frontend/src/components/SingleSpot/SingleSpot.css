@@ -1,7 +1,9 @@
 .title {
   padding: 24px 40px 0;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-direction: column; */
 }
 #subheader {
   display: flex;

@@ -15,9 +15,10 @@ const SingleReview = ({review, user}) => {
         <div id='review-date'>{review.createdAt}</div>
       </div>
 
-      {user.id === review.userId && (
+      {user?.id === review.userId && (
         <button
           id='delete-review'
+          className='pink'
           onClick={()=>dispatch(reviewActions.deleteReview(review.id))}
           >
           Delete
@@ -37,15 +38,17 @@ export default function SpotReviews({spotId, user}) {
   const spotReviews = useSelector(state=>state.reviews.spot);
 
   if (spotReviews) {
-    const reviews = Object.values(spotReviews)
-    let userReview = reviews.find(review=>review.userId === user.id)
+    let reviews = Object.values(spotReviews)
 
-    let nonUserReviews = reviews.filter(review=>review.userId !== user.id)
-    const orderedReviews = userReview? [userReview, ...nonUserReviews] : nonUserReviews;
+    if (user) {
+      let userReview = reviews.find(review=>review.userId === user.id)
+      let nonUserReviews = reviews.filter(review=>review.userId !== user.id)
+      reviews = userReview? [userReview, ...nonUserReviews] : nonUserReviews;
+    }
 
     return spotReviews && (
       <div id='spot-reviews'>
-        {orderedReviews.slice(0,6)
+        {reviews.slice(0,6)
           .map((review) => (
             <SingleReview
               key={review.id}

@@ -172,3 +172,7 @@ ul {
 .flex-columns {
   flex-direction: column;
 }
+
+.align {
+  align-items: center;
+}
