@@ -9,7 +9,6 @@ function EditOrDeleteSpotForm({setShowModal}) {
   const dispatch = useDispatch();
 
   let spot = useSelector(state=>state.spots.singleSpot)
-  console.log(spot)
 
   const [newAddress, setNewAddress] = useState('');
   const [newCity, setNewCity] = useState('');
@@ -49,13 +48,14 @@ function EditOrDeleteSpotForm({setShowModal}) {
       description,
       price
     };
-    await dispatch(spotActions.updateSpot(body))
+    const response = await dispatch(spotActions.updateSpot(body))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
-        if(!Object.keys(data.errors).length) setShowModal(false);
       });
-    };
+    if (response.ok) setShowModal(false);
+
+  };
 
   return (
     <div className='container'>
