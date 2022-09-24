@@ -20,7 +20,6 @@ const LoginForm = ({setShowModal}) => {
         dispatch,
         setErrors)
     };
-    console.log(errors)
     return (
       <div className='container'>
         <div className='modal-header'>

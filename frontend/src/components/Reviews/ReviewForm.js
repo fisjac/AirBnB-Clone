@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import errorCatching from "../../errorHandler.js";
 import FiveStars from "./FiveStars.js";
 import * as reviewActions from '../../store/reviews'
 
@@ -14,16 +13,13 @@ export default function ReviewForm({setShowModal}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const options = {spotId: spot.id, review: {review,stars}};
-    errorCatching(
-      reviewActions.createReview,
-      options,
-      dispatch,
-      setErrors
-    );
-    console.log(errors)
-    if (Object.keys(errors).length) setShowModal(false)
-
-
+    setErrors([]);
+    dispatch(reviewActions.createReview(options))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+            if (!Object.keys(data.errors).length) setShowModal(false)
+          });
   };
 
   return (

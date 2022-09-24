@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -11,16 +11,26 @@ function EditOrDeleteSpotForm({setShowModal}) {
   let spot = useSelector(state=>state.spots.singleSpot)
   console.log(spot)
 
-  const [address, setAddress] = useState(spot.address);
-  const [city, setCity] = useState(spot.city);
-  const [state, setState] = useState(spot.state);
-  const [country, setCountry] = useState(spot.country);
-  const [lat, setLat] = useState(spot.lat);
-  const [lng, setLng] = useState(spot.lng);
-  const [name, setName] = useState(spot.name);
-  const [description, setDescription] = useState(spot.description);
-  const [price, setPrice] = useState(spot.price);
+  const [newAddress, setNewAddress] = useState('');
+  const [newCity, setNewCity] = useState('');
+  const [newState, setNewState] = useState('');
+  const [newCountry, setNewCountry] = useState('');
+  const [newLat, setNewLat] = useState('');
+  const [newLng, setNewLng] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  const [newPrice, setNewPrice] = useState('');
   const [errors, setErrors] = useState([]);
+
+  let address = !newAddress? spot.address : newAddress;
+  let city = !newCity? spot.city : newCity;
+  let state = !newState? spot.state : newState;
+  let country = !newCountry? spot.country : newCountry;
+  let lat = !newLat? spot.lat : newLat;
+  let lng = !newLng? spot.lng : newLng;
+  let name = !newName? spot.name : newName;
+  let description = !newDescription? spot.description : newDescription;
+  let price = !newPrice? spot.price : newPrice;
 
   const history = useHistory();
 
@@ -39,13 +49,13 @@ function EditOrDeleteSpotForm({setShowModal}) {
       description,
       price
     };
-    const updatedSpot = await dispatch(spotActions.updateSpot(body))
+    await dispatch(spotActions.updateSpot(body))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
+        if(!Object.keys(data.errors).length) setShowModal(false);
       });
-      if(!Object.keys(errors).length) setShowModal(false);
-  };
+    };
 
   return (
     <div className='container'>
@@ -61,72 +71,63 @@ function EditOrDeleteSpotForm({setShowModal}) {
           <input
             className='top'
             type="text"
-            value={address}
-            placeholder='Address'
-            onChange={(e) => setAddress(e.target.value)}
-            required
+            value={newAddress}
+            placeholder={`Address:${spot.address}`}
+            onChange={(e) => setNewAddress(e.target.value)}
             />
           <input
             type="text"
-            value={city}
-            placeholder='City'
-            onChange={(e) => setCity(e.target.value)}
-            required
+            value={newCity}
+            placeholder={`City:${spot.city}`}
+            onChange={(e) => setNewCity(e.target.value)}
             />
           <input
             type="text"
-            value={state}
-            placeholder='State'
-            onChange={(e) => setState(e.target.value)}
-            required
+            value={newState}
+            placeholder={`State:${spot.state}`}
+            onChange={(e) => setNewState(e.target.value)}
             />
           <input
             type="text"
-            value={country}
-            placeholder='Country'
-            onChange={(e) => setCountry(e.target.value)}
-            required
+            value={newCountry}
+            placeholder={`Country:${spot.country}`}
+            onChange={(e) => setNewCountry(e.target.value)}
             />
           <input
             type="number"
-            value={lat}
+            value={newLat}
             min="-90"
             max="90"
-            placeholder='Latitude'
-            onChange={(e) => setLat(e.target.value)}
-            required
+            placeholder={`Latitude:${spot.lat}`}
+            onChange={(e) => setNewLat(e.target.value)}
             />
           <input
             type="number"
-            value={lng}
+            value={newLng}
             min="-180"
             max="180"
-            placeholder='Lng'
-            onChange={(e) => setLng(e.target.value)}
-            required
+            placeholder={`Longitude:${spot.lng}`}
+            onChange={(e) => setNewLng(e.target.value)}
             />
           <input
             type="text"
-            value={name}
-            placeholder='Name'
-            onChange={(e) => setName(e.target.value)}
-            required
+            value={newName}
+            placeholder={`Name:${spot.name}`}
+            onChange={(e) => setNewName(e.target.value)}
             />
           <input
             type="text"
-            value={description}
-            placeholder='Description'
-            onChange={(e) => setDescription(e.target.value)}
-            required
+            value={newDescription}
+            placeholder={`Description:${spot.description}`}
+            onChange={(e) => setNewDescription(e.target.value)}
             />
           <input
             className='bottom'
             type="number"
             min="0"
-            value={price}
-            placeholder='Price'
-            onChange={(e) => setPrice(e.target.value)}
-            required
+            value={newPrice}
+            placeholder={`Price:${spot.price}`}
+            onChange={(e) => setNewPrice(e.target.value)}
             />
           <button
             className='continue button'

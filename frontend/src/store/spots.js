@@ -70,7 +70,7 @@ export const updateSpot = (spot) => async dispatch => {
     method: 'PUT',
     body: JSON.stringify(spot)
   });
-  if (response.ok) dispatch(editSpot(spot));
+  if (response.ok) dispatch(getSpotDetails(spot.id));
   return response;
 }
 
@@ -105,10 +105,10 @@ const spotReducer = ( state = initialState, action) => {
       newState.singleSpot = action.payload;
       return newState;
 
-    case EDITSPOT:
-      newState= {...state};
-      newState.singleSpot= action.payload;
-      return newState;
+    // case EDITSPOT:
+    //   newState= {...state};
+    //   newState.singleSpot= action.payload;
+    //   return newState;
 
     case REMOVESPOT:
       newState= {...state};
