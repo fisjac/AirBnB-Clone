@@ -95,7 +95,7 @@ function CreateNewSpotForm ({setShowModal}) {
               value={lng}
               min="-180"
               max="180"
-              placeholder='Lng'
+              placeholder='Longitude'
               onChange={(e) => setLng(e.target.value)}
               required
               />

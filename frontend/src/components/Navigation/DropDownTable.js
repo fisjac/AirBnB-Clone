@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import LoginSignupFormModal from "./LoginSignupFormModal";
-import CreateNewSpotModal from './CreateNewSpotModal';
+
 import * as sessionActions from '../../store/session';
 import LoginForm from './LoginForm';
 
