@@ -94,8 +94,9 @@ export const deleteSpot = (spotId) => async dispatch => {
     method: 'DELETE',
   });
   if (response.ok) {
-    console.log('spot was deleted');
+    console.log('spot was deleted from db');
     dispatch(removeSpot())};
+    console.log('spot was removed from store');
   return response;
 }
 

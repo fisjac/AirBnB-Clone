@@ -147,7 +147,11 @@ function EditOrDeleteSpotForm({setShowModal}) {
               ) {
                 (async ()=> {
                 const response = await dispatch(spotActions.deleteSpot(spot.id))
-                if (response.ok) history.push('/');
+                console.log('line just after dispatch delete')
+                if (response.ok) {
+                  console.log('now redirecting to home')
+                  history.push('/')
+                };
               })()};
           }}
           >
