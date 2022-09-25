@@ -15,10 +15,9 @@ const rootReducer = combineReducers({
 let enhancer;
 
 if (process.env.NODE_ENV === 'production') {
-  // const composeEnhancers = compose;
-  // window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //delete when finished
-  // const logger = require('redux-logger').default; //delete when finished
-  // enhancer = composeEnhancers(applyMiddleware(thunk, logger)); //delete when finished
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //delete when finished
+  const logger = require('redux-logger').default; //delete when finished
+  enhancer = composeEnhancers(applyMiddleware(thunk, logger)); //delete when finished
   enhancer = applyMiddleware(thunk);
 } else {
   const logger = require('redux-logger').default;
