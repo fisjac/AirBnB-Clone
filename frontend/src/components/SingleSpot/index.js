@@ -2,7 +2,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getSpotDetails } from '../../store/spots';
+import * as spotActions from '../../store/spots';
+import * as reviewActions from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
@@ -29,7 +30,7 @@ const Title = ({spot, user}) => (
             'No Ratings'}
         </div>
         <span id='dot'>·</span>
-        <div id='num-reviews'>{`${spot.numReviews} Reviews`}</div>
+        <div id='num-reviews'>{`${spot.numReviews || 0} Reviews`}</div>
         <span id='dot'>·</span>
         <span id='city'>{`${spot.city},`} </span>
         <span id='state'> {` ${spot.state},`} </span>
@@ -103,16 +104,16 @@ function SingleSpot () {
   const {spotId} = useParams();
   const user = useSelector(state=>state.session.user);
   const spot = useSelector(state=>state.spots.singleSpot);
-  const reviews = useSelector(state=>state.reviews.spot);
 
   useEffect(()=>{
-    dispatch(getSpotDetails(spotId));
+    dispatch(spotActions.getSpotDetails(spotId))
+    dispatch(reviewActions.getSpotReviews(spotId));
   },[dispatch])
 
   return  spot && (
     <>
       <Title spot={spot} user={user} />
-      <Images spotImages={spot.SpotImages}/>
+      {spot.SpotImages?.length && <Images spotImages={spot.SpotImages}/>}
       <Reviews
         spot={spot}
         user={user}/>
