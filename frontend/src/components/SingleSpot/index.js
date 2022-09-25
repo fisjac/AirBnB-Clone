@@ -103,6 +103,7 @@ function SingleSpot () {
   const {spotId} = useParams();
   const user = useSelector(state=>state.session.user);
   const spot = useSelector(state=>state.spots.singleSpot);
+  const reviews = useSelector(state=>state.reviews.spot);
 
   useEffect(()=>{
     dispatch(getSpotDetails(spotId));

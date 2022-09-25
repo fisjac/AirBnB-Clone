@@ -1,5 +1,7 @@
 import { csrfFetch } from "./csrf";
 
+import * as spotActions from './spots';
+
 const CLEARSTATE = 'reviews/CLEAR'
 const LOADSPOTREVIEWS = 'spot/LOADREVIEWS';
 const LOADUSERREVIEWS = 'user/LOADREVIEWS';
@@ -36,6 +38,7 @@ export const createReview = ({spotId, review}) => async dispatch => {
     const loadedReview = reviews.find(review=> {
       return review.id === reviewId })
     dispatch(createSpotReview(loadedReview));
+    dispatch(spotActions.getSpotDetails(spotId));
   };
   return postResponse;
 };
@@ -93,11 +96,14 @@ export const removeReview = (reviewId) => {
   };
 };
 
-export const deleteReview = (reviewId) => async dispatch => {
+export const deleteReview = ({ spotId, reviewId}) => async dispatch => {
   const response = await csrfFetch(`/api/reviews/${reviewId}`,{
     method: 'DELETE'
   });
-  if (response.ok) dispatch(removeReview(reviewId));
+  if (response.ok) {
+    dispatch(removeReview(reviewId));
+    dispatch(spotActions.getSpotDetails(spotId))
+  };
   return response;
 };
 
