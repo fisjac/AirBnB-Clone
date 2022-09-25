@@ -1,0 +1,69 @@
+#reviews-header {
+  width: 100%;
+  font-size: 22px;
+  margin-bottom: 32px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#leave-review-button {
+  background-color: none;
+}
+
+#spot-reviews {
+  display: flex;
+  width:100%;
+  height:fit-content;
+  flex-wrap: wrap;
+}
+
+#review {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-right: 8.33%;
+  height: 196px;
+}
+
+#single-review-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#delete-review {
+  justify-self: end;
+}
+
+#review-details {
+  padding-left: 8px;
+  flex-grow: 1;
+}
+
+#reviewer {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#review-date {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(113, 113, 113)
+}
+
+#review-body {
+  width: 100%;
+  ;
+  font-size: 16px;
+  text-overflow:ellipsis;
+  overflow:hidden;
+
+  display: -webkit-box !important;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+
+
+}

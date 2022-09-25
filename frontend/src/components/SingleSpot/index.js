@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSpotDetails } from '../../store/spots';
-import LeaveAReviewModal from '../../components/Reviews/LeaveAReviewModal'
-import SpotReviews from './SpotReviews';
-import ReviewForm from '../Reviews/ReviewForm';
+import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 
@@ -16,6 +14,89 @@ import './SingleSpot.css'
 //get user from state
 //check if user owns spot
 
+
+const Title = ({spot, user}) => (
+  <div
+    className='title padded top-padded max1120 centered'
+    >
+    <div>
+        <div id='name'>{spot.name}</div>
+        <div id='subheader'>
+          <div id='stars'>
+          <i className="fa-solid fa-star"></i>
+          {spot.avgStarRating ?
+            spot.avgStarRating.toPrecision(3) :
+            'No Ratings'}
+        </div>
+        <span id='dot'>·</span>
+        <div id='num-reviews'>{`${spot.numReviews} Reviews`}</div>
+        <span id='dot'>·</span>
+        <span id='city'>{`${spot.city},`} </span>
+        <span id='state'> {` ${spot.state},`} </span>
+        <span id='country'>{` ${spot.country}`}</span>
+      </div>
+    </div>
+    {user?.id === spot.ownerId &&
+      <CreateModalButton
+        header='Edit or Delete Your Listing'
+        label='Edit/Delete'
+        className='pink align'
+        id='edit-delete-listing'
+        >
+        <EditOrDeleteSpotForm />
+      </CreateModalButton>
+      }
+  </div>
+);
+
+
+const Image = ({url, id}) => (
+  <div
+    style={{backgroundImage: `url(${url})`}}
+    id={id}
+    >
+  </div>
+);
+
+const Images = ({spotImages}) => {
+  const images = spotImages.reduce((arr, image)=> {
+    arr.push(image.url);
+    return arr;
+  },[])
+  return (
+    <div
+    className='undercarriage bottom-padded'>
+      <div className='padded top-padded centered  max1120'>
+      <div
+        className='image-grid'
+        id='main-grid'>
+
+          <Image url={images[0]} id='image'/>
+
+            <div
+              className='image-grid'
+              id='small-hide'
+              >
+              {
+              images?.slice(1,5)
+                .map(url=> (
+                  <Image
+                    url={url}
+                    id='image'
+                    />
+                  )
+                )
+              }
+        </div>
+      </div>
+    </div>
+    </div>
+
+  );
+};
+
+
+
 function SingleSpot () {
   const dispatch = useDispatch();
   const {spotId} = useParams();
@@ -24,126 +105,15 @@ function SingleSpot () {
 
   useEffect(()=>{
     dispatch(getSpotDetails(spotId));
-  },[dispatch, user])
-
-
-
-const Title = () => (
-  <div
-    className='title padded'>
-      <div id='name'>{spot.name}</div>
-      <div id='subheader'>
-        <div id='stars'>
-          <i className="fa-solid fa-star"></i>
-          {spot.avgStarRating ?
-            spot.avgStarRating.toPrecision(3) :
-            'No Ratings'}
-        </div>
-        <span id='dot'>·</span>
-        <div id='num-reviews'>{spot.numReviews}Reviews</div>
-        <div id=''></div>
-        <span id='dot'>·</span>
-        <span id='city'>{`${spot.city},`} </span>
-        <span id='state'> {` ${spot.state},`} </span>
-        <span id='country'>{` ${spot.country}`}</span>
-      </div>
-  </div>
-);
-
-const Wrappers = ({children}) => (
-  <div className='padded top-padded'>
-    <div className = 'fit-content'>
-      <div className='centered'>
-          {children}
-      </div>
-    </div>
-  </div>
-)
-
-
-const Image = ({url, className}) => (
-  <div
-    style={{backgroundImage: `url(${url})`}}
-    // src={url}
-    className={className}
-    >
-  </div>
-);
-
-
-  // {/* <div
-  //   id='col2'
-  //   >
-  //   {spot.SpotImages?.slice(1,3).map((image, idx)=>(
-  //     <div
-  //       key={idx}
-  //       style={{backgroundImage:`url(${image.url})`}}
-  //       className='image secondary'
-  //       >
-  //     </div>
-  //   ))}
-  // </div>
-  // <div
-  //   id='col3'
-  //   >
-  //   {spot.SpotImages?.slice(3,5).map((image, idx)=>(
-  //     <div
-  //       key={idx}
-  //       style={{backgroundImage:`url(${image.url})`}}
-  //       className='image secondary'
-  //       >
-  //     </div>
-  //   ))}
-  // </div> */}
-
-const Reviews = () => (
-  <div className='flex'>
-    <div className='stars'>
-       <label><i className="fa-solid fa-star"></i></label>
-       <span>{
-       spot.avgRating ? spot.avgRating.toPrecision(3) : 'No Ratings'
-       }</span>
-     </div>
-    <div>{`${spot.numReviews} Reviews`}</div>
-    {<SpotReviews spotId={spot.id}/>}
-    {user?.id === spot.ownerId &&
-      <CreateModalButton
-        header='Edit or Delete Your Listing'
-        label='Edit/Delete'
-        className='pink'
-        >
-        <EditOrDeleteSpotForm />
-      </CreateModalButton>
-    }
-    {user && user?.id !== spot.ownerId &&
-    <CreateModalButton
-      header='Leave a review'
-      label='Leave a Review'
-      className='pink'
-      >
-        <ReviewForm/>
-      </CreateModalButton>
-
-    }
-  </div>
-);
-
+  },[dispatch])
 
   return  spot && (
     <>
-      <Title />
-      <Wrappers>
-        <Image
-          url={
-            spot.SpotImages?.slice(0).url
-          }
-          className='background ratio fill'
-          />
-        <div></div>
-      </Wrappers>
-
-        <Reviews />
-
+      <Title spot={spot} user={user} />
+      <Images spotImages={spot.SpotImages}/>
+      <Reviews
+        spot={spot}
+        user={user}/>
     </>
   );
 };

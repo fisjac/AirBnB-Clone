@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserDropDown from "./UserDropDown";
+import DropDownTable from "./DropDownTable";
 
 
 function ProfileButton({ user }) {
@@ -37,7 +37,7 @@ function ProfileButton({ user }) {
         </div>
         </button>
         <div className={`drop-down-div ${!showMenu?'hidden': ''}`}>
-          {<UserDropDown user={user}/>}
+          {<DropDownTable user={user}/>}
         </div>
     </div>
   );

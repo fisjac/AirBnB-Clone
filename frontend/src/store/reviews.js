@@ -119,7 +119,7 @@ export default function reviewsReducer (state = initialState, action) {
     case DELETEREVIEW:
       newState = {...state};
       delete newState.spot[action.payload]
-      return newState;
+      return {...newState, spot: {...newState.spot}};
     default:
       return {...state};
   }

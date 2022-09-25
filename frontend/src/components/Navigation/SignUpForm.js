@@ -1,12 +1,10 @@
 import React, {useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import errorCatching from "../../errorHandler";
+import { useDispatch } from "react-redux";
+import errorCatching from "../errorHandler.js";
 import * as sessionActions from '../../store/session';
 
 function SignupForm({setShowModal}) {
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state=> state.session.user);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,9 +14,7 @@ function SignupForm({setShowModal}) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to='/' />
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
@@ -30,24 +26,18 @@ function SignupForm({setShowModal}) {
         password,
         confirmPassword
       };
-      return errorCatching(sessionActions.signup, options, dispatch, setErrors);
+      const response = await dispatch(sessionActions.signup(options))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
+      if (response.ok) setShowModal(false)
     }
   }
 
   return (
     <div
       className="container">
-      <div className='modal-header'>
-      <button
-        id='close-button'
-        onClick={()=> {
-          setShowModal(false)
-        }}
-        >
-        <i className="fa-regular fa-x"></i>
-      </button>
-      Sign Up
-      </div>
       <div id="content-container">
         <div className='welcome-banner'>Welcome to FlairBnB</div>
         <form
