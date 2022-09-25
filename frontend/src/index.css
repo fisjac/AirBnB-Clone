@@ -73,6 +73,10 @@ input::-webkit-inner-spin-button {
   width:100%;
 }
 
+.between {
+  justify-content: space-between;
+}
+
 .flex {
   display: flex;
 }
