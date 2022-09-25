@@ -27,8 +27,6 @@
 #image-container {
   width: 100%;
   display: flex;
-  max-height: 500px;
-  max-width: 1120px;
 }
 
 #divider {
@@ -50,8 +48,13 @@
   background-size: cover;
   resize: width;
   background-position: center;
-
   aspect-ratio: 1 / 1;
+}
+
+#main-grid {
+  max-height: 500px;
+  /* max-width: 1120px; */
+  overflow: hidden;
 }
 
 .image-grid {

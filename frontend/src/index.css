@@ -54,6 +54,10 @@ ul {
   display: none;
 }
 
+.max1120 {
+  max-width: 1250px;
+}
+
 .centered {
   margin-left: auto;
   margin-right: auto;

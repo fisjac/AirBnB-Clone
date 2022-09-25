@@ -19,7 +19,7 @@ function SpotsBrowser() {
   return spots && (
     <div
       id='spot-range'
-      className='padded'
+      className='padded max1120 centered'
       >
       { Object.values(spots).map(spot => (
           <SpotCard key={spot.id} spot={spot} />

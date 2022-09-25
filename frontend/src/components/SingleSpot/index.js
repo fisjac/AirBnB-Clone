@@ -17,7 +17,7 @@ import './SingleSpot.css'
 
 const Title = ({spot, user}) => (
   <div
-    className='title padded top-padded'
+    className='title padded top-padded max1120 centered'
     >
     <div>
         <div id='name'>{spot.name}</div>
@@ -64,9 +64,12 @@ const Images = ({spotImages}) => {
     return arr;
   },[])
   return (
-    <div className='padded top-padded undercarriage bottom-padded'>
+    <div
+    className='undercarriage bottom-padded'>
+      <div className='padded top-padded centered  max1120'>
       <div
-        className='image-grid'>
+        className='image-grid'
+        id='main-grid'>
 
           <Image url={images[0]} id='image'/>
 
@@ -87,6 +90,8 @@ const Images = ({spotImages}) => {
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 

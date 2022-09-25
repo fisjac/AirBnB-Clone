@@ -17,7 +17,7 @@ const LeaveAReviewButton = ({user, spot}) => (
 
 export default function Reviews({user, spot}) {
   return (
-    <div className="padded top-padded">
+    <div className="padded top-padded  max1120 centered">
       <div id='reviews-header'>
         <div>
           <div className='stars flex justify-center'>

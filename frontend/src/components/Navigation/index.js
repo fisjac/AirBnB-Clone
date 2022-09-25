@@ -11,7 +11,7 @@ function Navigation(){
 
   return (
     <div className='header undercarriage'>
-      <div className='flex padded height100 justify-between'>
+      <div className='flex padded height100 justify-between max1120 centered'>
 
         <NavLink className='home-button' exact to="/">
           <img id='logo' src={logo}></img>
