@@ -27,26 +27,30 @@ export default function ReviewForm({setShowModal}) {
 
   return (
     <div className='container'>
-      <div className="content-container">
+      <div className="content-container modal-padded flex-col">
         <div className='welcome-banner'>Leave a review for this listing</div>
         <form onSubmit={
           handleSubmit}>
           <ul>
             {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
           </ul>
-          <input
-            className="button bottom"
-            type='text'
+          <textarea
+            className="button bottom fill"
+            id='review-input'
             value={review}
             onChange={(e)=>setReview(e.target.value)}
-            />
-          <FiveStars
-            stars={stars}
-            setStars={setStars}
-            />
-          <button
-              className="button pink"
-              type="submit">Submit Review</button>
+            ></textarea>
+          <div className='flex between'>
+            <FiveStars
+              stars={stars}
+              setStars={setStars}
+              />
+            <button
+                className="button pink nomargin"
+                id="review-submit"
+                type="submit">Submit Review</button>
+          </div>
+
         </form>
       </div>
     </div>

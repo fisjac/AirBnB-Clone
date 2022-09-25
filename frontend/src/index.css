@@ -48,6 +48,11 @@ ul {
   --listing-title-line-height: 30px ;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin:0;
+}
 
 /* Class Modifiers */
 .hidden {
@@ -66,6 +71,10 @@ ul {
 .padded {
   padding: 0 80px;
   width:100%;
+}
+
+.between {
+  justify-content: space-between;
 }
 
 .flex {

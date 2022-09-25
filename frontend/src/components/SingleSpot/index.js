@@ -79,8 +79,9 @@ const Images = ({spotImages}) => {
               >
               {
               images?.slice(1,5)
-                .map(url=> (
+                .map((url, idx)=> (
                   <Image
+                    key={idx}
                     url={url}
                     id='image'
                     />

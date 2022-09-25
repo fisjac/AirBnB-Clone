@@ -3,7 +3,7 @@
   grid-auto-flow: row dense;
   column-gap: 24px;
   row-gap: 40px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   /* grid-template-rows: repeat(auto-fit, minmax(350px, 1fr)); */
   transform: translateY(20px);
 }
@@ -48,6 +48,10 @@ text-decoration: none;
 
 }
 
+.lightfont {
+color: rgb(113,113,113);
+}
+
 .stars {
   float: right;
   top:0;
@@ -62,4 +66,10 @@ text-decoration: none;
   resize: width;
   background-position: center;
   aspect-ratio: 20 / 19;
+}
+
+.nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -127,3 +127,12 @@ input:focus {
 .spacer {
   height: 16px;
 }
+
+.modal-padded {
+  padding: 0 24px;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}

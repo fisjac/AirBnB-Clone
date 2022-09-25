@@ -18,7 +18,8 @@ function printSpot(spot) {
        avgRating ? avgRating.toPrecision(3) : 'No Ratings'
        }</span>
      </div>
-     <div>{`${city}, ${state}`}</div>
+     <div className="nowrap">{`${city}, ${state}`}</div>
+     <div className="nowrap lightfont">{name}</div>
      <div><span style={{fontWeight: 'bold'}}>{`$${price} `}</span>night</div>
      </div>
    </>
