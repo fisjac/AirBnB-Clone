@@ -4,6 +4,14 @@ import * as reviewActions from '../../store/reviews'
 
 const SingleReview = ({review, user}) => {
   const dispatch = useDispatch();
+
+  const reviewDate = new Date(review.createdAt)
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+  ];
+  const month = monthNames[reviewDate.getMonth()];
+  const year = reviewDate.getFullYear();
+  const reviewDateString = `${month}, ${year}`;
   return (
   <div id='review'>
     <div id='single-review-header'>
@@ -12,7 +20,7 @@ const SingleReview = ({review, user}) => {
       </div>
       <div id='review-details'>
         <div id='reviewer'>{review.User.firstName}</div>
-        <div id='review-date'>{review.createdAt}</div>
+        <div id='review-date'>{reviewDateString}</div>
       </div>
 
       {user?.id === review.userId && (
