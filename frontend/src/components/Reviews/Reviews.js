@@ -26,7 +26,7 @@ export default function Reviews({user, spot}) {
               {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'}
             </span>
             <span id='dot'>·</span>
-            <div>{`${spot.numReviews} Reviews`}</div>
+            <div>{`${spot.numReviews || 0} Reviews`}</div>
           </div>
         </div>
         <LeaveAReviewButton id='leave-review-button' spot={spot} user={user}/>
