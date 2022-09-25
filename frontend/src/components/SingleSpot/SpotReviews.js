@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewActions from '../../store/reviews'
 
-const SingleReview = ({review, user}) => {
+const SingleReview = ({spotId, review, user}) => {
   const dispatch = useDispatch();
 
   const reviewDate = new Date(review.createdAt)
@@ -27,7 +27,9 @@ const SingleReview = ({review, user}) => {
         <button
           id='delete-review'
           className='pink'
-          onClick={()=>dispatch(reviewActions.deleteReview(review.id))}
+          onClick={()=>dispatch(reviewActions.deleteReview({
+            reviewId: review.id,
+            spotId: spotId}))}
           >
           Delete
         </button>)}
@@ -59,6 +61,7 @@ export default function SpotReviews({spotId, user}) {
         {reviews.slice(0,6)
           .map((review) => (
             <SingleReview
+              spotId={spotId}
               key={review.id}
               review={review}
               user={user}
