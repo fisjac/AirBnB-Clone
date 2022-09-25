@@ -16,7 +16,7 @@ const reviewsSeed = [
   {
     spotId: 1,
     userId: 4,
-    review: 'If you want to getaway, this cute little home makes a great stay. It was a bit smaller than I expected but that had no affect on how I felt about this place. Washing dishes, showering and even using the restrooms was cool experience. At night, you’re able to catch a beautiful view of the stars. To make it more enjoyable, make sure you bring your own hammock to swing beneath the shiny stars and the warmth of campfire next to you.',
+    review: "If you want to getaway, this cute little home makes a great stay. It was a bit smaller than I expected but that had no affect on how I felt about this place. Washing dishes, showering and even using the restrooms was cool experience. At night, you're able to catch a beautiful view of the stars. To make it more enjoyable, make sure you bring your own hammock to swing beneath the shiny stars and the warmth of campfire next to you.",
     stars: 5
   },
   {
