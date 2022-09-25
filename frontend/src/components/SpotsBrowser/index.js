@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as reviewActions from '../../store/reviews';
 
 import SpotCard from './SpotCard';
 
@@ -12,6 +13,8 @@ function SpotsBrowser() {
   const dispatch = useDispatch();
 
   useEffect(()=> {
+    dispatch(spotActions.clearState())
+    dispatch(reviewActions.clearState())
     dispatch(spotActions.getAllSpots())
   },[dispatch]);
 

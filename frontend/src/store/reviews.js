@@ -1,10 +1,18 @@
 import { csrfFetch } from "./csrf";
 
-
+const CLEARSTATE = 'reviews/CLEAR'
 const LOADSPOTREVIEWS = 'spot/LOADREVIEWS';
 const LOADUSERREVIEWS = 'user/LOADREVIEWS';
 const ADDNEWSPOTREVIEW = 'spot/ADDREVIEW';
 const DELETEREVIEW = 'review/DELETE';
+
+
+// RESET
+export const clearState = () => {
+  return {
+    type: CLEARSTATE,
+  };
+}
 
 
 // CREATE
@@ -101,6 +109,9 @@ const initialState = {
 let newState;
 export default function reviewsReducer (state = initialState, action) {
   switch (action.type) {
+
+    case CLEARSTATE:
+      return {spot:null, user:null}
 
     case ADDNEWSPOTREVIEW:
       return {

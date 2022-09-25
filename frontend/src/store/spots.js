@@ -1,9 +1,19 @@
 import { csrfFetch } from "./csrf";
 
+
+const CLEARSTATE = 'spot/CLEAR';
 const LOADSPOTS = 'spot/LOAD';
-const LOADSINGLESPOT = 'spot/LOADSINGLE'
-const EDITSPOT = 'spot/EDIT'
-const REMOVESPOT = 'spot/DELETE'
+const LOADSINGLESPOT = 'spot/LOADSINGLE';
+const EDITSPOT = 'spot/EDIT';
+const REMOVESPOT = 'spot/DELETE';
+
+
+export const clearState = () => {
+  return {
+    type: CLEARSTATE,
+  }
+}
+
 
 const loadSpots = (spots) => {
   return {
@@ -94,6 +104,9 @@ const initialState = {
 const spotReducer = ( state = initialState, action) => {
   let newState;
   switch (action.type) {
+    case CLEARSTATE:
+      return {allSpots: null, singleSpot:null};
+
     case LOADSPOTS:
       newState= {...state};
       const newSpots = action.payload.reduce((accum, spot) => {
