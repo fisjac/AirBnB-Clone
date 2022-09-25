@@ -145,9 +145,10 @@ function EditOrDeleteSpotForm({setShowModal}) {
             if(window
               .confirm('are you sure you want to delete your listing?')
               ) {
-                dispatch(spotActions.deleteSpot(spot.id))
-                history.push('/');
-              };
+                (async ()=> {
+                const response = await dispatch(spotActions.deleteSpot(spot.id))
+                if (response.ok) history.push('/');
+              })()};
           }}
           >
           Delete Listing
