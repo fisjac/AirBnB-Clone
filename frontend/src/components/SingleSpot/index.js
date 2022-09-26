@@ -7,7 +7,7 @@ import * as reviewActions from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
-
+import CreateImageForm from './CreateImageForm';
 
 import './SingleSpot.css'
 
@@ -62,17 +62,19 @@ const Image = ({url, id}) => (
 
 
 const Images = ({spot, user, spotImages}) => {
-  const images = spotImages.reduce((arr, image)=> {
-    arr.push(<Image url={image.url}/>);
-    return arr;
+  console.log('SpotImages = ',spotImages)
+  const images = spotImages?.reduce((arr, image)=> {
+  arr.push(<Image url={image.url}/>);
+  return arr;
   },[])
   if (user.id === spot.ownerId) images.push((
     <CreateModalButton
       id='addImage'
-      childElement={<i class="fa-solid fa-plus"></i>}>
-
+      header='Add an Image'
+      childElement={<i className="fa-solid fa-plus"></i>}>
+        <CreateImageForm spotId={spot.id}/>
     </CreateModalButton>))
-
+  console.log(images)
   return (
     <div>
       <div className='padded top-padded centered  max1120'>
@@ -154,10 +156,10 @@ function SingleSpot () {
   return  spot && (
     <>
       <Title spot={spot} user={user} />
-      {spot.SpotImages?.length && <Images
+      <Images
         spotImages={spot.SpotImages}
         spot={spot}
-        user={user}/>}
+        user={user}/>
       <Description spot={spot}/>
       <Reviews
         spot={spot}

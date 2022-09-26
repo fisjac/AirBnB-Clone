@@ -47,12 +47,25 @@ export const createSpot = (spot) => async dispatch => {
   });
   const newSpot = await response.json();
   if (response.ok) {
-    dispatch(loadSingleSpot(newSpot));
-    dispatch(reviewActions.getSpotReviews(newSpot.id))
+    await dispatch(getSpotDetails(newSpot.id));
+    await dispatch(reviewActions.getSpotReviews(newSpot.id))
     return newSpot
   };
   return response;
 }
+
+export const addImageToSpot = (body, spotId) => async dispatch => {
+  console.log(body)
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(body)
+  });
+  if (response.ok) {
+    dispatch(getSpotDetails(spotId))
+  };
+  return response;
+};
+
 
 //READ
 export const getAllSpots = () => async dispatch => {

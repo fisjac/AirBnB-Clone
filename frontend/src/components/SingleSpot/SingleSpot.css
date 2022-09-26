@@ -73,6 +73,9 @@
     display: none;
   }
 }
+#small-hide {
+  grid-template-rows: repeat(2, minmax(200px, 1fr));
+}
 
 #details-container{
   padding: 32px 0;
