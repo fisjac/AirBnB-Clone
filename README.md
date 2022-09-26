@@ -41,6 +41,14 @@ While logged or browsing as a guest, users can view individual listings by click
 [individual-listing]: ./assets/individual-listing.png
 
 
+### RoadMap
+- add functionality to remove images from a listing
+- add functionality to add/remove images from reviews
+- allow users to edit their reviews
+- add CRUD operations for bookings, enabling them to book a listing
+- add a page to allow a user to view their bookings
+- add a page to allow a user to view of all their listings
+
 
 ### Cloning instructions
 
