@@ -51,7 +51,7 @@ const Title = ({spot, user}) => (
 );
 
 
-const Image = ({url, id}) => (
+const Image = ({url}) => (
   <div
     style={{backgroundImage: `url(${url})`}}
     id='image'
@@ -67,7 +67,7 @@ const Images = ({spot, user, spotImages}) => {
   arr.push(<Image url={image.url}/>);
   return arr;
   },[])
-  if (user.id === spot.ownerId) images.push((
+  if (user?.id === spot.ownerId) images.push((
     <CreateModalButton
       id='addImage'
       header='Add an Image'
