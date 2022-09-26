@@ -22,26 +22,6 @@ export function ModalProvider({ children }) {
   );
 };
 
-const ModalHeader = ({setShowModal, header, children}) => {
-  return (
-
-    <div className='container'>
-      <div className='modal-header'>
-        <button
-          id='close-button'
-          onClick={()=> {
-            setShowModal(false)
-          }}
-          >
-          <i className="fa-regular fa-x"></i>
-        </button>
-        {header}
-      </div>
-      {React.cloneElement(children, {setShowModal})}
-    </div>
-  );
-};
-
 export function CreateModalButton(props) {
   // takes className, and button label and header as props
 
@@ -49,7 +29,9 @@ export function CreateModalButton(props) {
 
   return (
     <>
-    <button className={props.className || ''} id={props.id || ''} onClick={()=> setShowModal(true)}>{props.label || ''}</button>
+    <button className={props.className || ''} id={props.id || ''} onClick={()=> setShowModal(true)}>{props.label || ''}
+    {props.childElement}
+    </button>
     {showModal && (
       <Modal
         onClose={()=> setShowModal(false)}
@@ -78,5 +60,25 @@ export function Modal(props) {
       </div>
     </div>,
     modalNode
+  );
+};
+
+const ModalHeader = ({setShowModal, header, children}) => {
+  return (
+
+    <div className='container'>
+      <div className='modal-header'>
+        <button
+          id='close-button'
+          onClick={()=> {
+            setShowModal(false)
+          }}
+          >
+          <i className="fa-regular fa-x"></i>
+        </button>
+        {header}
+      </div>
+      {React.cloneElement(children, {setShowModal})}
+    </div>
   );
 };

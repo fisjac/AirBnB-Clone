@@ -127,6 +127,7 @@ router.post('/:spotId/images',
   errorCatching.checkOwnership(Spot, 'spotId', 'ownerId'),
   errorCatching.ownershipStatusMustBe(true),
   requireAuth,
+  customValidators.validateImage,
   async (req, res) => {
     req.body.spotId = req.params.spotId;
     const image = await SpotImage.create(req.body);

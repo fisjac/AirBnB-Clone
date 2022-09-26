@@ -147,7 +147,9 @@ function EditOrDeleteSpotForm({setShowModal}) {
               ) {
                 (async ()=> {
                 const response = await dispatch(spotActions.deleteSpot(spot.id))
-                if (response.ok) history.push('/');
+                if (response.ok) {
+                  history.push('/')
+                };
               })()};
           }}
           >

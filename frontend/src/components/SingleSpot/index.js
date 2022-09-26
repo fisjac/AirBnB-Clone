@@ -7,7 +7,7 @@ import * as reviewActions from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
 import { CreateModalButton } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
-
+import CreateImageForm from './CreateImageForm';
 
 import './SingleSpot.css'
 
@@ -54,25 +54,36 @@ const Title = ({spot, user}) => (
 const Image = ({url, id}) => (
   <div
     style={{backgroundImage: `url(${url})`}}
-    id={id}
+    id='image'
     >
   </div>
 );
 
-const Images = ({spotImages}) => {
-  const images = spotImages.reduce((arr, image)=> {
-    arr.push(image.url);
-    return arr;
+
+
+const Images = ({spot, user, spotImages}) => {
+  console.log('SpotImages = ',spotImages)
+  const images = spotImages?.reduce((arr, image)=> {
+  arr.push(<Image url={image.url}/>);
+  return arr;
   },[])
+  if (user.id === spot.ownerId) images.push((
+    <CreateModalButton
+      id='addImage'
+      header='Add an Image'
+      childElement={<i className="fa-solid fa-plus"></i>}>
+        <CreateImageForm spotId={spot.id}/>
+    </CreateModalButton>))
+  console.log(images)
   return (
-    <div
-    className='undercarriage bottom-padded'>
+    <div>
       <div className='padded top-padded centered  max1120'>
       <div
         className='image-grid'
         id='main-grid'>
 
-          <Image url={images[0]} id='image'/>
+          {/* <Image url={images[0]} id='image'/> */}
+          {images[0]}
 
             <div
               className='image-grid'
@@ -80,14 +91,14 @@ const Images = ({spotImages}) => {
               >
               {
               images?.slice(1,5)
-                .map((url, idx)=> (
-                  <Image
-                    key={idx}
-                    url={url}
-                    id='image'
-                    />
-                  )
-                )
+                // .map((url, idx)=> (
+                //   <Image
+                //     key={idx}
+                //     url={url}
+                //     id='image'
+                //     />
+                //   )
+                // )
               }
         </div>
       </div>
@@ -97,7 +108,39 @@ const Images = ({spotImages}) => {
   );
 };
 
+const Description = ({spot}) => {
+  return (
+    <div className='padded top-padded max1120 centered'>
+      <div className ='flex between undercarriage bottom-padded'>
+        <div id='details-container' className='undercarriage fill'>
+          <div className='subItem'>
+            {spot.description}
+          </div>
+        </div>
+        <div id='price-box'>
+          <div className='flex between wrap'>
+            <div>
+              <span id='price'>${spot.price}</span>
+              <span>night</span>
+            </div>
+            <div
+              id='RHS-reviews'
+              className='stars flex justify-center align'>
+            <label><i className="fa-solid fa-star"></i></label>
+            <span>
+              {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'} ·
+            </span>
+            <span className='lightfont underline'>{`${spot.numReviews || 0} Reviews`}</span>
+          </div>
 
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function SingleSpot () {
   const dispatch = useDispatch();
@@ -113,7 +156,11 @@ function SingleSpot () {
   return  spot && (
     <>
       <Title spot={spot} user={user} />
-      {spot.SpotImages?.length && <Images spotImages={spot.SpotImages}/>}
+      <Images
+        spotImages={spot.SpotImages}
+        spot={spot}
+        user={user}/>
+      <Description spot={spot}/>
       <Reviews
         spot={spot}
         user={user}/>

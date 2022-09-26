@@ -44,6 +44,7 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+
 // Create custom validators
 const validateSpot = [
   check('address')
@@ -88,6 +89,18 @@ const validateSpot = [
     .custom((val) => {
       if (val <= 0) {
         throw new Error("Price must be greater than zero");
+      } else return true
+    }),
+  handleValidationErrors
+];
+
+const validateImage = [
+  check('url')
+    .exists({checkFalsy: true})
+    .withMessage("URL is required")
+    .custom((val) => {
+      if (!(val.endsWith('.png') || val.endsWith('.jpg'))){
+        throw new Error("URL must link to an image");
       } else return true
     }),
   handleValidationErrors
@@ -200,6 +213,7 @@ const validateBooking = [
 
 module.exports = {
   handleValidationErrors,
+  validateImage,
   validateSignup,
   validateSpot,
   validateSpotQuery,
