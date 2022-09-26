@@ -23,3 +23,12 @@ The web application was built by [Jack Fisher](https://www.linkedin.com/in/jacks
 ![html5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white)
 ### Database:
 ![SQLite3](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white) ![postgresql](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white)
+
+
+## Features Directions:
+
+### Home Page Demo User:
+You will be able to test the features of this site without sign up by clicking user profile button in the top right hand corner, then clicking log in. This will prompt a modal popup window with an option to sign in as the demo user.
+![landing-page]
+
+[landing-page]: ./assets/landingpage.png
