@@ -62,7 +62,6 @@ const Image = ({url}) => (
 
 
 const Images = ({spot, user, spotImages}) => {
-  console.log('SpotImages = ',spotImages)
   const images = spotImages?.reduce((arr, image)=> {
   arr.push(<Image url={image.url}/>);
   return arr;
@@ -74,7 +73,6 @@ const Images = ({spot, user, spotImages}) => {
       childElement={<i className="fa-solid fa-plus"></i>}>
         <CreateImageForm spotId={spot.id}/>
     </CreateModalButton>))
-  console.log(images)
   return (
     <div>
       <div className='padded top-padded centered  max1120'>

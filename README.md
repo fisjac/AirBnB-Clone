@@ -32,3 +32,20 @@ You will be able to test the features of this site without sign up by clicking u
 ![landing-page]
 
 [landing-page]: ./assets/landingpage.png
+
+
+While logged or browsing as a guest, users can view individual listings by clicking on each a listing's card, redirecting the user to that individual listing's page.
+
+![individual-listing]
+
+[individual-listing]: ./assets/individual-listing.png
+
+
+
+### Cloning instructions
+
+For developers looking to clone the FlairBnB, after cloning the repo, first navigate to the backend folder, and install the dependencies within node by running
+```npm install```. Then repeat the same process in the front-end folder. The developer should then be able to run ```npm start``` in both the frontend and backend directories to launch the application.
+
+The developer can then access the app by navigating to http://localhost:3000/
+or any other port the developer specifies in the .env file.
