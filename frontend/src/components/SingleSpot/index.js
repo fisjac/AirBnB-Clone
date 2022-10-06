@@ -40,12 +40,11 @@ const Title = ({spot, user}) => (
       </div>
     </div>
     {user?.id === spot.ownerId &&
-      <ModalWrapper header='Edit or Delete Your Listing'>
+      <ModalWrapper header='Edit or Delete Your Listing' child='Edit/Delete'>
         <button
           className='pink align'
           id='edit-delete-listing'
           >
-          Edit/Delete
         </button>
         <EditOrDeleteSpotForm />
       </ModalWrapper>
@@ -70,10 +69,8 @@ const Images = ({spot, user, spotImages}) => {
   return arr;
   },[])
   if (user?.id === spot.ownerId) images.push((
-    <ModalWrapper
-      id='addImage'
-      header='Add an Image'
-      childElement={<i className="fa-solid fa-plus"></i>}>
+    <ModalWrapper header='Add an Image' child={<i className="fa-solid fa-plus"></i>}>
+        <button id='addImage'></button>
         <CreateImageForm spotId={spot.id}/>
     </ModalWrapper>))
   return (
@@ -92,14 +89,6 @@ const Images = ({spot, user, spotImages}) => {
               >
               {
               images?.slice(1,5)
-                // .map((url, idx)=> (
-                //   <Image
-                //     key={idx}
-                //     url={url}
-                //     id='image'
-                //     />
-                //   )
-                // )
               }
         </div>
       </div>

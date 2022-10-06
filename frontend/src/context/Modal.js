@@ -29,7 +29,7 @@ export function ModalWrapper(props) {
 
   return (
     <>
-    {React.cloneElement(props.children[0], {onClick: ()=> setShowModal(true)}, null)}
+    {React.cloneElement(props.children[0], {onClick: ()=> setShowModal(true)}, props.child)}
     {showModal && (
       <Modal
         onClose={()=> setShowModal(false)}

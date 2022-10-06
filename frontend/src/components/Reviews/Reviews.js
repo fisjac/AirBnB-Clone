@@ -1,4 +1,4 @@
-import { CreateModalButton } from "../../context/Modal";
+import { ModalWrapper } from "../../context/Modal";
 import SpotReviews from "../SingleSpot/SpotReviews";
 import ReviewForm from "./ReviewForm";
 
@@ -7,12 +7,10 @@ import './reviews.css'
 
 const LeaveAReviewButton = ({user, spot}) => (
   user && user?.id !== spot.ownerId &&
-  <CreateModalButton
-    header='Leave a review'
-    label='Leave a Review'
-    >
+  <ModalWrapper header='Leave a review' child='Leave a Review'>
+    <button></button>
     <ReviewForm/>
-  </CreateModalButton>
+  </ModalWrapper>
 );
 
 export default function Reviews({user, spot}) {
