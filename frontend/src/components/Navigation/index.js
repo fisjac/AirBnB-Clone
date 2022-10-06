@@ -6,12 +6,12 @@ import logo from '../../Flair-Favicon.png';
 
 import './Navigation.css';
 
-function Navigation(){
+function Navigation({maxWidth}){
   const user = useSelector(state => state.session.user);
 
   return (
     <div className='header undercarriage'>
-      <div className='flex padded height100 justify-between max1120 centered'>
+      <div className={`flex padded height100 justify-between max${maxWidth} centered`}>
 
         <NavLink className='home-button' exact to="/">
           <img id='logo' src={logo}></img>

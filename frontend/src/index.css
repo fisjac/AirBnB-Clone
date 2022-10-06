@@ -63,6 +63,10 @@ input::-webkit-inner-spin-button {
   max-width: 1120px;
 }
 
+.max1450 {
+  max-width: 1450px;
+}
+
 .centered {
   margin-left: auto;
   margin-right: auto;

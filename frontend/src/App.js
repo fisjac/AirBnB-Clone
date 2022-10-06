@@ -15,12 +15,13 @@ function App() {
   return (
     isLoaded && (
         <>
-        <Navigation/>
         <Switch>
           <Route exact path='/'>
-            <SpotsBrowser />
+            <Navigation maxWidth={1500}/>
+            <SpotsBrowser/>
           </Route>
           <Route path='/spots/:spotId'>
+            <Navigation maxWidth={1120}/>
             <SingleSpot/>
           </Route>
         </Switch>
