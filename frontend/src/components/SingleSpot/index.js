@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import * as reviewActions from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
-import { CreateModalButton } from '../../context/Modal';
+import { ModalWrapper } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
 
@@ -40,14 +40,15 @@ const Title = ({spot, user}) => (
       </div>
     </div>
     {user?.id === spot.ownerId &&
-      <CreateModalButton
-        header='Edit or Delete Your Listing'
-        label='Edit/Delete'
-        className='pink align'
-        id='edit-delete-listing'
-        >
+      <ModalWrapper header='Edit or Delete Your Listing'>
+        <button
+          className='pink align'
+          id='edit-delete-listing'
+          >
+          Edit/Delete
+        </button>
         <EditOrDeleteSpotForm />
-      </CreateModalButton>
+      </ModalWrapper>
       }
   </div>
 );
@@ -69,12 +70,12 @@ const Images = ({spot, user, spotImages}) => {
   return arr;
   },[])
   if (user?.id === spot.ownerId) images.push((
-    <CreateModalButton
+    <ModalWrapper
       id='addImage'
       header='Add an Image'
       childElement={<i className="fa-solid fa-plus"></i>}>
         <CreateImageForm spotId={spot.id}/>
-    </CreateModalButton>))
+    </ModalWrapper>))
   return (
     <div>
       <div className='padded top-padded centered  max1120'>

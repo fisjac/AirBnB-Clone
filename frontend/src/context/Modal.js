@@ -22,16 +22,14 @@ export function ModalProvider({ children }) {
   );
 };
 
-export function CreateModalButton(props) {
+export function ModalWrapper(props) {
   // takes className, id, button label, and header as props
 
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-    <button className={props.className || ''} id={props.id || ''} onClick={()=> setShowModal(true)}>{props.label || ''}
-    {props.childElement}
-    </button>
+    {React.cloneElement(props.children[0], {onClick: ()=> setShowModal(true)}, null)}
     {showModal && (
       <Modal
         onClose={()=> setShowModal(false)}
@@ -39,7 +37,7 @@ export function CreateModalButton(props) {
         showModal={showModal}
         header={props.header || ''}
         >
-        {props.children}
+        {props.children[1]}
       </Modal>
     )}
     </>
