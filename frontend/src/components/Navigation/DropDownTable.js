@@ -28,20 +28,33 @@ function UserDropDown({user}) {
         <div id='greeting'>{`Welcome back ${user.firstName}!`}</div>
         <CreateModalButton
           label='Create a listing'
-          header='Create New Listing'>
+          header='Create New Listing'
+          className='drop_down_button'>
           <CreateNewSpotForm/>
         </CreateModalButton>
-        {/* <CreateNewSpotModal text={'Create a listing'} /> */}
-        <button onClick={logout}>Log Out</button>
+        <button
+          onClick={logout}
+          className='drop_down_button'
+          >
+          Log Out
+        </button>
       </>
     )
   } else { // if no user is signed in then show
     dropDownMenu = (
       <>
-        <CreateModalButton label='Log In'>
+        <CreateModalButton
+          label='Log In'
+          header='Log In'
+          className='drop_down_button'
+          >
           <LoginForm/>
         </CreateModalButton>
-        <CreateModalButton label='Sign Up'>
+        <CreateModalButton
+          label='Sign Up'
+          header='Sign Up'
+          className='drop_down_button'
+          >
           <SignupForm/>
         </CreateModalButton>
       </>
