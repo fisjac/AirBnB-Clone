@@ -31,6 +31,7 @@
   position:sticky;
   z-index: 1;
   top:0;
+  flex-grow: 1 ;
 
   padding: 0 24px;
   height: 74px;

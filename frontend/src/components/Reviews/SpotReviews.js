@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ModalWrapper } from '../../context/Modal';
 import * as reviewActions from '../../store/reviews'
+import UpdateReviewForm from './UpdateReviewForm';
 
 const SingleReview = ({spotId, review, user, fullWidth}) => {
   const dispatch = useDispatch();
@@ -27,15 +29,27 @@ const SingleReview = ({spotId, review, user, fullWidth}) => {
       </div>
 
       {user?.id === review.userId && (
-        <button
-          id='delete-review'
-          className='pink'
-          onClick={()=>dispatch(reviewActions.deleteReview({
-            reviewId: review.id,
-            spotId: spotId}))}
-          >
-          Delete
-        </button>)}
+        <>
+
+
+          <ModalWrapper header='Edit Review' child='Edit'>
+          <button
+            id='delete-review'
+            className='pink'
+            ></button>
+            <UpdateReviewForm spotId={spotId} review={review}/>
+          </ModalWrapper>
+          <button
+            id='delete-review'
+            className='pink'
+            onClick={()=>dispatch(reviewActions.deleteReview({
+              reviewId: review.id,
+              spotId: spotId}))}
+            >
+            Delete
+          </button>
+        </>
+      )}
     </div>
     <div id='review-body' className='nowrap'>{review.review}</div>
   </div>
