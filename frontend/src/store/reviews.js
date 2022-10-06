@@ -6,6 +6,7 @@ const CLEARSTATE = 'reviews/CLEAR'
 const LOADSPOTREVIEWS = 'spot/LOADREVIEWS';
 const LOADUSERREVIEWS = 'user/LOADREVIEWS';
 const ADDNEWSPOTREVIEW = 'spot/ADDREVIEW';
+const UPDATESPOTREVIEW = 'spot/UPDATEREVIEW';
 const DELETEREVIEW = 'review/DELETE';
 
 
@@ -70,20 +71,14 @@ export const getSpotReviews = (spotId) => async dispatch => {
 };
 
 // UPDATE
-export const updateReview = ({spotId, review}) => async dispatch => {
-  const putResponse = await csrfFetch(`/api/spots/${spotId}/reviews`,{
+export const updateReview = ({spotId, reviewId, review}) => async dispatch => {
+  const putResponse = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: 'PUT',
     body: JSON.stringify(review)
   });
   if (putResponse.ok) {
-    const putResponseData = await putResponse.json();
-    const reviewId = putResponseData.id;
-    const loadResponse = await csrfFetch(`/api/spots/${spotId}/reviews`);
-    const {reviews} = await loadResponse.json();
-    const loadedReview = reviews.find(review=> {
-      console.log(review.id, reviewId)
-      return review.id === reviewId })
-    dispatch(createSpotReview(loadedReview));
+    dispatch(spotActions.getSpotDetails(spotId));
+    dispatch(getSpotReviews(spotId))
   };
   return putResponse;
 };

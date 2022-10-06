@@ -5,7 +5,7 @@ import * as sessionActions from '../../store/session';
 import LoginForm from './LoginForm';
 
 import './DropDownTable.css'
-import { CreateModalButton } from '../../context/Modal';
+import { ModalWrapper } from '../../context/Modal';
 import SignupForm from './SignUpForm';
 import CreateNewSpotForm from './CreateNewSpotForm';
 
@@ -26,24 +26,29 @@ function UserDropDown({user}) {
     dropDownMenu = (
       <>
         <div id='greeting'>{`Welcome back ${user.firstName}!`}</div>
-        <CreateModalButton
-          label='Create a listing'
-          header='Create New Listing'>
+        <ModalWrapper header='Create New Listing' child='Create New Listing'>
+            <button className='drop_down_button'></button>
           <CreateNewSpotForm/>
-        </CreateModalButton>
-        {/* <CreateNewSpotModal text={'Create a listing'} /> */}
-        <button onClick={logout}>Log Out</button>
+        </ModalWrapper>
+        <button
+          onClick={logout}
+          className='drop_down_button'
+          >
+          Log Out
+        </button>
       </>
     )
   } else { // if no user is signed in then show
     dropDownMenu = (
       <>
-        <CreateModalButton label='Log In'>
+        <ModalWrapper header='Log In' child='Log In'>
+          <button className='drop_down_button'></button>
           <LoginForm/>
-        </CreateModalButton>
-        <CreateModalButton label='Sign Up'>
+        </ModalWrapper>
+        <ModalWrapper header='Sign Up' child='Sign Up'>
+          <button className='drop_down_button'></button>
           <SignupForm/>
-        </CreateModalButton>
+        </ModalWrapper>
       </>
   )};
 

@@ -22,16 +22,14 @@ export function ModalProvider({ children }) {
   );
 };
 
-export function CreateModalButton(props) {
-  // takes className, and button label and header as props
+export function ModalWrapper(props) {
+  // takes className, id, button label, and header as props
 
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
-    <button className={props.className || ''} id={props.id || ''} onClick={()=> setShowModal(true)}>{props.label || ''}
-    {props.childElement}
-    </button>
+    {React.cloneElement(props.children[0], {onClick: ()=> setShowModal(true)}, props.child)}
     {showModal && (
       <Modal
         onClose={()=> setShowModal(false)}
@@ -39,7 +37,7 @@ export function CreateModalButton(props) {
         showModal={showModal}
         header={props.header || ''}
         >
-        {props.children}
+        {props.children[1]}
       </Modal>
     )}
     </>
@@ -53,7 +51,7 @@ export function Modal(props) {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={props.onClose} />
-      <div id="modal-content">
+      <div id="modal-container">
         <ModalHeader header={props.header} setShowModal={props.setShowModal}>
           {props.children}
         </ModalHeader>
@@ -66,8 +64,8 @@ export function Modal(props) {
 const ModalHeader = ({setShowModal, header, children}) => {
   return (
 
-    <div className='container'>
-      <div className='modal-header'>
+    <>
+      <div id='modal-header'>
         <button
           id='close-button'
           onClick={()=> {
@@ -78,7 +76,9 @@ const ModalHeader = ({setShowModal, header, children}) => {
         </button>
         {header}
       </div>
-      {React.cloneElement(children, {setShowModal})}
-    </div>
+      <div id='modal-content'>
+        {React.cloneElement(children, {setShowModal})}
+      </div>
+    </>
   );
 };

@@ -10,9 +10,15 @@
   margin-top: 8px;
 }
 
-#num-reviews, #city, #state, #country {
+#city, #state, #country {
   font-weight: 600;
   text-decoration: underline;
+}
+
+#num-reviews {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 #dot {

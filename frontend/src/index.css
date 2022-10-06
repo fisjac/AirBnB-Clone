@@ -63,6 +63,10 @@ input::-webkit-inner-spin-button {
   max-width: 1120px;
 }
 
+.max1450 {
+  max-width: 1450px;
+}
+
 .centered {
   margin-left: auto;
   margin-right: auto;
@@ -192,4 +196,8 @@ input::-webkit-inner-spin-button {
 
 .undercarriage {
   border-bottom: 1px solid rgba(0,0,0, .1);
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -51,7 +51,7 @@ button:hover {
 #profile-icon {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   width: 30px;
   height: 30px;
   border-radius: 50%;

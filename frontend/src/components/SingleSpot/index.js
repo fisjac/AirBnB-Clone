@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom';
 import * as spotActions from '../../store/spots';
 import * as reviewActions from '../../store/reviews';
 import Reviews from '../Reviews/Reviews';
-import { CreateModalButton } from '../../context/Modal';
+import { ModalWrapper } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
 
 import './SingleSpot.css'
+import SpotReviews from '../Reviews/SpotReviews';
 
 //get spot details from db
 //get user from state
@@ -30,7 +31,14 @@ const Title = ({spot, user}) => (
             'No Ratings'}
         </div>
         <span id='dot'>·</span>
-        <div id='num-reviews'>{`${spot.numReviews || 0} Reviews`}</div>
+        <ModalWrapper
+          header='Reviews'
+          child={`${spot.numReviews || 0} Reviews`}
+          >
+          <div id='num-reviews'></div>
+          <SpotReviews limit={20} fullWidth={true}/>
+        </ModalWrapper>
+
         <span id='dot'>·</span>
         <span id='city'>{`${spot.city},`} </span>
         <span id='state'> {` ${spot.state},`} </span>
@@ -38,14 +46,14 @@ const Title = ({spot, user}) => (
       </div>
     </div>
     {user?.id === spot.ownerId &&
-      <CreateModalButton
-        header='Edit or Delete Your Listing'
-        label='Edit/Delete'
-        className='pink align'
-        id='edit-delete-listing'
-        >
+      <ModalWrapper header='Edit or Delete Your Listing' child='Edit/Delete'>
+        <button
+          className='pink align'
+          id='edit-delete-listing'
+          >
+        </button>
         <EditOrDeleteSpotForm />
-      </CreateModalButton>
+      </ModalWrapper>
       }
   </div>
 );
@@ -67,12 +75,10 @@ const Images = ({spot, user, spotImages}) => {
   return arr;
   },[])
   if (user?.id === spot.ownerId) images.push((
-    <CreateModalButton
-      id='addImage'
-      header='Add an Image'
-      childElement={<i className="fa-solid fa-plus"></i>}>
+    <ModalWrapper header='Add an Image' child={<i className="fa-solid fa-plus"></i>}>
+        <button id='addImage'></button>
         <CreateImageForm spotId={spot.id}/>
-    </CreateModalButton>))
+    </ModalWrapper>))
   return (
     <div>
       <div className='padded top-padded centered  max1120'>
@@ -89,14 +95,6 @@ const Images = ({spot, user, spotImages}) => {
               >
               {
               images?.slice(1,5)
-                // .map((url, idx)=> (
-                //   <Image
-                //     key={idx}
-                //     url={url}
-                //     id='image'
-                //     />
-                //   )
-                // )
               }
         </div>
       </div>
@@ -128,7 +126,12 @@ const Description = ({spot}) => {
             <span>
               {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'} ·
             </span>
-            <span className='lightfont underline'>{`${spot.numReviews || 0} Reviews`}</span>
+            <ModalWrapper
+              header='Reviews'
+              child={`${spot.numReviews || 0} Reviews`}>
+              <span className='lightfont underline pointer'></span>
+              <SpotReviews limit={20} fullWidth={true} />
+            </ModalWrapper>
           </div>
 
 
@@ -161,7 +164,8 @@ function SingleSpot () {
       <Description spot={spot}/>
       <Reviews
         spot={spot}
-        user={user}/>
+        user={user}
+        />
     </>
   );
 };

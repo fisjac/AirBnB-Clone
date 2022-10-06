@@ -19,21 +19,19 @@
 }
 
 #modal-content {
-  position: absolute;
-  display: flex;
-  flex-flow:column;
-  /* bottom:-150vh; */
-  width: 568px;
-  height: max-content;
-  background-color:white;
-  transition: bottom .2s ease-out;
-  border-radius: 14px;
+
+  padding: 0 24px;
+  overflow-y: auto;
 }
 
-.modal-header {
+#modal-header {
   display: flex;
   align-items: center;
   justify-content: center;
+  position:sticky;
+  z-index: 1;
+  top:0;
+  flex-grow: 1 ;
 
   padding: 0 24px;
   height: 74px;
@@ -42,6 +40,18 @@
   font-size: 16px;
 
   border-bottom: rgb(235, 235, 235) solid 1px;
+}
+
+#modal-container {
+  position: absolute;
+  display: flex;
+  flex-flow:column;
+  width: 50%;
+  /* height: max-content; */
+  max-height: 80%;
+  background-color:white;
+  transition: bottom .2s ease-out;
+  border-radius: 14px;
 }
 
 #close-button {

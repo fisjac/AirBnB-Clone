@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ModalWrapper } from '../../context/Modal';
 import * as reviewActions from '../../store/reviews'
+import UpdateReviewForm from './UpdateReviewForm';
 
-const SingleReview = ({spotId, review, user}) => {
+const SingleReview = ({spotId, review, user, fullWidth}) => {
   const dispatch = useDispatch();
 
   const reviewDate = new Date(review.createdAt)
@@ -13,7 +15,10 @@ const SingleReview = ({spotId, review, user}) => {
   const year = reviewDate.getFullYear();
   const reviewDateString = `${month}, ${year}`;
   return (
-  <div id='review'>
+  <div
+    id='review'
+    className={fullWidth? 'full-width': 'half-width'}
+    >
     <div id='single-review-header'>
       <div id='profile-icon'>
         <i className="fa-solid fa-user"></i>
@@ -24,22 +29,34 @@ const SingleReview = ({spotId, review, user}) => {
       </div>
 
       {user?.id === review.userId && (
-        <button
-          id='delete-review'
-          className='pink'
-          onClick={()=>dispatch(reviewActions.deleteReview({
-            reviewId: review.id,
-            spotId: spotId}))}
-          >
-          Delete
-        </button>)}
+        <>
+
+
+          <ModalWrapper header='Edit Review' child='Edit'>
+          <button
+            id='delete-review'
+            className='pink'
+            ></button>
+            <UpdateReviewForm spotId={spotId} review={review}/>
+          </ModalWrapper>
+          <button
+            id='delete-review'
+            className='pink'
+            onClick={()=>dispatch(reviewActions.deleteReview({
+              reviewId: review.id,
+              spotId: spotId}))}
+            >
+            Delete
+          </button>
+        </>
+      )}
     </div>
     <div id='review-body' className='nowrap'>{review.review}</div>
   </div>
 )};
 
 
-export default function SpotReviews({spotId, user}) {
+export default function SpotReviews({spotId, user, limit=6, fullWidth=false}) {
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch(reviewActions.getSpotReviews(spotId))
@@ -58,13 +75,14 @@ export default function SpotReviews({spotId, user}) {
 
     return spotReviews && (
       <div id='spot-reviews'>
-        {reviews.slice(0,6)
+        {reviews.slice(0,limit)
           .map((review) => (
             <SingleReview
               spotId={spotId}
               key={review.id}
               review={review}
               user={user}
+              fullWidth={fullWidth}
               />
           ))
         }
