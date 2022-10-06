@@ -10,7 +10,7 @@ import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
 
 import './SingleSpot.css'
-import SpotReviews from './SpotReviews';
+import SpotReviews from '../Reviews/SpotReviews';
 
 //get spot details from db
 //get user from state
@@ -31,7 +31,13 @@ const Title = ({spot, user}) => (
             'No Ratings'}
         </div>
         <span id='dot'>·</span>
-        <div id='num-reviews'>{`${spot.numReviews || 0} Reviews`}</div>
+        <ModalWrapper
+          header='Reviews'
+          child={`${spot.numReviews || 0} Reviews`}
+          >
+          <div id='num-reviews'></div>
+          <SpotReviews limit={20} fullWidth={true}/>
+        </ModalWrapper>
 
         <span id='dot'>·</span>
         <span id='city'>{`${spot.city},`} </span>
@@ -120,7 +126,12 @@ const Description = ({spot}) => {
             <span>
               {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'} ·
             </span>
-            <span className='lightfont underline'>{`${spot.numReviews || 0} Reviews`}</span>
+            <ModalWrapper
+              header='Reviews'
+              child={`${spot.numReviews || 0} Reviews`}>
+              <span className='lightfont underline pointer'></span>
+              <SpotReviews limit={20} />
+            </ModalWrapper>
           </div>
 
 
@@ -153,7 +164,8 @@ function SingleSpot () {
       <Description spot={spot}/>
       <Reviews
         spot={spot}
-        user={user}/>
+        user={user}
+        />
     </>
   );
 };

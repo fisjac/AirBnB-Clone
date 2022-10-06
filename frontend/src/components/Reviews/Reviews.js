@@ -1,5 +1,5 @@
 import { ModalWrapper } from "../../context/Modal";
-import SpotReviews from "../SingleSpot/SpotReviews";
+import SpotReviews from "./SpotReviews";
 import ReviewForm from "./ReviewForm";
 
 
@@ -30,7 +30,7 @@ export default function Reviews({user, spot}) {
         <LeaveAReviewButton id='leave-review-button' spot={spot} user={user}/>
       </div>
       <div>
-        <SpotReviews spotId={spot.id} user={user}/>
+        <SpotReviews spotId={spot.id} user={user} fullWidth={false}/>
       </div>
     </div>)
 };

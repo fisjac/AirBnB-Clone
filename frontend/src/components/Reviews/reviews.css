@@ -21,8 +21,18 @@
 #review {
   display: flex;
   flex-direction: column;
-  width: 50%;
   padding-right: 8.33%;
+
+}
+
+.full-width {
+  width: 100%;
+  min-height: 100px;
+  padding-bottom: 8px;
+}
+
+.half-width {
+  width: 50%;
   height: 196px;
 }
 

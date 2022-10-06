@@ -51,7 +51,7 @@ export function Modal(props) {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={props.onClose} />
-      <div id="modal-content">
+      <div id="modal-container">
         <ModalHeader header={props.header} setShowModal={props.setShowModal}>
           {props.children}
         </ModalHeader>
@@ -64,8 +64,8 @@ export function Modal(props) {
 const ModalHeader = ({setShowModal, header, children}) => {
   return (
 
-    <div className='container'>
-      <div className='modal-header'>
+    <>
+      <div id='modal-header'>
         <button
           id='close-button'
           onClick={()=> {
@@ -76,7 +76,9 @@ const ModalHeader = ({setShowModal, header, children}) => {
         </button>
         {header}
       </div>
-      {React.cloneElement(children, {setShowModal})}
-    </div>
+      <div id='modal-content'>
+        {React.cloneElement(children, {setShowModal})}
+      </div>
+    </>
   );
 };

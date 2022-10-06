@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewActions from '../../store/reviews'
 
-const SingleReview = ({spotId, review, user}) => {
+const SingleReview = ({spotId, review, user, fullWidth}) => {
   const dispatch = useDispatch();
 
   const reviewDate = new Date(review.createdAt)
@@ -13,7 +13,10 @@ const SingleReview = ({spotId, review, user}) => {
   const year = reviewDate.getFullYear();
   const reviewDateString = `${month}, ${year}`;
   return (
-  <div id='review'>
+  <div
+    id='review'
+    className={fullWidth? 'full-width': 'half-width'}
+    >
     <div id='single-review-header'>
       <div id='profile-icon'>
         <i className="fa-solid fa-user"></i>
@@ -39,7 +42,7 @@ const SingleReview = ({spotId, review, user}) => {
 )};
 
 
-export default function SpotReviews({spotId, user, limit=6}) {
+export default function SpotReviews({spotId, user, limit=6, fullWidth=false}) {
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch(reviewActions.getSpotReviews(spotId))
@@ -65,6 +68,7 @@ export default function SpotReviews({spotId, user, limit=6}) {
               key={review.id}
               review={review}
               user={user}
+              fullWidth={fullWidth}
               />
           ))
         }
