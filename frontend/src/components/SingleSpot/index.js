@@ -10,6 +10,7 @@ import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
 
 import './SingleSpot.css'
+import SpotReviews from './SpotReviews';
 
 //get spot details from db
 //get user from state
@@ -31,6 +32,7 @@ const Title = ({spot, user}) => (
         </div>
         <span id='dot'>·</span>
         <div id='num-reviews'>{`${spot.numReviews || 0} Reviews`}</div>
+
         <span id='dot'>·</span>
         <span id='city'>{`${spot.city},`} </span>
         <span id='state'> {` ${spot.state},`} </span>

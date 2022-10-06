@@ -23,7 +23,7 @@ export function ModalProvider({ children }) {
 };
 
 export function CreateModalButton(props) {
-  // takes className, and button label and header as props
+  // takes className, id, button label, and header as props
 
   const [showModal, setShowModal] = useState(false);
 

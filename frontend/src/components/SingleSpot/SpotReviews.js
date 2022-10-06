@@ -39,7 +39,7 @@ const SingleReview = ({spotId, review, user}) => {
 )};
 
 
-export default function SpotReviews({spotId, user}) {
+export default function SpotReviews({spotId, user, limit=6}) {
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch(reviewActions.getSpotReviews(spotId))
@@ -58,7 +58,7 @@ export default function SpotReviews({spotId, user}) {
 
     return spotReviews && (
       <div id='spot-reviews'>
-        {reviews.slice(0,6)
+        {reviews.slice(0,limit)
           .map((review) => (
             <SingleReview
               spotId={spotId}
