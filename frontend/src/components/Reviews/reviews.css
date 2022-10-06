@@ -63,20 +63,24 @@
   color: rgb(113, 113, 113)
 }
 
-#review-body {
+ #review-body {
   width: 100%;
-  ;
+
   font-size: 16px;
+
+  white-space: normal;
+}
+
+.half-width #review-body {
   text-overflow:ellipsis;
   overflow:hidden;
 
   display: -webkit-box !important;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  white-space: normal;
-
-
 }
+
+
 
 #review-input {
   width:100%;

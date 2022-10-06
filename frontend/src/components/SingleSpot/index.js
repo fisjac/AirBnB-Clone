@@ -130,7 +130,7 @@ const Description = ({spot}) => {
               header='Reviews'
               child={`${spot.numReviews || 0} Reviews`}>
               <span className='lightfont underline pointer'></span>
-              <SpotReviews limit={20} />
+              <SpotReviews limit={20} fullWidth={true} />
             </ModalWrapper>
           </div>
 
