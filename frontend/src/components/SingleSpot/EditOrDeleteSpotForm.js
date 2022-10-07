@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 
@@ -31,7 +31,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
   let description = !newDescription? spot.description : newDescription;
   let price = !newPrice? spot.price : newPrice;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -148,7 +148,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
                 (async ()=> {
                 const response = await dispatch(spotActions.deleteSpot(spot.id))
                 if (response.ok) {
-                  history.push('/')
+                  navigate('/')
                 };
               })()};
           }}

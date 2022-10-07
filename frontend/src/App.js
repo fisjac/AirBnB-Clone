@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotsBrowser from "./components/SpotsBrowser";
@@ -14,18 +14,30 @@ function App() {
   }, [dispatch]);
   return (
     isLoaded && (
-        <>
-        <Switch>
-          <Route exact path='/'>
-            <Navigation maxWidth={1500}/>
-            <SpotsBrowser/>
-          </Route>
-          <Route path='/spots/:spotId'>
+        <Routes>
+          <Route
+            path='/' element={(
+              <>
+                <Navigation maxWidth={1500}/>
+                <SpotsBrowser/>
+              </>
+            )}
+            />
+
+
+          <Route path='/spots' element={(
+            <>
+              <Navigation maxWidth={1500}/>
+              <SpotsBrowser/>
+            </>
+          )} />
+          <Route path='/spots/:spotId' element={(
+          <>
             <Navigation maxWidth={1120}/>
             <SingleSpot/>
-          </Route>
-        </Switch>
-      </>
+          </>
+          )}/>
+        </Routes>
       )
   );
 }

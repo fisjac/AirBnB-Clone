@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import * as spotActions from '../../store/spots';
 import * as reviewActions from '../../store/reviews';
@@ -12,12 +12,9 @@ import CreateImageForm from './CreateImageForm';
 import './SingleSpot.css'
 import SpotReviews from '../Reviews/SpotReviews';
 
-//get spot details from db
-//get user from state
-//check if user owns spot
-
-
-const Title = ({spot, user}) => (
+const Title = ({spot, user}) => {
+  const navigate = useNavigate();
+  return (
   <div
     className='title padded top-padded max1120 centered'
     >
@@ -40,7 +37,13 @@ const Title = ({spot, user}) => (
         </ModalWrapper>
 
         <span id='dot'>·</span>
-        <span id='city'>{`${spot.city},`} </span>
+        <span
+          id='city'
+          className='cursor'
+          onClick={()=>navigate(`/spots?city=${spot.city}`)}
+          >
+          {`${spot.city},`}
+        </span>
         <span id='state'> {` ${spot.state},`} </span>
         <span id='country'>{` ${spot.country}`}</span>
       </div>
@@ -56,7 +59,7 @@ const Title = ({spot, user}) => (
       </ModalWrapper>
       }
   </div>
-);
+)};
 
 
 const Image = ({url}) => (
@@ -70,8 +73,8 @@ const Image = ({url}) => (
 
 
 const Images = ({spot, user, spotImages}) => {
-  const images = spotImages?.reduce((arr, image)=> {
-  arr.push(<Image url={image.url}/>);
+  const images = spotImages?.reduce((arr, image, idx)=> {
+  arr.push(<Image key={idx} url={image.url}/>);
   return arr;
   },[])
   if (user?.id === spot.ownerId) images.push((
@@ -85,8 +88,6 @@ const Images = ({spot, user, spotImages}) => {
       <div
         className='image-grid'
         id='main-grid'>
-
-          {/* <Image url={images[0]} id='image'/> */}
           {images[0]}
 
             <div

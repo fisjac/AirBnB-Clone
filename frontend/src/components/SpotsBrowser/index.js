@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewActions from '../../store/reviews';
-
+import { useSearchParams } from 'react-router-dom';
 import SpotCard from './SpotCard';
 
 import './Spots.css'
@@ -11,10 +11,12 @@ import * as spotActions from '../../store/spots';
 function SpotsBrowser() {
 
   const dispatch = useDispatch();
+  console.log('searchparams', useSearchParams())
 
   useEffect(()=> {
     dispatch(spotActions.clearState())
     dispatch(reviewActions.clearState())
+
     dispatch(spotActions.getAllSpots())
   },[dispatch]);
 

@@ -20,7 +20,10 @@ router.get(
       minLng: {'name': 'lng', 'func': Op.gte},
       maxLng: {'name': 'lng', 'func': Op.lte},
       minPrice: {'name': 'price', 'func': Op.gte},
-      maxPrice: {'name': 'price', 'func': Op.lte}
+      maxPrice: {'name': 'price', 'func': Op.lte},
+      city: {'name': 'city', 'func': Op.eq},
+      state: {'name': 'state', 'func': Op.eq},
+      country: {'name': 'country', 'func': Op.eq},
     };
 
     // Dynamic WHERE object code

@@ -75,6 +75,14 @@ export const getAllSpots = () => async dispatch => {
   return response;
 };
 
+export const getQueriedSpots = (query) => async dispatch => {
+  const queryUrl = Object.keys(query)
+    .map(key => `${key}=${query[key].replace(' ', '%20')}`).join('&');
+  console.log(queryUrl);
+  const response = await csrfFetch(`/api/spots?${queryUrl}`);
+
+}
+
 export const getUsersSpots = () => async dispatch => {
   const response = await csrfFetch('/api/spots/current');
   const {spots} = await response.json();
