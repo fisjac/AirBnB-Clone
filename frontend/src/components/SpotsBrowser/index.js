@@ -22,7 +22,7 @@ function SpotsBrowser() {
     } else {
       dispatch(spotActions.getQueriedSpots(location));
     };
-  },[dispatch]);
+  },[dispatch, location]);
 
   const spots = useSelector(state=> state.spots.allSpots)
   return spots && (

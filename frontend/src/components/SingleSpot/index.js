@@ -39,13 +39,21 @@ const Title = ({spot, user}) => {
         <span id='dot'>·</span>
         <span
           id='city'
-          className='cursor'
+          className='pointer'
           onClick={()=>navigate(`/spots?city=${spot.city}`)}
           >
           {`${spot.city},`}
         </span>
-        <span id='state'> {` ${spot.state},`} </span>
-        <span id='country'>{` ${spot.country}`}</span>
+        <span
+          id='state'
+          className='pointer'
+          onClick={()=>navigate(`/spots?state=${spot.state}`)}
+          > {` ${spot.state},`} </span>
+        <span
+          id='country'
+          className='pointer'
+          onClick={()=>navigate(`/spots?country=${spot.country}`)}
+          >{` ${spot.country}`}</span>
       </div>
     </div>
     {user?.id === spot.ownerId &&
