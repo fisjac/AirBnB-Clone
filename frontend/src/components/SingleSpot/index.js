@@ -27,15 +27,19 @@ const Title = ({spot, user}) => {
             spot.avgStarRating.toPrecision(3) :
             'No Ratings'}
         </div>
-        <span id='dot'>·</span>
-        <ModalWrapper
-          header='Reviews'
-          child={`${spot.numReviews || 0} Reviews`}
-          >
-          <div id='num-reviews'></div>
-          <SpotReviews limit={20} fullWidth={true}/>
-        </ModalWrapper>
-
+        { !spot.numReviews? null : (
+          <>
+            <span id='dot'>·</span>
+            <ModalWrapper
+              header='Reviews'
+              child={`${spot.numReviews || 0} Reviews`}
+              >
+              <div id='num-reviews'></div>
+              <SpotReviews limit={20} fullWidth={true}/>
+            </ModalWrapper>
+          </>
+          )
+        }
         <span id='dot'>·</span>
         <span
           id='city'
@@ -48,7 +52,7 @@ const Title = ({spot, user}) => {
           id='state'
           className='pointer'
           onClick={()=>navigate(`/spots?state=${spot.state}`)}
-          > {` ${spot.state},`} </span>
+          > {` ${spot.state},`}</span>
         <span
           id='country'
           className='pointer'
@@ -133,14 +137,19 @@ const Description = ({spot}) => {
               className='stars flex justify-center align'>
             <label><i className="fa-solid fa-star"></i></label>
             <span>
-              {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'} ·
+              {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'}
             </span>
-            <ModalWrapper
-              header='Reviews'
-              child={`${spot.numReviews || 0} Reviews`}>
-              <span className='lightfont underline pointer'></span>
-              <SpotReviews limit={20} fullWidth={true} />
-            </ModalWrapper>
+            {!spot.numReviews ? null : (
+              <>
+                <span id='dot'>·</span>
+                <ModalWrapper
+                  header='Reviews'
+                  child={`${spot.numReviews || 0} Reviews`}>
+                  <span className='lightfont underline pointer'></span>
+                  <SpotReviews limit={20} fullWidth={true} />
+                </ModalWrapper>
+              </>
+            )}
           </div>
 
 
