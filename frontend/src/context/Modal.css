@@ -19,10 +19,17 @@
 }
 
 #modal-content {
-
   padding: 0 24px;
   overflow-y: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
+#modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+
 
 #modal-header {
   display: flex;
