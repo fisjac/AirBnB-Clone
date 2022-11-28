@@ -130,7 +130,7 @@ const Description = ({spot}) => {
           <div className='flex between wrap'>
             <div>
               <span id='price'>${spot.price}</span>
-              <span>night</span>
+              <span> night</span>
             </div>
             <div
               id='RHS-reviews'
