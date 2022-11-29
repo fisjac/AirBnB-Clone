@@ -201,3 +201,7 @@ input::-webkit-inner-spin-button {
 .pointer {
   cursor: pointer;
 }
+
+#dot {
+  padding: 0 6px;
+}

@@ -1,5 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
+import { DateRangePicker } from 'react-date-range';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import * as spotActions from '../../store/spots';
@@ -96,7 +97,7 @@ const Images = ({spot, user, spotImages}) => {
     </ModalWrapper>))
   return (
     <div>
-      <div className='padded top-padded centered  max1120'>
+      <div className='padded top-padded centered max1120'>
       <div
         className='image-grid'
         id='main-grid'>
@@ -117,6 +118,41 @@ const Images = ({spot, user, spotImages}) => {
   );
 };
 
+
+const BookingCalendar = (props) => {
+  return (
+    <div>
+      <div>
+        <label htmlFor='check-in'>Check-In</label>
+        <DateRangePicker/>
+        <label htmlFor='check-out'>Check-Out</label>
+      </div>
+      <button>Reserve</button>
+      <div>
+        <div className='flex between align'>
+          <span>price x night</span>
+          <span>total</span>
+        </div>
+        <div className='flex between align'>
+          <span>cleaning fee</span>
+          <span>total</span>
+        </div>
+        <div className='flex between align'>
+          <span>service fee</span>
+          <span>total</span>
+        </div>
+
+        <div className='flex between align'>
+          <span className='bold'>Total before taxes</span>
+          <span className='bold'>total</span>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
+
 const Description = ({spot}) => {
   return (
     <div className='padded top-padded max1120 centered'>
@@ -135,26 +171,24 @@ const Description = ({spot}) => {
             <div
               id='RHS-reviews'
               className='stars flex justify-center align'>
-            <label><i className="fa-solid fa-star"></i></label>
-            <span>
-              {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'}
-            </span>
-            {!spot.numReviews ? null : (
-              <>
-                <span id='dot'>·</span>
-                <ModalWrapper
-                  header='Reviews'
-                  child={`${spot.numReviews || 0} Reviews`}>
-                  <span className='lightfont underline pointer'></span>
-                  <SpotReviews limit={20} fullWidth={true} />
-                </ModalWrapper>
-              </>
-            )}
+              <label><i className="fa-solid fa-star"></i></label>
+              <span>
+                {spot.avgStarRating ? spot.avgStarRating.toPrecision(3) : 'No Ratings'}
+              </span>
+              {!spot.numReviews ? null : (
+                <>
+                  <span>·</span>
+                  <ModalWrapper
+                    header='Reviews'
+                    child={`${spot.numReviews || 0} Reviews`}>
+                    <span className='lightfont underline pointer'></span>
+                    <SpotReviews limit={20} fullWidth={true} />
+                  </ModalWrapper>
+                </>
+              )}
+            </div>
           </div>
-
-
-
-          </div>
+          <BookingCalendar/>
         </div>
       </div>
     </div>

@@ -21,10 +21,6 @@
   cursor: pointer;
 }
 
-#dot {
-  margin: 0 8px;
-}
-
 #name {
   font-size: 26px;
   font-weight: 600;
@@ -140,4 +136,8 @@ padding-left: 4px;
 }
 #addImage:hover {
   box-shadow: rgb(0 0 0 / 12%) 0px 6px 16px;
+}
+
+.bold {
+  font-weight: bold;
 }
