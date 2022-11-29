@@ -1,6 +1,5 @@
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from 'react';
-import { DateRangePicker } from 'react-date-range';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import * as spotActions from '../../store/spots';
@@ -9,6 +8,8 @@ import Reviews from '../Reviews/Reviews';
 import { ModalWrapper } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
+import BookingCalendar from './BookingCalendar';
+
 
 import './SingleSpot.css'
 import SpotReviews from '../Reviews/SpotReviews';
@@ -117,40 +118,6 @@ const Images = ({spot, user, spotImages}) => {
 
   );
 };
-
-
-const BookingCalendar = (props) => {
-  return (
-    <div>
-      <div>
-        <label htmlFor='check-in'>Check-In</label>
-        <DateRangePicker/>
-        <label htmlFor='check-out'>Check-Out</label>
-      </div>
-      <button>Reserve</button>
-      <div>
-        <div className='flex between align'>
-          <span>price x night</span>
-          <span>total</span>
-        </div>
-        <div className='flex between align'>
-          <span>cleaning fee</span>
-          <span>total</span>
-        </div>
-        <div className='flex between align'>
-          <span>service fee</span>
-          <span>total</span>
-        </div>
-
-        <div className='flex between align'>
-          <span className='bold'>Total before taxes</span>
-          <span className='bold'>total</span>
-        </div>
-
-      </div>
-    </div>
-  )
-}
 
 
 const Description = ({spot}) => {

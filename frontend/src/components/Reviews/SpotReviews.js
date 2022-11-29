@@ -81,7 +81,7 @@ export function ReviewBars({reviews}) {
   return (
     <div className='review-line-container'>
       {[...Array(5).keys()].reverse().map(i=>(
-        <ReviewLine numStars={i+1} starCounts={starCounts}/>
+        <ReviewLine key={i} numStars={i+1} starCounts={starCounts}/>
       ))}
     </div>
   )
