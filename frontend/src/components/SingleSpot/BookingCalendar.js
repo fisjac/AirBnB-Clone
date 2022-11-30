@@ -7,16 +7,16 @@ export default function BookingCalendar (props) {
 
   }
 
-  const [checkInDate, setCheckInDate] = useState(new Date())
-  const [checkOutDate, setCheckOutDate] = useState(new Date())
+  const [checkInDate, setCheckInDate] = useState('')
+  const [checkOutDate, setCheckOutDate] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     // await dispatch() //need to dispatch to backend
   }
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="calendar-inputs flex">
           <div className='input-area'>
             <label
@@ -47,6 +47,7 @@ export default function BookingCalendar (props) {
         </div>
         <button
           id='reserve-button'
+          className="pink button"
           type='submit'>Reserve</button>
       </form>
       <div>
@@ -63,6 +64,7 @@ export default function BookingCalendar (props) {
           <span>total</span>
         </div>
 
+        <div id='solid-line'></div>
         <div className='flex between align'>
           <span className='bold'>Total before taxes</span>
           <span className='bold'>total</span>
