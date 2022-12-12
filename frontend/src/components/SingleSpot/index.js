@@ -155,7 +155,7 @@ const Description = ({spot}) => {
               )}
             </div>
           </div>
-          <BookingCalendar/>
+          <BookingCalendar spot={spot}/>
         </div>
       </div>
     </div>

@@ -103,14 +103,19 @@
 
 .top {
   border-top: hsl(0, 0%, 50%) solid 1px;;
-  border-bottom: hsl(0, 0%, 50%) solid 1px;
+  /* border-bottom: hsl(0, 0%, 50%) solid .5px; */
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   /* transform: translateY(1px); */
 }
 
+.middle {
+  border-top: .5px;
+}
+
 .bottom {
-  border-bottom: hsl(0, 0%, 50%) solid .5px;
+  border-bottom: hsl(0, 0%, 50%) solid 1px;
+  border-top: .5px;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
@@ -119,7 +124,6 @@ input {
   height: 48px;
   border: hsl(0, 0%, 50%) solid 1px;
   /* transform: translateY(1px) ; */
-  /* border-top: none; */
   transition: .3s;
   outline: none;
 }

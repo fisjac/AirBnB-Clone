@@ -153,7 +153,6 @@ padding-left: 4px;
   position: relative;
   height: 48px;
   width: 100%;
-
 }
 
 #check-in, #check-out {
@@ -196,6 +195,10 @@ padding-left: 4px;
   font-size: 14px;
   transform: translateY(-200%) translateX(10%);
 
+}
+
+.small-pad-vert {
+  padding: 4px 0;
 }
 
 .bold {

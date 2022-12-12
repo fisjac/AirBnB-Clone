@@ -77,24 +77,28 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="text"
+            className='middle'
             value={newCity}
             placeholder={`City:${spot.city}`}
             onChange={(e) => setNewCity(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newState}
             placeholder={`State:${spot.state}`}
             onChange={(e) => setNewState(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newCountry}
             placeholder={`Country:${spot.country}`}
             onChange={(e) => setNewCountry(e.target.value)}
             />
           <input
             type="number"
+            className='middle'
             value={newLat}
             min="-90"
             max="90"
@@ -103,6 +107,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="number"
+            className='middle'
             value={newLng}
             min="-180"
             max="180"
@@ -111,12 +116,14 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="text"
+            className='middle'
             value={newName}
             placeholder={`Name:${spot.name}`}
             onChange={(e) => setNewName(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newDescription}
             placeholder={`Description:${spot.description}`}
             onChange={(e) => setNewDescription(e.target.value)}
