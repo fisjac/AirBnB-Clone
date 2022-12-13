@@ -48,8 +48,6 @@ export default function BookingCalendar ({spot, user}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user) {}
-
     // await dispatch( //need to dispatch to backend
   }
   return (
@@ -99,7 +97,8 @@ export default function BookingCalendar ({spot, user}) {
             <button
               id='reserve-button'
               className="pink button"
-              type='submit'>
+              type='button'
+              >
             </button>
             <LoginForm/>
           </ModalWrapper>
