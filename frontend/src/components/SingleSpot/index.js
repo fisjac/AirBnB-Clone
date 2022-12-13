@@ -120,7 +120,7 @@ const Images = ({spot, user, spotImages}) => {
 };
 
 
-const Description = ({spot}) => {
+const Description = ({spot, user}) => {
   return (
     <div className='padded top-padded max1120 centered'>
       <div className ='flex between undercarriage bottom-padded'>
@@ -155,7 +155,7 @@ const Description = ({spot}) => {
               )}
             </div>
           </div>
-          <BookingCalendar spot={spot}/>
+          <BookingCalendar spot={spot} user={user}/>
         </div>
       </div>
     </div>
@@ -180,7 +180,7 @@ function SingleSpot () {
         spotImages={spot.SpotImages}
         spot={spot}
         user={user}/>
-      <Description spot={spot}/>
+      <Description spot={spot} user={user}/>
       <Reviews
         spot={spot}
         user={user}

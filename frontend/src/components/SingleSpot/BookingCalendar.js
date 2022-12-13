@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { ModalWrapper } from "../../context/Modal";
+import LoginForm from "../Navigation/LoginForm";
 
 const shortDateStringToDate = (dateString) => {
   const year = Number(dateString.slice(0,4));
@@ -32,7 +34,7 @@ const dateDiff = (date1, date2) => {
   return days
 }
 
-export default function BookingCalendar ({spot}) {
+export default function BookingCalendar ({spot, user}) {
   const today = new Date();
   const endDate = new Date();
   addDays(endDate, 7);
@@ -43,9 +45,11 @@ export default function BookingCalendar ({spot}) {
   let stayCost = numNights * spot.price;
   let cleaningFee = Math.ceil(7.5 * numNights,0);
   let serviceFee = Math.ceil(spot.price * .15 * numNights,0);
-  shortDateStringToDate(checkInDate)
+
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    if (!user) {}
+
     // await dispatch( //need to dispatch to backend
   }
   return (
@@ -89,10 +93,25 @@ export default function BookingCalendar ({spot}) {
               />
           </div>
         </div>
-        <button
-          id='reserve-button'
-          className="pink button"
-          type='submit'>Reserve</button>
+
+        {!user &&
+          <ModalWrapper header='Log In' child='Log in to reserve'>
+            <button
+              id='reserve-button'
+              className="pink button"
+              type='submit'>
+            </button>
+            <LoginForm/>
+          </ModalWrapper>
+          }
+        {user &&
+          <button
+                id='reserve-button'
+                className="pink button"
+                type='submit'>
+                  Reserve
+          </button>
+          }
       </form>
       {numNights > 0 && checkInDate && checkOutDate && <div>
         <div className='flex between align small-pad-vert'>
@@ -111,7 +130,7 @@ export default function BookingCalendar ({spot}) {
         <div id='solid-line'></div>
         <div className='flex between align small-pad-vert'>
           <span className='bold'>Total before taxes</span>
-          <span className='bold'>{`$${stayCost + serviceFee + cleaningFee}`}</span>
+          <span className='bold'>{`$${Number(stayCost + serviceFee + cleaningFee).toLocaleString()}`}</span>
         </div>
 
       </div>}
