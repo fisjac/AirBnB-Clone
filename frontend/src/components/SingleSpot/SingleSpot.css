@@ -143,7 +143,6 @@ padding-left: 4px;
   margin-top: 10px;
   justify-content: space-between;
   width: 100%;
-
 }
 
 .input-area {
@@ -158,6 +157,7 @@ padding-left: 4px;
 #check-in, #check-out {
   width: 100%;
   font-family: montserrat;
+  cursor: pointer;
 }
 
 #check-in {
