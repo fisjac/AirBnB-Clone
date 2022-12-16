@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import * as spotActions from '../../store/spots';
 import * as reviewActions from '../../store/reviews';
+import * as bookingActions from '../../store/bookings'
 import Reviews from '../Reviews/Reviews';
 import { ModalWrapper } from '../../context/Modal';
 import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
@@ -171,7 +172,8 @@ function SingleSpot () {
   useEffect(()=>{
     dispatch(spotActions.getSpotDetails(spotId))
     dispatch(reviewActions.getSpotReviews(spotId));
-  },[dispatch])
+    dispatch(bookingActions.getSpotBookings(spotId));
+  },[dispatch, spotId])
 
   return  spot && (
     <>

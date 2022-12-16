@@ -204,8 +204,8 @@ router.post('/:spotId/bookings',
 // Get booking based on spotId
 router.get('/:spotId/bookings',
   errorCatching.exists(Spot,'spotId'),
-  requireAuth,
-  errorCatching.checkOwnership(Spot, 'spotId', 'ownerId'),
+  // requireAuth,
+  // errorCatching.checkOwnership(Spot, 'spotId', 'ownerId'),
   async (req, res) => {
     let bookings;
     if (!req.isOwner) {

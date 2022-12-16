@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+import * as bookingActions from '../../store/bookings'
 import { ModalWrapper } from "../../context/Modal";
 import LoginForm from "../Navigation/LoginForm";
 
@@ -35,6 +37,8 @@ const dateDiff = (date1, date2) => {
 }
 
 export default function BookingCalendar ({spot, user}) {
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState([])
   const today = new Date();
   const endDate = new Date();
   addDays(endDate, 7);
@@ -48,11 +52,33 @@ export default function BookingCalendar ({spot, user}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // await dispatch( //need to dispatch to backend
+    setErrors('')
+    const newBooking = await dispatch(
+      bookingActions.createBooking({
+        spotId: spot.id,
+        startDate: checkInDate,
+        endDate: checkOutDate
+        })
+    )
+    .then(()=>{
+      setErrors('')
+      window.alert('Reservation Successful')
+    }, async res => {
+      console.log(res)
+      if (res.ok) {
+        setErrors([]);
+      } else {
+        const data = await res.json()
+        if (data && data.errors) setErrors(data.errors);
+    }
+    } )
   }
   return (
     <div>
       <form onSubmit={handleSubmit}>
+      <ul>
+            {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${errors[key]}`}</li>)}
+        </ul>
         <div className="calendar-inputs flex">
           <div className='input-area'>
             <label
@@ -91,7 +117,6 @@ export default function BookingCalendar ({spot, user}) {
               />
           </div>
         </div>
-
         {!user &&
           <ModalWrapper header='Log In' child='Log in to reserve'>
             <button

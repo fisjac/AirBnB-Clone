@@ -13,12 +13,23 @@ export const getSpotBookings = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   if (response.ok) {
     const bookings = await response.json();
-     dispatch(addBookings(bookings));
+     dispatch(loadSpotBookings(bookings));
   };
   return response
 };
 
-let initialSate = {
+export const createBooking = (booking) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
+    method: 'POST',
+    body: JSON.stringify({
+      startDate: booking.startDate,
+      endDate: booking.endDate
+    })
+  });
+  return response;
+}
+
+let initialState = {
   spotBookings: null,
   userBookings: null,
 };
@@ -30,5 +41,5 @@ export default function bookingsReducer (state = initialState, action) {
       return {spotBookings: [...action.bookings]}
     default:
       return {...state}
-  }
+  };
 };
