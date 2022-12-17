@@ -30,6 +30,10 @@ function UserDropDown({user}) {
             <button className='drop_down_button'></button>
           <CreateNewSpotForm/>
         </ModalWrapper>
+        <ModalWrapper header='Your Reservations' child='Trips'>
+          <button className='drop_down_button'></button>
+          <div>bookings list</div>
+        </ModalWrapper>
         <button
           onClick={logout}
           className='drop_down_button'
