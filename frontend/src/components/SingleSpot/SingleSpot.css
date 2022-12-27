@@ -204,3 +204,7 @@ padding-left: 4px;
 .bold {
   font-weight: bold;
 }
+
+#view-reservations {
+  margin-right: 5px;
+}

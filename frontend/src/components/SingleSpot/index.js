@@ -11,9 +11,9 @@ import EditOrDeleteSpotForm from './EditOrDeleteSpotForm';
 import CreateImageForm from './CreateImageForm';
 import BookingCalendar from './BookingCalendar';
 
-
 import './SingleSpot.css'
 import SpotReviews from '../Reviews/SpotReviews';
+import BookingsList from '../Bookings/BookingsList';
 
 const Title = ({spot, user}) => {
   const navigate = useNavigate();
@@ -64,6 +64,15 @@ const Title = ({spot, user}) => {
       </div>
     </div>
     {user?.id === spot.ownerId &&
+      <div>
+      <ModalWrapper header='Guest Reservations' child='View Reservations'>
+        <button
+          className='pink align'
+          id='view-reservations'
+          >
+        </button>
+        <BookingsList spot={spot}/>
+      </ModalWrapper>
       <ModalWrapper header='Edit or Delete Your Listing' child='Edit/Delete'>
         <button
           className='pink align'
@@ -72,6 +81,7 @@ const Title = ({spot, user}) => {
         </button>
         <EditOrDeleteSpotForm />
       </ModalWrapper>
+      </div>
       }
   </div>
 )};
@@ -172,7 +182,6 @@ function SingleSpot () {
   useEffect(()=>{
     dispatch(spotActions.getSpotDetails(spotId))
     dispatch(reviewActions.getSpotReviews(spotId));
-    dispatch(bookingActions.getSpotBookings(spotId));
   },[dispatch, spotId])
 
   return  spot && (
