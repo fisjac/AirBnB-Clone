@@ -29,9 +29,11 @@ export default function BookingsList({spot}) {
     } else {
       // dispatch(bookingActions.getUserBookings())
     };
-  }, [dispatch])
+    return ()=>dispatch(bookingActions.clearBookings())
+  }, [dispatch]);
+
   const spotBookings = useSelector(state=> state.bookings.spotBookings);
-  spotBookings.sort((date1,date2)=>
+  spotBookings?.sort((date1,date2)=>
     (date1.startDate > date2.startDate ? 1 : -1
     )
   );
@@ -44,5 +46,9 @@ export default function BookingsList({spot}) {
     spotBookings && spotBookings.map((booking, idx ) => (
       <GuestBooking id={idx} booking={booking}/>
     ))
+
+    // userBookings && userBookings.map((booking, idx ) => (
+    //   <UserBooking id={idx} booking={booking}/>
+    // ))
   )
 }

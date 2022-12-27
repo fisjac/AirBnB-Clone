@@ -8,6 +8,7 @@ import './DropDownTable.css'
 import { ModalWrapper } from '../../context/Modal';
 import SignupForm from './SignUpForm';
 import CreateNewSpotForm from './CreateNewSpotForm';
+import BookingsList from '../Bookings/BookingsList';
 
 function UserDropDown({user}) {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function UserDropDown({user}) {
         </ModalWrapper>
         <ModalWrapper header='Your Reservations' child='Trips'>
           <button className='drop_down_button'></button>
-          <div>bookings list</div>
+          <BookingsList/>
         </ModalWrapper>
         <button
           onClick={logout}

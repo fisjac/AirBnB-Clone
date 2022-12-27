@@ -1,6 +1,13 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_SPOT_BOOKINGS = 'bookings/set';
+const CLEAR_BOOKINGS = 'bookings/clear';
+
+export const clearBookings = () => {
+  return {
+    type: CLEAR_BOOKINGS
+  }
+};
 
 export const loadSpotBookings = ({bookings}) => {
   return {
@@ -17,6 +24,7 @@ export const getSpotBookings = (spotId) => async dispatch => {
   };
   return response
 };
+
 
 export const createBooking = (booking) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
@@ -37,6 +45,9 @@ let initialState = {
 let newState;
 export default function bookingsReducer (state = initialState, action) {
   switch (action.type) {
+    case CLEAR_BOOKINGS:
+      return {...initialState}
+
     case LOAD_SPOT_BOOKINGS:
       return {spotBookings: [...action.bookings]}
     default:
