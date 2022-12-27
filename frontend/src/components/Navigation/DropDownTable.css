@@ -44,14 +44,12 @@ div.drop-down-menu button {
   background-color: white;
   border-radius: 0;
   border: none;
+  margin: 0;
+  margin-bottom: 6px;
 }
 
 div.drop-down-menu button:hover {
 cursor: pointer;
 background-color: rgb(0,0,0, .1);
 box-shadow: none;
-}
-
-.drop_down_button {
-
 }

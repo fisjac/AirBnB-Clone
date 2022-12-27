@@ -198,7 +198,6 @@ const validateBooking = [
   .custom((_val, {req})=> {
     let {startDate, endDate} = req.body;
     [startDate, endDate] = [startDate, endDate].map(ele => Date.parse(ele));
-    console.log(startDate, endDate)
     if (startDate >= endDate) {
       throw new Error("endDate cannot be on or before startDate")
     } else return true
