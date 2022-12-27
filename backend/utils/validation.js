@@ -188,7 +188,7 @@ const validateBooking = [
   .exists({checkFalsy: true})
   .withMessage("StartDate is required")
   .custom((val) => {
-    if (Date.parse(val) < Date.now()) {
+    if (Date.parse(val) < Date()) {
       throw new Error("startDate cannot be in the past");
     } else return true
   }),

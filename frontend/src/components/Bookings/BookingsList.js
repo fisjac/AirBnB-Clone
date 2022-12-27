@@ -22,7 +22,6 @@ function GuestBooking ({booking}) {
 export default function BookingsList({spot}) {
   const dispatch = useDispatch();
 
-
   useEffect(()=> {
     if (spot) {
       dispatch(bookingActions.getSpotBookings(spot.id))
@@ -34,9 +33,11 @@ export default function BookingsList({spot}) {
   // const userBookings = useSelector(state=> state.bookings.userBookings);
   // if (listType === 'user') {}
 
-
+  console.log('spotbookings', spotBookings)
   return (
 
-    <GuestBooking booking={spotBookings[0]}/>
+    spotBookings && spotBookings.map((booking, idx ) => (
+      <GuestBooking id={idx} booking={booking}/>
+    ))
   )
 }
