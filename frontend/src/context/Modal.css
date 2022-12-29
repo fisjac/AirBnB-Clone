@@ -101,6 +101,11 @@
   flex-grow: 1;
 }
 
+.single {
+  border-top: hsl(0, 0%, 50%) solid 1px;;
+  border-radius: 15px;
+}
+
 .top {
   border-top: hsl(0, 0%, 50%) solid 1px;;
   /* border-bottom: hsl(0, 0%, 50%) solid .5px; */
