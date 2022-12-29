@@ -66,6 +66,13 @@ export const editBooking = async (booking) => {
   return response;
 }
 
+export const deleteBookings = async (bookingId) => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE'
+  })
+  return response
+};
+
 let initialState = {
   spotBookings: null,
   userBookings: null,
