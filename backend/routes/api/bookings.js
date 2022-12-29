@@ -21,7 +21,7 @@ router.get('/current',
       booking.dataValues.Spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(booking.dataValues.Spot);
     };
 
-    res.status(200).json({Bookings: bookings});
+    res.status(200).json({bookings: bookings});
   }
 );
 

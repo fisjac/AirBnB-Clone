@@ -27,7 +27,8 @@ export default function BookingsList({spot}) {
     if (spot) {
       dispatch(bookingActions.getSpotBookings(spot.id))
     } else {
-      // dispatch(bookingActions.getUserBookings())
+      console.log('in else')
+      dispatch(bookingActions.getUserBookings())
     };
     return ()=>dispatch(bookingActions.clearBookings())
   }, [dispatch]);
@@ -38,8 +39,7 @@ export default function BookingsList({spot}) {
     )
   );
 
-  // const userBookings = useSelector(state=> state.bookings.userBookings);
-  // if (listType === 'user') {}
+  const userBookings = useSelector(state=> state.bookings.userBookings);
 
   return (
 
