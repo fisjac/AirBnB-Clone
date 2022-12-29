@@ -188,7 +188,7 @@ const validateBooking = [
   .exists({checkFalsy: true})
   .withMessage("StartDate is required")
   .custom((val) => {
-    if (Date.parse(val) < Date.now()) {
+    if (Date.parse(val) < Date()) {
       throw new Error("startDate cannot be in the past");
     } else return true
   }),
@@ -198,7 +198,6 @@ const validateBooking = [
   .custom((_val, {req})=> {
     let {startDate, endDate} = req.body;
     [startDate, endDate] = [startDate, endDate].map(ele => Date.parse(ele));
-    console.log(startDate, endDate)
     if (startDate >= endDate) {
       throw new Error("endDate cannot be on or before startDate")
     } else return true

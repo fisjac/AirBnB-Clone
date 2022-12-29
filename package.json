@@ -1,12 +1,14 @@
 {
   "dependencies": {
-    "pg": "^8.8.0"
+    "date-fns": "^2.29.3",
+    "pg": "^8.8.0",
+    "react": "^18.2.0",
+    "react-date-range": "^1.4.0"
   },
   "name": "authenticate-me",
   "description": "## Database Schema Design",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "heroku-postbuild": "npm run build --prefix frontend",
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",

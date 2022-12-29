@@ -13,7 +13,7 @@ function Navigation({maxWidth}){
     <div className='header undercarriage'>
       <div className={`flex padded height100 justify-between max${maxWidth} centered`}>
 
-        <NavLink className='home-button' exact to="/">
+        <NavLink className='home-button' to="/" end>
           <img id='logo' src={logo}></img>
           FlairBnB
         </NavLink>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 
@@ -17,7 +17,7 @@ function CreateNewSpotForm ({setShowModal}) {
   const [price, setPrice] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
       e.preventDefault();
@@ -37,7 +37,7 @@ function CreateNewSpotForm ({setShowModal}) {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
-      history.push(`/spots/${newSpot.id}`)
+      navigate(`/spots/${newSpot.id}`)
       setShowModal(false);
     };
 
@@ -62,6 +62,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="text"
+              className='middle'
               value={city}
               placeholder='City'
               onChange={(e) => setCity(e.target.value)}
@@ -69,6 +70,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="text"
+              className='middle'
               value={state}
               placeholder='State'
               onChange={(e) => setState(e.target.value)}
@@ -76,6 +78,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="text"
+              className='middle'
               value={country}
               placeholder='Country'
               onChange={(e) => setCountry(e.target.value)}
@@ -83,6 +86,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="number"
+              className='middle'
               value={lat}
               min="-90"
               max="90"
@@ -92,6 +96,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="number"
+              className='middle'
               value={lng}
               min="-180"
               max="180"
@@ -101,6 +106,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="text"
+              className='middle'
               value={name}
               placeholder='Name'
               onChange={(e) => setName(e.target.value)}
@@ -108,6 +114,7 @@ function CreateNewSpotForm ({setShowModal}) {
               />
             <input
               type="text"
+              className='middle'
               value={description}
               placeholder='Description'
               onChange={(e) => setDescription(e.target.value)}

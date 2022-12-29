@@ -31,7 +31,7 @@ export default function CreateImageForm ({spotId, setShowModal}) {
       {Object.keys(errors).map((key, idx) => <li id='error-message' key={idx}>{`${key}: ${errors[key]}`}</li>)}
       </ul>
       <input
-        className='top bottom'
+        className='single'
         type="text"
         value={url}
         placeholder={`url`}

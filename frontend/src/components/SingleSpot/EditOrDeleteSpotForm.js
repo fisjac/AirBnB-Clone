@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 
@@ -31,7 +31,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
   let description = !newDescription? spot.description : newDescription;
   let price = !newPrice? spot.price : newPrice;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,24 +77,28 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="text"
+            className='middle'
             value={newCity}
             placeholder={`City:${spot.city}`}
             onChange={(e) => setNewCity(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newState}
             placeholder={`State:${spot.state}`}
             onChange={(e) => setNewState(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newCountry}
             placeholder={`Country:${spot.country}`}
             onChange={(e) => setNewCountry(e.target.value)}
             />
           <input
             type="number"
+            className='middle'
             value={newLat}
             min="-90"
             max="90"
@@ -103,6 +107,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="number"
+            className='middle'
             value={newLng}
             min="-180"
             max="180"
@@ -111,12 +116,14 @@ function EditOrDeleteSpotForm({setShowModal}) {
             />
           <input
             type="text"
+            className='middle'
             value={newName}
             placeholder={`Name:${spot.name}`}
             onChange={(e) => setNewName(e.target.value)}
             />
           <input
             type="text"
+            className='middle'
             value={newDescription}
             placeholder={`Description:${spot.description}`}
             onChange={(e) => setNewDescription(e.target.value)}
@@ -148,7 +155,7 @@ function EditOrDeleteSpotForm({setShowModal}) {
                 (async ()=> {
                 const response = await dispatch(spotActions.deleteSpot(spot.id))
                 if (response.ok) {
-                  history.push('/')
+                  navigate('/')
                 };
               })()};
           }}

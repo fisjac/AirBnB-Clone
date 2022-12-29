@@ -1,7 +1,7 @@
 #reviews-header {
   width: 100%;
   font-size: 22px;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
@@ -98,4 +98,31 @@
 #review-submit {
   margin-top: 0;
 
+}
+
+
+.review-line-container {
+  margin-top: 16px;
+  width: 50%;
+  margin-bottom: 16px;
+}
+
+.review-line-section {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-line {
+ width: 150px;
+ height: 4px;
+ border-radius: 2px;
+ background-color: grey;
+}
+
+.review-line-black {
+  height: 100%;
+  background-color: black;
+  border-radius: 2px;
 }

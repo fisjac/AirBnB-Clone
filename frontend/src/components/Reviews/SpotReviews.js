@@ -56,6 +56,39 @@ const SingleReview = ({spotId, review, user, fullWidth}) => {
 )};
 
 
+export function ReviewLine({numStars, starCounts}) {
+  return (
+    <div className='review-line-section'>
+        <div>
+          {[...Array(numStars)].map(()=>(<i className='fa-solid fa-star'></i>))}
+        </div>
+        <div className='review-line'>
+          <div className='review-line-black' style={{'width': `${starCounts[numStars]*100}%`}}></div>
+      </div>
+    </div>
+  )
+};
+
+
+export function ReviewBars({reviews}) {
+  const starCounts = Object.values(reviews).reduce((starCounts, review)=> {
+    starCounts[review.stars]++;
+    return starCounts;
+  },{1: 0, 2: 0, 3: 0, 4: 0, 5: 0});
+
+  Object.keys(starCounts).forEach(key=>starCounts[key]=starCounts[key]/Object.keys(reviews).length)
+
+  return (
+    <div className='review-line-container'>
+      {[...Array(5).keys()].reverse().map(i=>(
+        <ReviewLine key={i} numStars={i+1} starCounts={starCounts}/>
+      ))}
+    </div>
+  )
+
+}
+
+
 export default function SpotReviews({spotId, user, limit=6, fullWidth=false}) {
   const dispatch = useDispatch();
   useEffect(()=> {
@@ -74,18 +107,23 @@ export default function SpotReviews({spotId, user, limit=6, fullWidth=false}) {
     }
 
     return spotReviews && (
-      <div id='spot-reviews'>
-        {reviews.slice(0,limit)
-          .map((review) => (
-            <SingleReview
-              spotId={spotId}
-              key={review.id}
-              review={review}
-              user={user}
-              fullWidth={fullWidth}
-              />
-          ))
-        }
+      <div>
+        {Object.values(spotReviews).length ?
+          <ReviewBars reviews={spotReviews}/> :
+          null}
+        <div id='spot-reviews'>
+          {reviews.slice(0,limit)
+            .map((review) => (
+              <SingleReview
+                spotId={spotId}
+                key={review.id}
+                review={review}
+                user={user}
+                fullWidth={fullWidth}
+                />
+            ))
+          }
+        </div>
       </div>
     )
   };

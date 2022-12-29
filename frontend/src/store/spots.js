@@ -75,6 +75,13 @@ export const getAllSpots = () => async dispatch => {
   return response;
 };
 
+export const getQueriedSpots = (location) => async dispatch => {
+  const response = await csrfFetch(`/api/spots${location.search}`);
+  const {spots} = await response.json();
+  if (response.ok) dispatch(loadSpots(spots));
+  return response;
+};
+
 export const getUsersSpots = () => async dispatch => {
   const response = await csrfFetch('/api/spots/current');
   const {spots} = await response.json();

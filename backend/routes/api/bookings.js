@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireAuth} = require('../../utils/auth');
+const { requireAuth, restoreUser} = require('../../utils/auth');
 const {Spot, Booking} = require('../../db/models');
 const customValidators = require('../../utils/validation')
 const helperFuncs = require('../../utils/helperFuncs')
@@ -8,20 +8,22 @@ const errorCatching = require('../../utils/errorCatching')
 
 router.get('/current',
   requireAuth,
-  async (_req, res) => {
+  restoreUser,
+  async (req, res) => {
     let bookings = await Booking.findAll({
       include: [
         {
           model: Spot
         },
-      ]
+      ],
+      where: {'userId': req.user.id}
     });
 
     for (let booking of bookings) {
       booking.dataValues.Spot.dataValues.previewImage = await helperFuncs.getPreviewForSpot(booking.dataValues.Spot);
     };
 
-    res.status(200).json({Bookings: bookings});
+    res.status(200).json({bookings: bookings});
   }
 );
 
