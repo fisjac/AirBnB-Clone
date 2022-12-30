@@ -10,14 +10,14 @@ export const clearBookings = () => {
   }
 };
 
-export const loadSpotBookings = ({bookings}) => {
+export const loadSpotBookings = (bookings) => {
   return {
     type: LOAD_SPOT_BOOKINGS,
     bookings
   }
 };
 
-export const loadUserBookings = ({bookings}) => {
+export const loadUserBookings = (bookings) => {
   return {
     type: LOAD_USER_BOOKINGS,
     bookings
@@ -27,8 +27,7 @@ export const loadUserBookings = ({bookings}) => {
 export const getSpotBookings = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   if (response.ok) {
-    const bookings = await response.json();
-    console.log(bookings)
+    const {bookings} = await response.json();
     dispatch(loadSpotBookings(bookings));
   };
   return response;
@@ -37,14 +36,13 @@ export const getSpotBookings = (spotId) => async dispatch => {
 export const getUserBookings = () => async dispatch => {
   const response = await csrfFetch('/api/bookings/current');
   if (response.ok) {
-    const bookings = await response.json();
-    console.log(bookings)
+    const {bookings} = await response.json();
     dispatch(loadUserBookings(bookings));
   };
   return response;
 }
 
-export const createBooking = async (booking) => {
+export const createBooking = (booking) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${booking.spotId}/bookings`, {
     method: 'POST',
     body: JSON.stringify({
@@ -55,7 +53,7 @@ export const createBooking = async (booking) => {
   return response;
 }
 
-export const editBooking = async (booking) => {
+export const editBooking = (booking) => async dispatch => {
   const response = await csrfFetch(`/api/bookings/${booking.id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -66,7 +64,7 @@ export const editBooking = async (booking) => {
   return response;
 }
 
-export const deleteBookings = async (bookingId) => {
+export const deleteBookings = (bookingId) => async dispatch => {
   const response = await csrfFetch(`/api/bookings/${bookingId}`, {
     method: 'DELETE'
   })

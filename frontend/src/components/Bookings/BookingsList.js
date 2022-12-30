@@ -38,6 +38,7 @@ function UserBooking ({booking, setShowModal}) {
 
       }}
       >
+      {!booking && <div>No upcoming reservations</div>}
       <div className='preview-image-container'>
         <div
           style={{backgroundImage: `url(${spot.previewImage})`}}
@@ -53,7 +54,7 @@ function UserBooking ({booking, setShowModal}) {
           </div>
       </div>
       <div className='side-buttons'>
-        <div className='side-button pink'><i className="fa-solid fa-pen-to-square"></i></div>
+        {/* <div className='side-button pink'><i className="fa-solid fa-pen-to-square"></i></div> */}
         <div
           className='side-button pink'
           onClick={async (e)=> {
@@ -62,6 +63,7 @@ function UserBooking ({booking, setShowModal}) {
               const response = await dispatch(bookingActions.deleteBookings(booking.id))
               if (response.ok) {
                 alert('Reservation cancelled')
+                dispatch(bookingActions.getUserBookings())
               }
             }
           }}
@@ -109,6 +111,10 @@ export default function BookingsList({spot, setShowModal}) {
         <UserBooking id={idx} booking={booking} setShowModal={setShowModal}/>
       ))
     }
+    {
+      !userBookings?.length && !spotBookings?.length && <div className='no-reservations'>No Upcoming Reservations</div>
+    }
+
     </>
   )
 }
