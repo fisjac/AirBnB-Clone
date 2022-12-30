@@ -10,14 +10,14 @@ export const clearBookings = () => {
   }
 };
 
-export const loadSpotBookings = ({bookings}) => {
+export const loadSpotBookings = (bookings) => {
   return {
     type: LOAD_SPOT_BOOKINGS,
     bookings
   }
 };
 
-export const loadUserBookings = ({bookings}) => {
+export const loadUserBookings = (bookings) => {
   return {
     type: LOAD_USER_BOOKINGS,
     bookings
@@ -27,8 +27,8 @@ export const loadUserBookings = ({bookings}) => {
 export const getSpotBookings = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
   if (response.ok) {
-    const bookings = await response.json();
-    if (bookings.length) dispatch(loadSpotBookings(bookings));
+    const {bookings} = await response.json();
+    dispatch(loadSpotBookings(bookings));
   };
   return response;
 };
@@ -36,8 +36,8 @@ export const getSpotBookings = (spotId) => async dispatch => {
 export const getUserBookings = () => async dispatch => {
   const response = await csrfFetch('/api/bookings/current');
   if (response.ok) {
-    const bookings = await response.json();
-    if (bookings.length) dispatch(loadUserBookings(bookings));
+    const {bookings} = await response.json();
+    dispatch(loadUserBookings(bookings));
   };
   return response;
 }
@@ -50,7 +50,6 @@ export const createBooking = (booking) => async dispatch => {
       endDate: booking.endDate
     })
   });
-  console.log(response)
   return response;
 }
 

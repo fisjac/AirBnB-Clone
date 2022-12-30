@@ -54,7 +54,7 @@ function UserBooking ({booking, setShowModal}) {
           </div>
       </div>
       <div className='side-buttons'>
-        <div className='side-button pink'><i className="fa-solid fa-pen-to-square"></i></div>
+        {/* <div className='side-button pink'><i className="fa-solid fa-pen-to-square"></i></div> */}
         <div
           className='side-button pink'
           onClick={async (e)=> {
@@ -63,7 +63,7 @@ function UserBooking ({booking, setShowModal}) {
               const response = await dispatch(bookingActions.deleteBookings(booking.id))
               if (response.ok) {
                 alert('Reservation cancelled')
-                await dispatch(booking.getUserBookings())
+                dispatch(bookingActions.getUserBookings())
               }
             }
           }}
@@ -112,7 +112,7 @@ export default function BookingsList({spot, setShowModal}) {
       ))
     }
     {
-      !userBookings && !spotBookings && <div className='no-reservations'>No Upcoming Reservations</div>
+      !userBookings?.length && !spotBookings?.length && <div className='no-reservations'>No Upcoming Reservations</div>
     }
 
     </>
