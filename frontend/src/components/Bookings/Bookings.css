@@ -47,3 +47,10 @@
   background-position: center;
   aspect-ratio: 1 / 1;
 }
+
+.no-reservations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px;
+}
